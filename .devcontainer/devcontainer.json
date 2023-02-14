@@ -1,0 +1,25 @@
+//This version is compatible with semeru T5 nvidia libraries
+//Update your folders mapping accordingly to your project
+{
+	"name": "Code Rationales 1.0",
+	"build": { 
+		"context": "..",
+		"dockerfile": "Dockerfile",
+		"args": {
+			"NODE_VERSION": "none"
+		}
+	},
+	"settings": {
+	},
+	"mounts": [
+		"source=/nfs/semeru/projects/code_rationales/,target=/workspaces/code_rationales/data,type=bind,consistency=cached",
+		"source=/nfs/semeru/data/dvc,target=/tf/dvc,type=bind,consistency=cached"
+	],	
+	"extensions": [
+		"ms-python.python"
+	],
+    "remoteEnv": {
+        //"MY_PROJECT_NAME": "The-container-name-here" //NOTE: make this name the same as the folder containing the repo
+        "MY_PROJECT_NAME": "code_rationales"
+    }
+}

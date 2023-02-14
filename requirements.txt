@@ -1,0 +1,8 @@
+transformers==4.18.0
+tree-sitter
+astunparse==1.6.3
+torch
+pandas
+scipy
+nbdev
+fairseq
