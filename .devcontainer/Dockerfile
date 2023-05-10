@@ -1,6 +1,7 @@
 ## Semeru VS-Code mapping data folders and configuring DVC
 
-FROM tensorflow/tensorflow:2.11.0-gpu-jupyter
+FROM tensorflow/tensorflow:2.10.0-gpu-jupyter
+
 ARG MY-RPOJECT-NAME
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A4B469963BF863CC
 ADD ./requirements.txt .
@@ -11,6 +12,10 @@ RUN pip install --upgrade pip
 
 RUN pip install -r requirements.txt
 RUN pip install dvc
+
+RUN nbdev_install_quarto
+## Matching the cuda version for this container and T5 server Feb 2023
+RUN pip install --upgrade torch==1.12.1 --extra-index-url https://download.pytorch.org/whl/cu113 
 
 #TODO: How to change the project name dynamicaly
 RUN git config --global --add safe.directory /workspaces/${MY-PROJECT-NAME}
