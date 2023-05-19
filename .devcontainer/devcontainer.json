@@ -13,7 +13,7 @@
 		"source=/nfs/semeru/projects/code_rationales/,target=/workspaces/code-rationales/data,type=bind,consistency=cached",
 		"source=/nfs/semeru/data/dvc,target=/tf/dvc,type=bind,consistency=cached",
 		"source=/scratch/danielrc/datax,target=/workspaces/code-rationales/datax,type=bind,consistency=cached",
-		"source=/nfs/semeru/semeru_datasets/,target=/workspaces/code-rationales/datax,type=bind,consistency=cached"
+		"source=/nfs/semeru/semeru_datasets/,target=/workspaces/code-rationales/semeru-datasets,type=bind,consistency=cached"
 
 	],
     "remoteEnv": {
