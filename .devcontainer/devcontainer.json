@@ -10,9 +10,10 @@
 		}
 	},
 	"mounts": [
-		"source=/nfs/semeru/projects/code_rationales/,target=/workspaces/code_rationales/data,type=bind,consistency=cached",
+		"source=/nfs/semeru/projects/code_rationales/,target=/workspaces/code-rationales/data,type=bind,consistency=cached",
 		"source=/nfs/semeru/data/dvc,target=/tf/dvc,type=bind,consistency=cached",
-		"source=/scratch/svelascodimate/datax,target=/workspaces/code_rationales/datax,type=bind,consistency=cached"
+		"source=/scratch/danielrc/datax,target=/workspaces/code-rationales/datax,type=bind,consistency=cached",
+		"source=/nfs/semeru/semeru_datasets/,target=/workspaces/code-rationales/datax,type=bind,consistency=cached"
 
 	],
     "remoteEnv": {
