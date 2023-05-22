@@ -158,5 +158,7 @@ scripts/compatibility/codeparrot-small/logs/*
 scripts/compatibility/gpt2-medium/logs/*
 scripts/compatibility/santacoder/logs/*
 
+/workspaces/code-rationales/scripts/datasets/logs/*
+
 /semeru-datasets/
 /data/

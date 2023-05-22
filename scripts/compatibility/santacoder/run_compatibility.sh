@@ -1,4 +1,4 @@
-
+export HF_DATASETS_CACHE=/workspaces/code-rationales/datax/hf_datasets_cache
 MODEL=bigcode/santacoder
 CHECKPOINT_DIR=/workspaces/code-rationales/data/santacoder/checkpoints
 LOGGING_DIR=/workspaces/code-rationales/scripts/compatibility/santacoder/logs

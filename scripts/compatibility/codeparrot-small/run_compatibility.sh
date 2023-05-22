@@ -1,4 +1,4 @@
-
+export HF_DATASETS_CACHE=/workspaces/code-rationales/datax/hf_datasets_cache
 MODEL=codeparrot/codeparrot-small
 #DATA_DIR=/workspaces/code-rationales/sequential-rationales/compatibility/gpt2-medium/data
 CHECKPOINT_DIR=/workspaces/code-rationales/data/codeparrot-small/checkpoints
