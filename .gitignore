@@ -156,6 +156,7 @@ checklink/cookies.txt
 
 scripts/compatibility/codeparrot-small/logs/*
 scripts/compatibility/gpt2-medium/logs/*
+scripts/compatibility/santacoder/logs/*
 
 /semeru-datasets/
 /data/
