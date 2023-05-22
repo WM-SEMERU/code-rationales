@@ -153,3 +153,9 @@ checklink/cookies.txt
 #Code rationales repository
 /sequential-rationales
 /sequential-rationales/*
+
+scripts/compatibility/codeparrot-small/logs/*
+scripts/compatibility/gpt2-medium/logs/*
+
+/semeru-datasets/
+/data/
