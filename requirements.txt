@@ -12,3 +12,5 @@ protobuf
 bitarray
 transformers==4.18.0
 tree-sitter==0.20.1
+seaborn
+huggingface
