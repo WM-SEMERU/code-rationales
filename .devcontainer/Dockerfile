@@ -1,4 +1,5 @@
 ## Semeru VS-Code mapping data folders and configuring DVC
+## TODO: consider to use git lfs instead of DVC
 
 FROM tensorflow/tensorflow:2.10.0-gpu-jupyter
 
