@@ -9,12 +9,14 @@ RUN apt-get update && apt-get install -y git
 RUN apt-get install -y openssh-client
 RUN apt-get install sudo
 RUN apt-get install wget
+RUN apt-get install git-lfs
 RUN pip3 -q install pip --upgrade
 RUN pip install --upgrade pip
 
 RUN pip install -r requirements.txt
 RUN pip install dvc==2.17.0
-
+RUN pip install sacrebleu
+RUN pip install tensorboardX
 RUN nbdev_install_quarto
 ## Matching the cuda version for this container and T5 server Feb 2023
 RUN pip install --upgrade torch==1.12.1 torchaudio==0.12.1+cu113 --extra-index-url https://download.pytorch.org/whl/cu113 

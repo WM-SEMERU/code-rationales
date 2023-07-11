@@ -20,5 +20,6 @@
         //"MY_PROJECT_NAME": "The-container-name-here" //NOTE: make this name the same as the folder containing the repo
         "MY_PROJECT_NAME": "code-rationales"
     },
-	"runArgs": [ "--gpus", "all"]
+	"runArgs": ["--gpus", "all", "-e", "GRANT_SUDO=yes","--name", "${localWorkspaceFolderBasename}-danielrc", "--add-host", "host.docker.internal:host-gateway"]	
+
 }
