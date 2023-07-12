@@ -19,6 +19,5 @@ nohup python3 -u /workspaces/code-rationales/sequential-rationales/huggingface/e
     --save_total_limit 2 \
     --max_steps 30000 \
     --word_dropout_mixture 0.5 \
-    --tensorboard-logdir $LOGGING_DIR\
     --cache_dir  $CACHE_DIR\
     > /workspaces/code-rationales/scripts/compatibility/codeparrot-small/logs/output.txt &
