@@ -2,7 +2,7 @@ export TOTAL_NUM_UPDATES=100000
 export WARMUP_UPDATES=10000
 export LR=4.2e-05
 export UPDATE_FREQ=8
-export DIR=/workspaces/code-rationales/datax/bart_fairseq/checkpoint_dir_base
+export DIR=/workspaces/code-rationales/datax/bart_fairseq/checkpoint_dir_bleu
 export MAX_TOKENS=1024
 export DATA_DIR=/workspaces/code-rationales/datax/methods2test/corpus/preprocessed/fm_fc_ms_ff/bin
 export SRC_LANG=input.methods
@@ -18,6 +18,11 @@ fairseq-train $DATA_DIR \
     --share-decoder-input-output-embed \
     --arch bart_large \
     --criterion cross_entropy \
+    --eval-bleu \
+    --eval-bleu-args '{"beam": 4, "lenpen": 0.6}' \
+    --eval-bleu-detok moses \
+    --eval-bleu-remove-bpe \
+    --best-checkpoint-metric bleu --maximize-best-checkpoint-metric \
     --dropout 0.1 --attention-dropout 0.1 \
     --weight-decay 0.01 --optimizer adam \
     --reset-optimizer \
