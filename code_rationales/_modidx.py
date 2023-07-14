@@ -5,4 +5,6 @@ d = { 'settings': { 'branch': 'main',
                 'doc_host': 'https://WM-SEMERU.github.io',
                 'git_url': 'https://github.com/WM-SEMERU/code-rationales',
                 'lib_path': 'code_rationales'},
-  'syms': {'code_rationales.core': {'code_rationales.core.foo': ('core.html#foo', 'code_rationales/core.py')}}}
+  'syms': { 'code_rationales.core': {'code_rationales.core.foo': ('core.html#foo', 'code_rationales/core.py')},
+            'code_rationales.loader': { 'code_rationales.loader.download_grammars': ( 'grammar_loader.html#download_grammars',
+                                                                                      'code_rationales/loader.py')}}}
