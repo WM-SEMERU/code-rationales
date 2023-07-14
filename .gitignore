@@ -159,6 +159,7 @@ scripts/compatibility/gpt2-medium/logs/*
 scripts/compatibility/santacoder/logs/*
 
 /workspaces/code-rationales/scripts/datasets/logs/*
+/workspaces/code-rationales/scripts/rationalize/logs/*
 
 /semeru-datasets/
 /data/
