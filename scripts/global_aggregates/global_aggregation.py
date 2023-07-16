@@ -431,14 +431,14 @@ print(df_rationals['span'][eval(df_rationals['rationale_pos_tgt'][2])[0]-1])
 # %%
 def param_default():
     return {
-        'dataset' : 'code_completion_random_cut_5k_30_512_tokens',
-        #'dataset' : 'code_completion_docstring_random_cut_3.8k_30_150_tokens',
+        #'dataset' : 'code_completion_random_cut_5k_30_512_tokens',
+        'dataset' : 'code_completion_docstring_random_cut_3.8k_30_150_tokens',
         #'dataset' : 'code_completion_docstring_signature_3.8k_30_150_tokens',
         #'dataset' : 'code_completion_docstring_5k_30_150_tokens',
         'rational_results': '/workspaces/code-rationales/data/rationales/gpt',
         'global_results': '/workspaces/code-rationales/data/global_results/gpt',
         'num_samples' : 100, 
-        'size_samples' : 44,
+        'size_samples' : 146,
         'num_experiments': 30, 
         'bootstrapping' : 500
     }
@@ -470,8 +470,11 @@ def aggregate_rationals(experiment_paths: list, parser, node_types: list):
                 target_node_types = get_token_nodes(experiment_rational_result['span'][target_token_idx], target_ast, target_code.split("\n"))
                 for rational_idx, rational_pos in enumerate(eval(experiment_rational_result['rationale_pos_tgt'][target_token_idx])):
                     if eval(experiment_rational_result['rationale_pos_tgt'][target_token_idx])[rational_idx] > 0: #rational 1 position.
-                        rational_node_types = get_token_nodes(experiment_rational_result['span'][eval(experiment_rational_result['rationale_pos_tgt'][target_token_idx])[rational_idx]-1], target_ast, target_code.split("\n"))
-                        [global_results[target_node_type][rational_node_type].append(eval(experiment_rational_result['rationale_prob_tgt'][target_token_idx])[rational_idx]) for target_node_type in target_node_types for rational_node_type in rational_node_types]
+                        try:
+                            rational_node_types = get_token_nodes(experiment_rational_result['span'][eval(experiment_rational_result['rationale_pos_tgt'][target_token_idx])[rational_idx]-1], target_ast, target_code.split("\n"))
+                            [global_results[target_node_type][rational_node_type].append(eval(experiment_rational_result['rationale_prob_tgt'][target_token_idx])[rational_idx]) for target_node_type in target_node_types for rational_node_type in rational_node_types]
+                        except Exception as e:
+                            print('rational pos out of range')
     return global_results
 
 # %%
