@@ -431,14 +431,14 @@ print(df_rationals['span'][eval(df_rationals['rationale_pos_tgt'][2])[0]-1])
 # %%
 def param_default():
     return {
-        #'dataset' : 'code_completion_random_cut_5k_30_512_tokens',
-        'dataset' : 'code_completion_docstring_random_cut_3.8k_30_150_tokens',
+        'dataset' : 'code_completion_random_cut_5k_30_512_tokens',
+        #'dataset' : 'code_completion_docstring_random_cut_3.8k_30_150_tokens',
         #'dataset' : 'code_completion_docstring_signature_3.8k_30_150_tokens',
         #'dataset' : 'code_completion_docstring_5k_30_150_tokens',
         'rational_results': '/workspaces/code-rationales/data/rationales/gpt',
         'global_results': '/workspaces/code-rationales/data/global_results/gpt',
         'num_samples' : 100, 
-        'size_samples' : 146,
+        'size_samples' : 44,
         'num_experiments': 30, 
         'bootstrapping' : 500
     }
@@ -466,14 +466,11 @@ def aggregate_rationals(experiment_paths: list, parser, node_types: list):
             experiment_rational_result.insert(loc=experiment_rational_result.columns.get_loc('goal_token')+1, column='span', value=list(map(lambda tuple: (tuple[0],tuple[0]+len(tuple[1])),[(calculate_left_span(index), str(token)) for index, token in experiment_rational_result['goal_token'].items()])))
             target_code = eval(experiment_rational_result['typesets_tgt'][0])[0][0] + ''.join(str(experiment_rational_result['goal_token']))
             target_ast = parser.parse(bytes(target_code, 'utf8')).root_node
-            for target_token_idx in range(len(df_rationals['span'])):
-                try:
-                    target_node_types = get_token_nodes(df_rationals['span'][target_token_idx], target_ast, target_code.split("\n"))
-                except Exception as e:
-                    print(e)
+            for target_token_idx in range(len(experiment_rational_result['span'])):
+                target_node_types = get_token_nodes(experiment_rational_result['span'][target_token_idx], target_ast, target_code.split("\n"))
                 for rational_idx, rational_pos in enumerate(eval(experiment_rational_result['rationale_pos_tgt'][target_token_idx])):
                     if eval(experiment_rational_result['rationale_pos_tgt'][target_token_idx])[rational_idx] > 0: #rational 1 position.
-                        rational_node_types = get_token_nodes(df_rationals['span'][eval(experiment_rational_result['rationale_pos_tgt'][target_token_idx])[rational_idx]-1], target_ast, target_code.split("\n"))
+                        rational_node_types = get_token_nodes(experiment_rational_result['span'][eval(experiment_rational_result['rationale_pos_tgt'][target_token_idx])[rational_idx]-1], target_ast, target_code.split("\n"))
                         [global_results[target_node_type][rational_node_type].append(eval(experiment_rational_result['rationale_prob_tgt'][target_token_idx])[rational_idx]) for target_node_type in target_node_types for rational_node_type in rational_node_types]
     return global_results
 
