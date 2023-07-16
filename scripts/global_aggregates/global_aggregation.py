@@ -274,29 +274,26 @@ def pl_taxonomy_python() -> dict:
 # ### Calculate Spans
 
 # %%
-tokenizer = AutoTokenizer.from_pretrained('/workspaces/code-rationales/data/codeparrot-small/checkpoints/checkpoint-29000')
+#df_rationals = pd.read_csv('/workspaces/code-rationales/data/rationales/gpt/testing/[t_100]_[max_tgt_44]_[exp:0]_.csv',index_col=0)
 
 # %%
-df_rationals = pd.read_csv('/workspaces/code-rationales/data/rationales/gpt/testing/[t_100]_[max_tgt_44]_[exp:0]_.csv',index_col=0)
-
-# %%
-df_rationals = df_rationals[df_rationals['from_seq_id'] == 0]
+#df_rationals = df_rationals[df_rationals['from_seq_id'] == 0]
 
 # %%
 ### Retrieve the generated output
-initial_token = eval(df_rationals['typesets_tgt'][0])[0][0]
-code = initial_token + ''.join(df_rationals['goal_token'])
-code
+#initial_token = eval(df_rationals['typesets_tgt'][0])[0][0]
+#code = initial_token + ''.join(df_rationals['goal_token'])
+#code
 
 # %%
 #### Add Span column
-calculate_left_span = lambda index : len(initial_token + ''.join(df_rationals['goal_token'][:index]))
-calculate_right_span = lambda left_span, token : len(left_span) + len(token)
-span_col = list(map(lambda tuple: (tuple[0],tuple[0]+len(tuple[1])),[(calculate_left_span(index),token) for index, token in df_rationals['goal_token'].items()]))
-df_rationals.insert(loc=df_rationals.columns.get_loc('goal_token')+1, column='span', value=span_col)
+#calculate_left_span = lambda index : len(initial_token + ''.join(df_rationals['goal_token'][:index]))
+#calculate_right_span = lambda left_span, token : len(left_span) + len(token)
+#span_col = list(map(lambda tuple: (tuple[0],tuple[0]+len(tuple[1])),[(calculate_left_span(index),token) for index, token in df_rationals['goal_token'].items()]))
+#df_rationals.insert(loc=df_rationals.columns.get_loc('goal_token')+1, column='span', value=span_col)
 
 # %%
-df_rationals
+#df_rationals
 
 # %% [markdown]
 # ### Map Tokens with Nodes
@@ -404,25 +401,24 @@ def get_token_nodes(
     return results
 
 # %%
-parser, node_types = create_parser('python')
+#parser, node_types = create_parser('python')
 
 # %%
-nodes = traverse(parser.parse(bytes(code, 'utf8')).root_node)
+#nodes = traverse(parser.parse(bytes(code, 'utf8')).root_node)
 
 # %%
-print(get_token_type(df_rationals['span'][40], nodes, code.split("\n")))
+#print(get_token_type(df_rationals['span'][40], nodes, code.split("\n")))
 
 # %%
-print(get_token_nodes(df_rationals['span'][42], parser.parse(bytes(code, 'utf8')).root_node, code.split("\n")))
+#print(get_token_nodes(df_rationals['span'][42], parser.parse(bytes(code, 'utf8')).root_node, code.split("\n")))
 
 # %%
-print(eval(df_rationals['rationale_pos_tgt'][2]))
-print(eval(df_rationals['rationale_prob_tgt'][2]))
+#print(eval(df_rationals['rationale_pos_tgt'][2]))
+#print(eval(df_rationals['rationale_prob_tgt'][2]))
 
 # %%
-
-print(df_rationals['goal_token'][eval(df_rationals['rationale_pos_tgt'][2])[0]-1])
-print(df_rationals['span'][eval(df_rationals['rationale_pos_tgt'][2])[0]-1])
+#print(df_rationals['goal_token'][eval(df_rationals['rationale_pos_tgt'][2])[0]-1])
+#print(df_rationals['span'][eval(df_rationals['rationale_pos_tgt'][2])[0]-1])
 
 
 # %% [markdown]
@@ -446,7 +442,7 @@ params = param_default()
 
 # %%
 get_experiment_path =  lambda samples, size, exp: params['rational_results'] + '/' + params['dataset'] + '/' + '[t_'+str(samples)+']_[max_tgt_'+str(size)+']_[exp:'+str(exp)+']_.csv'
-calculate_left_span = lambda index : len(initial_token + ''.join(df_rationals['goal_token'][:index]))
+calculate_left_span = lambda index, initial_token, df_rationals : len(initial_token + ''.join(df_rationals['goal_token'][:index]))
 calculate_right_span = lambda left_span, token : len(left_span) + len(token)
 
 # %%
@@ -463,7 +459,8 @@ def aggregate_rationals(experiment_paths: list, parser, node_types: list):
         experiment_rational_results = [df_experiment[(df_experiment['from_seq_id'] == sample_idx) | (df_experiment['from_seq_id'] == str(sample_idx))].reset_index() for sample_idx in range(params['num_samples'])]
         print('*'*10 +'Aggregating rationales for exp: ' +str(exp_idx) + '*'*10)
         for experiment_rational_result in experiment_rational_results:
-            experiment_rational_result.insert(loc=experiment_rational_result.columns.get_loc('goal_token')+1, column='span', value=list(map(lambda tuple: (tuple[0],tuple[0]+len(tuple[1])),[(calculate_left_span(index), str(token)) for index, token in experiment_rational_result['goal_token'].items()])))
+            initial_token = eval(experiment_rational_result['typesets_tgt'][0])[0][0]
+            experiment_rational_result.insert(loc=experiment_rational_result.columns.get_loc('goal_token')+1, column='span', value=list(map(lambda tuple: (tuple[0],tuple[0]+len(tuple[1])),[(calculate_left_span(index, initial_token, experiment_rational_result), str(token)) for index, token in experiment_rational_result['goal_token'].items()])))
             target_code = eval(experiment_rational_result['typesets_tgt'][0])[0][0] + ''.join(str(experiment_rational_result['goal_token']))
             target_ast = parser.parse(bytes(target_code, 'utf8')).root_node
             for target_token_idx in range(len(experiment_rational_result['span'])):

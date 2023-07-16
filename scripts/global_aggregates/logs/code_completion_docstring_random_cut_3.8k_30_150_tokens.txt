@@ -1,13 +1,7 @@
 /usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (2.0.2) or chardet (3.0.4) doesn't match a supported version!
   warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
-2023-07-16 23:15:18.742778: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+2023-07-16 23:24:39.851448: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
 To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2023-07-16 23:15:18.897871: E tensorflow/stream_executor/cuda/cuda_blas.cc:2981] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2023-07-16 23:24:40.006760: E tensorflow/stream_executor/cuda/cuda_blas.cc:2981] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
 /usr/local/lib/python3.8/dist-packages/code_rationales/grammars
-None
-['module', 'ERROR', 'class']
-[2, 1, 0]
-[0.001134732156060636, 0.0059091681614518166, 0.0049865879118442535]
-_
-(8, 9)
 **********Aggregating rationales for exp: 0**********
