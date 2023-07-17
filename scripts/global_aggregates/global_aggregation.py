@@ -427,14 +427,14 @@ def get_token_nodes(
 # %%
 def param_default():
     return {
-        #'dataset' : 'code_completion_random_cut_5k_30_512_tokens',
-        'dataset' : 'code_completion_docstring_random_cut_3.8k_30_150_tokens',
+        'dataset' : 'code_completion_random_cut_5k_30_512_tokens',
+        #'dataset' : 'code_completion_docstring_random_cut_3.8k_30_150_tokens',
         #'dataset' : 'code_completion_docstring_signature_3.8k_30_150_tokens',
         #'dataset' : 'code_completion_docstring_5k_30_150_tokens',
         'rational_results': '/workspaces/code-rationales/data/rationales/gpt',
         'global_results': '/workspaces/code-rationales/data/global_results/gpt',
         'num_samples' : 100, 
-        'size_samples' : 146,
+        'size_samples' : 44,
         'num_experiments': 30, 
         'bootstrapping' : 500
     }
@@ -442,7 +442,7 @@ params = param_default()
 
 # %%
 get_experiment_path =  lambda samples, size, exp: params['rational_results'] + '/' + params['dataset'] + '/' + '[t_'+str(samples)+']_[max_tgt_'+str(size)+']_[exp:'+str(exp)+']_.csv'
-calculate_left_span = lambda index, initial_token, df_rationals : len(initial_token + ''.join(df_rationals['goal_token'][:index]))
+calculate_left_span = lambda index, initial_token, df_rationals : len(str(initial_token) + ''.join(str(df_rationals['goal_token'][:index])))
 calculate_right_span = lambda left_span, token : len(left_span) + len(token)
 
 # %%
