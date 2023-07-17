@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="BART-based global rationalization">
+
+<title>code-rationales - Rationalization @ Global Granularity</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="code-rationales - Rationalization @ Global Granularity">
+<meta property="og:description" content="BART-based global rationalization">
+<meta property="og:site-name" content="code-rationales">
+<meta name="twitter:title" content="code-rationales - Rationalization @ Global Granularity">
+<meta name="twitter:description" content="BART-based global rationalization">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">code-rationales</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools ms-auto">
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./bart_global_rationalization.html">Rationalization @ Global Granularity</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">code-rationales</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./grammar_loader.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Grammar Loading Module</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bart_sampling_.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Large Scale Encoder-Decoder (BART) Sampling</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gpt_sampling_.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decoder Based Transformer (GPT-2) Sampling</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bart_global_rationalization.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Rationalization @ Global Granularity</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gpt_global_rationalization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rationalization @ Global Granularity</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mapping_taxonomy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mapping Function</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interpretableshapley.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exploratory Data Code Analysis</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#rationalizations-utilities" id="toc-rationalizations-utilities" class="nav-link active" data-scroll-target="#rationalizations-utilities">Rationalizations Utilities</a></li>
+  <li><a href="#universal-tokenizer" id="toc-universal-tokenizer" class="nav-link" data-scroll-target="#universal-tokenizer">Universal Tokenizer</a></li>
+  <li><a href="#model-loading-and-testing" id="toc-model-loading-and-testing" class="nav-link" data-scroll-target="#model-loading-and-testing">Model Loading and Testing</a></li>
+  <li><a href="#data-loading-and-testing" id="toc-data-loading-and-testing" class="nav-link" data-scroll-target="#data-loading-and-testing">Data Loading and Testing</a></li>
+  <li><a href="#running-rationales" id="toc-running-rationales" class="nav-link" data-scroll-target="#running-rationales">Running Rationales</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/WM-SEMERU/code-rationales/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Rationalization @ Global Granularity</h1>
+</div>
+
+<div>
+  <div class="description">
+    BART-based global rationalization
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> csv</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns<span class="op">;</span> sns.set_theme()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> functools</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>pd.options.display.float_format <span class="op">=</span> <span class="st">'</span><span class="sc">{:.2f}</span><span class="st">'</span>.<span class="bu">format</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sacrebleu.metrics <span class="im">import</span> BLEU</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tokenizers <span class="im">import</span> ByteLevelBPETokenizer</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> importlib</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fairseq.models.transformer <span class="im">import</span> TransformerModel</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> colors</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rationalization <span class="im">import</span> rationalize_lm, rationalize_conditional_model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> param_default():</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    corpus <span class="op">=</span> <span class="st">'fm_fc_ms_ff'</span> <span class="co">#&lt;-- Scope</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    data_path <span class="op">=</span> Path(<span class="st">'../athena-datasets/'</span> <span class="op">+</span> corpus <span class="op">+</span> <span class="st">'/'</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    data_path_raw <span class="op">=</span> Path(<span class="st">'../athena-datasets/'</span> <span class="op">+</span> corpus <span class="op">+</span> <span class="st">'/raw/'</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    tokenizer_path <span class="op">=</span> Path(<span class="st">'../tokenizer/'</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">'bpe_path'</span> : tokenizer_path <span class="op">/</span> <span class="st">'universal_tokenizer/universal_tokenizer/roberta_aug_spaces'</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'eval_raw'</span>: [data_path_raw <span class="op">/</span> <span class="st">'eval/input.methods.txt'</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                        data_path_raw <span class="op">/</span> <span class="st">'eval/output.tests.txt'</span>],</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">'test_raw'</span>: [data_path_raw <span class="op">/</span> <span class="st">'test/input.methods.txt'</span>, </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                        data_path_raw <span class="op">/</span> <span class="st">'test/output.tests.txt'</span>],</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">'train_raw'</span>: [data_path_raw <span class="op">/</span> <span class="st">'train/input.methods.txt'</span>, </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                        data_path_raw <span class="op">/</span> <span class="st">'train/output.tests.txt'</span>],</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">'data_labels'</span> : [<span class="st">'test_raw'</span>],<span class="co">#['eval_raw','test_raw','train_raw'], &lt;----- Just Test</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">'output_pandas'</span> : data_path <span class="op">/</span> <span class="st">'pandas/'</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">'out_processed'</span> : <span class="st">'/datasets/out_processed/'</span>,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">'model_name_or_path'</span> : <span class="st">'models/checkpoint_dir_01/models/'</span>, <span class="co">#Model Path</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">'checkpoint_file'</span>: <span class="st">'checkpoint_best.pt'</span>, <span class="co">#Model</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">'data_preprocessed'</span>:<span class="st">'/home/davidna/data/dummy/sequential-rationales/fairseq/fairseq/data-bin/bins/'</span>,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">'output_results'</span> : <span class="st">'results/'</span> </span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="86">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> param_default()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>params[<span class="st">'output_results'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="86">
+<pre><code>'results/'</code></pre>
+</div>
+</div>
+<section id="rationalizations-utilities" class="level2">
+<h2 class="anchored" data-anchor-id="rationalizations-utilities">Rationalizations Utilities</h2>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>rationalization <span class="op">=</span> importlib.import_module(<span class="st">"sequential-rationales.huggingface.rationalization"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>rationalize <span class="op">=</span> rationalization.rationalize_lm</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="universal-tokenizer" class="level2">
+<h2 class="anchored" data-anchor-id="universal-tokenizer">Universal Tokenizer</h2>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> lazy_decode(bpe_java):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> bpe_java.replace(<span class="st">' '</span>,<span class="st">''</span>).replace(<span class="st">'Ġ'</span>,<span class="st">' '</span>).replace(<span class="st">'Ċ'</span>,<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prettify_java(minified_java):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"tries to undo Michele's minification. Works decently, although for loops and sets get newlines inserted, and there are no empty lines or comments"</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    minified_java <span class="op">=</span> minified_java.replace(<span class="st">'{'</span>,<span class="st">'{</span><span class="ch">\n</span><span class="st">'</span>).replace(<span class="st">'}'</span>,<span class="st">'}</span><span class="ch">\n</span><span class="st">'</span>).replace(<span class="st">';'</span>,<span class="st">';</span><span class="ch">\n</span><span class="st">'</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    num_indents <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    pretty_java <span class="op">=</span> <span class="st">''</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> minified_java.splitlines():</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.lstrip().startswith(<span class="st">'}'</span>):</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>            num_indents <span class="op">-=</span> <span class="dv">1</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        pretty_java <span class="op">+=</span> num_indents<span class="op">*</span><span class="st">'    '</span><span class="op">+</span>line<span class="op">+</span><span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.endswith(<span class="st">'{'</span>):</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>            num_indents <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.endswith(<span class="st">'}'</span>) <span class="kw">and</span> <span class="kw">not</span> line.lstrip().startswith(<span class="st">'}'</span>):</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>            num_indents <span class="op">-=</span> <span class="dv">1</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pretty_java</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="model-loading-and-testing" class="level2">
+<h2 class="anchored" data-anchor-id="model-loading-and-testing">Model Loading and Testing</h2>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Loading a pretrain model</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> TransformerModel.from_pretrained(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  model_name_or_path <span class="op">=</span> params[<span class="st">'model_name_or_path'</span>],</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  checkpoint_file <span class="op">=</span> params[<span class="st">'checkpoint_file'</span>],</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">#data_name_or_path = params['data_preprocessed']</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Setting experiments </span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#! export CUDA_VISIBLE_DEVICES="0,1"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Move model to GPU if available and trigger evaluation mode</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> model_activate(model <span class="op">=</span> model):</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> torch.cuda.is_available():</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    model.cuda()</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    model.<span class="bu">eval</span>()</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    model.model <span class="op">=</span> model.models[<span class="dv">0</span>]</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    model.device</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Model Activated"</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="data-loading-and-testing" class="level2">
+<h2 class="anchored" data-anchor-id="data-loading-and-testing">Data Loading and Testing</h2>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Loading Code Generation</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df_generated_input <span class="op">=</span> pd.read_json( params[<span class="st">'output_results'</span>] <span class="op">+</span> <span class="st">'1_generation_[max:100]_02.json'</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df_generated_input.columns[<span class="dv">4</span>:] <span class="co">#Tensor Columns</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>Index(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
+       '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24',
+       '25', '26', '27', '28', '29', 'source_sampling'],
+      dtype='object')</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'df readit'</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df_generated_input.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>df readit</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">index</th>
+<th data-quarto-table-cell-role="th">test_raw0</th>
+<th data-quarto-table-cell-role="th">test_raw_bpe0</th>
+<th data-quarto-table-cell-role="th">method_size0</th>
+<th data-quarto-table-cell-role="th">0</th>
+<th data-quarto-table-cell-role="th">1</th>
+<th data-quarto-table-cell-role="th">2</th>
+<th data-quarto-table-cell-role="th">3</th>
+<th data-quarto-table-cell-role="th">4</th>
+<th data-quarto-table-cell-role="th">5</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">21</th>
+<th data-quarto-table-cell-role="th">22</th>
+<th data-quarto-table-cell-role="th">23</th>
+<th data-quarto-table-cell-role="th">24</th>
+<th data-quarto-table-cell-role="th">25</th>
+<th data-quarto-table-cell-role="th">26</th>
+<th data-quarto-table-cell-role="th">27</th>
+<th data-quarto-table-cell-role="th">28</th>
+<th data-quarto-table-cell-role="th">29</th>
+<th data-quarto-table-cell-role="th">source_sampling</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>3610</td>
+<td>CitizenId implements Identity { @Override publ...</td>
+<td>[C, itizen, Id, Ġimplements, ĠIdentity, Ġ{, Ġ@...</td>
+<td>96</td>
+<td>[1039, 34603, 285, 13842, 1296, 20320, 32890, ...</td>
+<td>[1039, 34603, 285, 13842, 1296, 20320, 32890, ...</td>
+<td>[1039, 34603, 285, 13842, 28754, 1215, 17276, ...</td>
+<td>[1039, 34603, 285, 13842, 8218, 1215, 17276, 4...</td>
+<td>[1039, 34603, 285, 13842, 8218, 1215, 17276, 1...</td>
+<td>[1039, 34603, 285, 13842, 8218, 1215, 17276, 1...</td>
+<td>...</td>
+<td>[1039, 34603, 285, 13842, 8218, 1215, 17276, 4...</td>
+<td>[1039, 34603, 285, 13842, 28754, 1215, 17276, ...</td>
+<td>[1039, 34603, 285, 13842, 28754, 1215, 17276, ...</td>
+<td>[1039, 34603, 285, 13842, 8218, 1215, 17276, 4...</td>
+<td>[1039, 34603, 285, 13842, 8218, 1215, 17276, 1...</td>
+<td>[1039, 34603, 285, 13842, 1296, 20320, 32890, ...</td>
+<td>[1039, 34603, 285, 13842, 28754, 1215, 17276, ...</td>
+<td>[1039, 34603, 285, 13842, 1296, 20320, 32890, ...</td>
+<td>[1039, 34603, 285, 13842, 1296, 20320, 32890, ...</td>
+<td>[347, 31020, 28081, 36987, 30805, 25522, 787, ...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>23609</td>
+<td>GetDMNMessagesCommand extends AbstractDMNResul...</td>
+<td>[Get, DM, NM, ess, ages, Command, Ġextends, ĠA...</td>
+<td>70</td>
+<td>[1039, 34603, 285, 13842, 1296, 46891, 4467, 4...</td>
+<td>[1039, 34603, 285, 13842, 1296, 46891, 4467, 4...</td>
+<td>[1039, 34603, 285, 13842, 1296, 46891, 4467, 4...</td>
+<td>[1039, 34603, 285, 13842, 1296, 46891, 4467, 4...</td>
+<td>[1039, 34603, 285, 13842, 1296, 46891, 4467, 4...</td>
+<td>[1039, 34603, 285, 13842, 1296, 46891, 4467, 4...</td>
+<td>...</td>
+<td>[1039, 34603, 285, 13842, 1296, 46891, 4467, 4...</td>
+<td>[1039, 34603, 285, 13842, 1296, 46891, 4467, 4...</td>
+<td>[1039, 34603, 285, 13842, 1296, 43048, 25522, ...</td>
+<td>[1039, 34603, 285, 13842, 1296, 43048, 25522, ...</td>
+<td>[1039, 34603, 285, 13842, 1296, 46891, 4467, 4...</td>
+<td>[1039, 34603, 285, 13842, 1296, 46891, 4467, 4...</td>
+<td>[1039, 34603, 285, 13842, 1296, 46891, 4467, 4...</td>
+<td>[1039, 34603, 285, 13842, 1296, 46891, 4467, 4...</td>
+<td>[1039, 34603, 285, 13842, 1296, 46891, 4467, 4...</td>
+<td>[14181, 25652, 31156, 3361, 3443, 46785, 14269...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>45764</td>
+<td>Calculator { public double div(double firstOpe...</td>
+<td>[Cal, cul, ator, Ġ{, Ġpublic, Ġdouble, Ġdiv, (...</td>
+<td>95</td>
+<td>[1039, 34603, 285, 13842, 1296, 37165, 43048, ...</td>
+<td>[1039, 34603, 285, 13842, 1296, 37165, 43048, ...</td>
+<td>[1039, 34603, 285, 13842, 1296, 37165, 43048, ...</td>
+<td>[1039, 34603, 285, 13842, 14445, 43048, 25522,...</td>
+<td>[1039, 34603, 285, 13842, 1296, 37165, 43048, ...</td>
+<td>[1039, 34603, 285, 13842, 14445, 9058, 47395, ...</td>
+<td>...</td>
+<td>[1039, 34603, 285, 13842, 1296, 37165, 43048, ...</td>
+<td>[1039, 34603, 285, 13842, 1296, 37165, 43048, ...</td>
+<td>[1039, 34603, 285, 13842, 1296, 37165, 43048, ...</td>
+<td>[1039, 34603, 285, 13842, 14445, 43048, 25522,...</td>
+<td>[1039, 34603, 285, 13842, 1296, 37165, 43048, ...</td>
+<td>[1039, 34603, 285, 13842, 14445, 43048, 25522,...</td>
+<td>[1039, 34603, 285, 13842, 1296, 37165, 43048, ...</td>
+<td>[1039, 34603, 285, 13842, 14445, 43048, 25522,...</td>
+<td>[1039, 34603, 285, 13842, 14445, 43048, 25522,...</td>
+<td>[15117, 13300, 2630, 25522, 285, 1457, 14445, ...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>6263</td>
+<td>AsyncSqsClientFactory { public AsyncSqsClient ...</td>
+<td>[Async, S, qs, Client, Factory, Ġ{, Ġpublic, Ġ...</td>
+<td>55</td>
+<td>[1039, 34603, 285, 13842, 197, 44758, 47952, 4...</td>
+<td>[1039, 34603, 285, 13842, 197, 44758, 47952, 4...</td>
+<td>[1039, 34603, 1640, 10162, 5457, 44840, 26170,...</td>
+<td>[1039, 34603, 285, 13842, 197, 44758, 49636, 1...</td>
+<td>[1039, 34603, 285, 13842, 197, 44758, 47952, 4...</td>
+<td>[1039, 34603, 285, 13842, 197, 44758, 49636, 1...</td>
+<td>...</td>
+<td>[1039, 34603, 1640, 10162, 5457, 44840, 26170,...</td>
+<td>[1039, 34603, 1640, 10162, 5457, 44840, 26170,...</td>
+<td>[1039, 34603, 1640, 10162, 5457, 44840, 26170,...</td>
+<td>[1039, 34603, 1640, 10162, 5457, 44840, 26170,...</td>
+<td>[1039, 34603, 1640, 10162, 5457, 44840, 26170,...</td>
+<td>[1039, 34603, 1640, 10162, 5457, 44840, 26170,...</td>
+<td>[1039, 34603, 1640, 10162, 5457, 44840, 26170,...</td>
+<td>[1039, 34603, 1640, 10162, 5457, 44840, 26170,...</td>
+<td>[1039, 34603, 1640, 10162, 5457, 44840, 26170,...</td>
+<td>[49636, 104, 44458, 47952, 47249, 25522, 285, ...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>29527</td>
+<td>Store { Observable&lt;T&gt; get() { if(obj == null) ...</td>
+<td>[Store, Ġ{, ĠObserv, able, &lt;, T, &gt;, Ġget, (), ...</td>
+<td>88</td>
+<td>[1039, 34603, 285, 13842, 1296, 14181, 43048, ...</td>
+<td>[1039, 34603, 285, 13842, 1296, 14181, 43048, ...</td>
+<td>[1039, 34603, 285, 13842, 1296, 14181, 43048, ...</td>
+<td>[1039, 34603, 285, 13842, 1296, 14181, 43048, ...</td>
+<td>[1039, 34603, 285, 13842, 1296, 14181, 43048, ...</td>
+<td>[1039, 34603, 285, 13842, 1296, 14181, 43048, ...</td>
+<td>...</td>
+<td>[1039, 34603, 285, 13842, 1296, 14181, 43048, ...</td>
+<td>[1039, 34603, 285, 13842, 1296, 14181, 43048, ...</td>
+<td>[1039, 34603, 285, 13842, 1296, 14181, 43048, ...</td>
+<td>[1039, 34603, 285, 13842, 1296, 14181, 43048, ...</td>
+<td>[1039, 34603, 285, 13842, 1296, 14181, 43048, ...</td>
+<td>[1039, 34603, 285, 13842, 1296, 14181, 43048, ...</td>
+<td>[1039, 34603, 285, 13842, 1296, 14181, 43048, ...</td>
+<td>[1039, 34603, 285, 13842, 1296, 14181, 43048, ...</td>
+<td>[1039, 34603, 285, 13842, 1296, 14181, 43048, ...</td>
+<td>[40266, 25522, 42231, 868, 41552, 565, 15698, ...</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 35 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df_generated_input.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>(1000, 35)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tst decoding</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>decoded <span class="op">=</span> model.decode(df_generated_input[<span class="st">'0'</span>][<span class="dv">0</span>])</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>decoded</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>'@ Test Ġpublic Ġvoid Ġtest Val idate () Ġ{ Ġassert True ( c itizen Id . valid ate ()); Ġassert False ( c itizen Id . valid ate ()); Ġ}'</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>prettify_java( lazy_decode( decoded ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>'@Test public void testValidate() {\n     assertTrue(citizenId.validate());\n     assertFalse(citizenId.validate());\n }\n'</code></pre>
+</div>
+</div>
+</section>
+<section id="running-rationales" class="level2">
+<h2 class="anchored" data-anchor-id="running-rationales">Running Rationales</h2>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Statistics</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>np.mean( [<span class="bu">len</span>(i) <span class="cf">for</span> i <span class="kw">in</span> df_generated_input[<span class="st">'0'</span>].values] )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<pre><code>83.684</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#TODO Run the distribution of each experiment. The mean value of tokens or size for each experiment. </span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>np.mean( [<span class="bu">len</span>(i) <span class="cf">for</span> i <span class="kw">in</span> df_generated_input[<span class="st">'source_sampling'</span>].values] )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>74.758</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(df_generated_input[<span class="st">'0'</span>].values[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<pre><code>40</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>MAX_TOKEN_SIZE <span class="op">=</span> <span class="dv">150</span> <span class="co">#Hardocoded!!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#If the model is not fine-tuned or compatible, it will rise an error</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Bear in mind that Athena is a Translation model (not a language one)</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co">#This function works for one tensor of source token and one tensor of target tokens</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> rationalize_model(t_source_tokens, t_target_tokens, model, verbose<span class="op">=</span><span class="va">True</span>):</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    all_source_rationales, all_target_rationales, log <span class="op">=</span> rationalize_conditional_model(</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>        model <span class="op">=</span> model, </span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>        source_tokens <span class="op">=</span> t_source_tokens, <span class="co">#[:MAX_TOKEN_SIZE],</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>        target_tokens <span class="op">=</span> t_target_tokens[:MAX_TOKEN_SIZE], </span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>        verbose<span class="op">=</span>verbose,</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>        max_steps<span class="op">=</span><span class="dv">1024</span> <span class="co">#Max number of steps for greedy rationalization</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> all_source_rationales, all_target_rationales, log</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tst &lt;--- TestCase1</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tst_rationalize_model():</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    gc.collect()</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    torch.cuda.empty_cache() <span class="co">#Cleaning Cache</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    model_activate(model <span class="op">=</span> model)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    t_dict_generated_input <span class="op">=</span> { exp : [ torch.tensor(s).to(model.device) <span class="cf">for</span> </span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>                s <span class="kw">in</span> df_generated_input[exp].values ] <span class="cf">for</span> exp <span class="kw">in</span> df_generated_input.columns[<span class="dv">4</span>:]  } <span class="co">#Tensor Columns only</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    rationalize_model(  </span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>        t_source_tokens <span class="op">=</span>  t_dict_generated_input[<span class="st">'source_sampling'</span>][<span class="dv">0</span>],</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>        t_target_tokens <span class="op">=</span>  t_dict_generated_input[<span class="st">'0'</span>][<span class="dv">0</span>],</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>        model <span class="op">=</span> model </span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a><span class="co">#tst_rationalize_model()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="73">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_multiple_rational(</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    arr_source_tokens, </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    arr_target_tokens, </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    model, </span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    seq_id, <span class="co">#mapping sequence id</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    verbose<span class="op">=</span><span class="va">True</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>    arr_log <span class="op">=</span> []</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> index,val <span class="kw">in</span> <span class="bu">enumerate</span>( arr_source_tokens ):</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>        _, _, log <span class="op">=</span> rationalize_model(</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>            t_source_tokens <span class="op">=</span> val, </span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>            t_target_tokens <span class="op">=</span> arr_target_tokens[index], </span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>            model <span class="op">=</span> model,</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>            verbose <span class="op">=</span> verbose )</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>        arr_log.append(log)</span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>    arr_code_rationales <span class="op">=</span> [ log[<span class="st">'rationalizations'</span>] <span class="cf">for</span> log <span class="kw">in</span> arr_log ] <span class="co">#extracting just rationalizations</span></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>    arr_from_sentence <span class="op">=</span> [ <span class="bu">list</span>(np.full( <span class="bu">len</span>(val), seq_id[arr_i] )) <span class="co">#arr_i maps to the real sequence id</span></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>                            <span class="cf">for</span> arr_i, val <span class="kw">in</span> <span class="bu">enumerate</span>(arr_code_rationales)]</span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>    arr_code_rationales <span class="op">=</span> <span class="bu">sum</span>( arr_code_rationales, [] ) <span class="co">#flatting</span></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>    arr_from_sentence <span class="op">=</span> <span class="bu">sum</span>( arr_from_sentence, [] ) <span class="co">#flatting</span></span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> arr_code_rationales, arr_from_sentence</span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">#return arr_code_rationales</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="63">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="74">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tst &lt;------- Test Case 2</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tst_run_multiple_rationa():</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    gc.collect()</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    torch.cuda.empty_cache() <span class="co">#Cleaning Cache</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    model_activate(model <span class="op">=</span> model)</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    t_dict_generated_input <span class="op">=</span> { exp : [ torch.tensor(s).to(model.device) <span class="cf">for</span> </span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>                s <span class="kw">in</span> df_generated_input[exp].values ] <span class="cf">for</span> exp <span class="kw">in</span> df_generated_input.columns[<span class="dv">4</span>:]  }</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    arr_rations, seq_id <span class="op">=</span> run_multiple_rational(</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>        arr_source_tokens <span class="op">=</span>  t_dict_generated_input[<span class="st">'source_sampling'</span>][:<span class="dv">2</span>], <span class="co">#With 2 Sequences  </span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>        arr_target_tokens <span class="op">=</span>  t_dict_generated_input[<span class="st">'0'</span>][:<span class="dv">2</span>], </span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>        model <span class="op">=</span> model,</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>        seq_id <span class="op">=</span> <span class="bu">list</span>( <span class="bu">range</span>(<span class="dv">2</span>,<span class="dv">4</span>) ),</span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>        verbose <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> arr_rations, seq_id</span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a><span class="co">#tst_arr_rations, seq_id = tst_run_multiple_rationa()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Model Activated</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="77">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pandas_rationales( arr_code_rationales, arr_from_sentence ):</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Creating pandas_1 {p_rationale}</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    rational <span class="op">=</span> <span class="kw">lambda</span> list_log,typeset: [ (dict_tok[<span class="st">'added_token_text'</span>],<span class="bu">round</span>(dict_tok[<span class="st">'true_token_prob'</span>],<span class="dv">6</span>)) <span class="cf">for</span> dict_tok <span class="kw">in</span> list_log <span class="cf">if</span> dict_tok[<span class="st">'from'</span>]<span class="op">==</span>typeset]</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    log_from <span class="op">=</span> <span class="kw">lambda</span> log_row,typeset: [(log_dict[<span class="st">'added_token_text'</span>],log_dict[<span class="st">'true_token_prob'</span>]) <span class="cf">for</span> log_dict <span class="kw">in</span> log_row <span class="cf">if</span> log_dict[<span class="st">'from'</span>]<span class="op">==</span>typeset] <span class="co">#Typeset</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    log_position <span class="op">=</span> <span class="kw">lambda</span> log_row,typeset: [log_dict[<span class="st">'added_token_position'</span>] <span class="cf">for</span> log_dict <span class="kw">in</span> log_row <span class="cf">if</span> log_dict[<span class="st">'from'</span>]<span class="op">==</span>typeset] <span class="co">#Position of the Rationale</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    log_prediction <span class="op">=</span> <span class="kw">lambda</span> log_row,typeset: [log_dict[<span class="st">'true_token_prob'</span>] <span class="cf">for</span> log_dict <span class="kw">in</span> log_row <span class="cf">if</span> log_dict[<span class="st">'from'</span>]<span class="op">==</span>typeset] <span class="co">#Rationale Prob</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>    p_rationale <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>    p_rationale[<span class="st">'goal_token'</span>] <span class="op">=</span> [dict_token[<span class="st">'goal_word'</span>] <span class="cf">for</span> dict_token <span class="kw">in</span> arr_code_rationales]</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>    p_rationale[<span class="st">'from_seq_id'</span>] <span class="op">=</span> arr_from_sentence</span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>    p_rationale[<span class="st">'typesets_tgt'</span>] <span class="op">=</span> [ log_from(log_row,<span class="st">'target'</span>) <span class="cf">for</span> log_row <span class="kw">in</span> [dict_token[<span class="st">'log'</span>] <span class="cf">for</span> dict_token <span class="kw">in</span> arr_code_rationales]]</span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>    p_rationale[<span class="st">'typesets_src'</span>] <span class="op">=</span> [ log_from(log_row,<span class="st">'source'</span>) <span class="cf">for</span> log_row <span class="kw">in</span> [dict_token[<span class="st">'log'</span>] <span class="cf">for</span> dict_token <span class="kw">in</span> arr_code_rationales]]</span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>    p_rationale[<span class="st">'rationale_pos_tgt'</span>] <span class="op">=</span> [ log_position(log_row,<span class="st">'target'</span>) <span class="cf">for</span> log_row <span class="kw">in</span> [dict_token[<span class="st">'log'</span>] <span class="cf">for</span> dict_token <span class="kw">in</span> arr_code_rationales]]</span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a>    p_rationale[<span class="st">'rationale_pos_src'</span>] <span class="op">=</span> [ log_position(log_row,<span class="st">'source'</span>) <span class="cf">for</span> log_row <span class="kw">in</span> [dict_token[<span class="st">'log'</span>] <span class="cf">for</span> dict_token <span class="kw">in</span> arr_code_rationales]]</span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a>    p_rationale[<span class="st">'rationale_prob_tgt'</span>] <span class="op">=</span> [ log_prediction(log_row,<span class="st">'target'</span>) <span class="cf">for</span> log_row <span class="kw">in</span> [dict_token[<span class="st">'log'</span>] <span class="cf">for</span> dict_token <span class="kw">in</span> arr_code_rationales]]</span>
+<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a>    p_rationale[<span class="st">'rationale_prob_src'</span>] <span class="op">=</span> [ log_prediction(log_row,<span class="st">'source'</span>) <span class="cf">for</span> log_row <span class="kw">in</span> [dict_token[<span class="st">'log'</span>] <span class="cf">for</span> dict_token <span class="kw">in</span> arr_code_rationales]]</span>
+<span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-24"><a href="#cb38-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> p_rationale</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="83">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Running Rationalization</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_code_rational( </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>        df_generated_input,</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>        tensor_size, <span class="co">#Control the size of the experiment</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>        experiment <span class="op">=</span> <span class="st">'5'</span>,</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>        batch_size <span class="op">=</span> <span class="dv">100</span>, </span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>        model <span class="op">=</span> model, </span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>        verbose <span class="op">=</span> <span class="va">True</span> </span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    ):</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>    arr_rationals <span class="op">=</span> []</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>    arr_from_seq <span class="op">=</span> []</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>( <span class="dv">0</span> , tensor_size , batch_size ):</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>        model_activate(model <span class="op">=</span> model)</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'************************'</span> <span class="op">+</span> <span class="bu">str</span>(i) <span class="op">+</span> <span class="st">'************************'</span>)</span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>        t_generated_input <span class="op">=</span> df_generated_input[ experiment ].values[i:i<span class="op">+</span>batch_size]</span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>        t_source_sampling <span class="op">=</span> df_generated_input[<span class="st">'source_sampling'</span>].values[i:i<span class="op">+</span>batch_size]</span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>        t_generated_input <span class="op">=</span> [ torch.tensor(s).to(model.device) <span class="cf">for</span> s <span class="kw">in</span> t_generated_input]</span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>        t_source_sampling <span class="op">=</span> [ torch.tensor(s).to(model.device) <span class="cf">for</span> s <span class="kw">in</span> t_source_sampling]</span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a>        t_arr_rationals,t_arr_from_seq <span class="op">=</span> run_multiple_rational(</span>
+<span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a>            arr_source_tokens <span class="op">=</span>  t_source_sampling, </span>
+<span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a>            arr_target_tokens <span class="op">=</span>  t_generated_input, </span>
+<span id="cb39-27"><a href="#cb39-27" aria-hidden="true" tabindex="-1"></a>            model <span class="op">=</span> model,</span>
+<span id="cb39-28"><a href="#cb39-28" aria-hidden="true" tabindex="-1"></a>            seq_id <span class="op">=</span> <span class="bu">list</span>( <span class="bu">range</span>(i,i<span class="op">+</span>batch_size) ),</span>
+<span id="cb39-29"><a href="#cb39-29" aria-hidden="true" tabindex="-1"></a>            verbose <span class="op">=</span> verbose</span>
+<span id="cb39-30"><a href="#cb39-30" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb39-31"><a href="#cb39-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-32"><a href="#cb39-32" aria-hidden="true" tabindex="-1"></a>        arr_rationals <span class="op">=</span> arr_rationals <span class="op">+</span> t_arr_rationals</span>
+<span id="cb39-33"><a href="#cb39-33" aria-hidden="true" tabindex="-1"></a>        arr_from_seq <span class="op">=</span> arr_from_seq <span class="op">+</span> t_arr_from_seq</span>
+<span id="cb39-34"><a href="#cb39-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-35"><a href="#cb39-35" aria-hidden="true" tabindex="-1"></a>        gc.collect()</span>
+<span id="cb39-36"><a href="#cb39-36" aria-hidden="true" tabindex="-1"></a>        torch.cuda.empty_cache() <span class="co">#Cleaning Cache</span></span>
+<span id="cb39-37"><a href="#cb39-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-38"><a href="#cb39-38" aria-hidden="true" tabindex="-1"></a>    <span class="co">#keys_tensor = list( dict_generated_input.keys() )</span></span>
+<span id="cb39-39"><a href="#cb39-39" aria-hidden="true" tabindex="-1"></a>    <span class="co">#keys_tensor = keys_tensor[:1] #HardCoded Ratios</span></span>
+<span id="cb39-40"><a href="#cb39-40" aria-hidden="true" tabindex="-1"></a>    <span class="co">#dict_arr_rations = { key : for key in keys_tensor}</span></span>
+<span id="cb39-41"><a href="#cb39-41" aria-hidden="true" tabindex="-1"></a>    <span class="co">#torch.cuda.empty_cache() #Cleaning Cache</span></span>
+<span id="cb39-42"><a href="#cb39-42" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Experiment Finished: "</span> <span class="op">+</span> experiment)</span>
+<span id="cb39-43"><a href="#cb39-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pandas_rationales( arr_rationals, arr_from_seq )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="84">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>gc.collect()</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>torch.cuda.empty_cache()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>torch.cuda.is_available()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="34">
+<pre><code>True</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="96">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tst</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tst_run_code_rational_sampling_set(exp<span class="op">=</span><span class="st">'0'</span>):</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    gc.collect()</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    torch.cuda.empty_cache()</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    tensor_n <span class="op">=</span> <span class="dv">3</span> <span class="co">#df_generated_input.shape[0]</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>    EXP <span class="op">=</span> exp</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>    BATCH <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>    test_arr_rationals <span class="op">=</span> run_code_rational( </span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>            df_generated_input <span class="op">=</span> df_generated_input.sample( n <span class="op">=</span> tensor_n, replace <span class="op">=</span> <span class="va">False</span>, random_state<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>            tensor_size <span class="op">=</span> tensor_n,</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>            experiment <span class="op">=</span> EXP,</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>            batch_size <span class="op">=</span> BATCH, </span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>            model <span class="op">=</span> model, </span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>            verbose <span class="op">=</span> <span class="va">False</span> </span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Saving process</span></span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print('Saving process')</span></span>
+<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">#test_arr_rationals.to_json( params['output_results'] + 'rationales_[t_1000]_[max_100]_02_' + EXP )</span></span>
+<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> test_arr_rationals</span>
+<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a><span class="co">#df_test_run = tst_run_code_rational_sampling_set()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Model Activated
+************************0************************
+Model Activated
+************************1************************
+Model Activated
+************************2************************
+Experiment Finished: 0</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="99">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tst</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="co">#df_test_run[ df_test_run['from_seq_id'] == 1]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="99">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">goal_token</th>
+<th data-quarto-table-cell-role="th">from_seq_id</th>
+<th data-quarto-table-cell-role="th">typesets_tgt</th>
+<th data-quarto-table-cell-role="th">typesets_src</th>
+<th data-quarto-table-cell-role="th">rationale_pos_tgt</th>
+<th data-quarto-table-cell-role="th">rationale_pos_src</th>
+<th data-quarto-table-cell-role="th">rationale_prob_tgt</th>
+<th data-quarto-table-cell-role="th">rationale_prob_src</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">125</td>
+<td>Test</td>
+<td>1</td>
+<td>[(@, 0.9980469942092896)]</td>
+<td>[]</td>
+<td>[0]</td>
+<td>[]</td>
+<td>[0.9980469942092896]</td>
+<td>[]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">126</td>
+<td>Ġpublic</td>
+<td>1</td>
+<td>[(Test, 0.9563336968421936)]</td>
+<td>[]</td>
+<td>[1]</td>
+<td>[]</td>
+<td>[0.9563336968421936]</td>
+<td>[]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">127</td>
+<td>Ġvoid</td>
+<td>1</td>
+<td>[(Ġpublic, 0.9999794960021973)]</td>
+<td>[]</td>
+<td>[2]</td>
+<td>[]</td>
+<td>[0.9999794960021973]</td>
+<td>[]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">128</td>
+<td>Ġtest</td>
+<td>1</td>
+<td>[(Ġvoid, 0.914583683013916)]</td>
+<td>[]</td>
+<td>[3]</td>
+<td>[]</td>
+<td>[0.914583683013916]</td>
+<td>[]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">129</td>
+<td>Par</td>
+<td>1</td>
+<td>[(Ġtest, 0.0033622581977397203)]</td>
+<td>[(Ġparse, 0.18080583214759827), (Ġtext, 0.9371...</td>
+<td>[4]</td>
+<td>[37, 41]</td>
+<td>[0.0033622581977397203]</td>
+<td>[0.18080583214759827, 0.937179446220398]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">130</td>
+<td>se</td>
+<td>1</td>
+<td>[(Par, 0.9929555654525757)]</td>
+<td>[]</td>
+<td>[5]</td>
+<td>[]</td>
+<td>[0.9929555654525757]</td>
+<td>[]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">131</td>
+<td>Empty</td>
+<td>1</td>
+<td>[(se, 0.015842923894524574), (Ġpublic, 0.01932...</td>
+<td>[(Ġ}, 0.025482192635536194), (Ġstatic, 0.06598...</td>
+<td>[6, 2]</td>
+<td>[29, 5, 23]</td>
+<td>[0.015842923894524574, 0.01932516135275364]</td>
+<td>[0.025482192635536194, 0.06598009169101715, 0....</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">132</td>
+<td>()</td>
+<td>1</td>
+<td>[(Empty, 0.16571001708507538)]</td>
+<td>[((, 0.7976974844932556)]</td>
+<td>[7]</td>
+<td>[39]</td>
+<td>[0.16571001708507538]</td>
+<td>[0.7976974844932556]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">133</td>
+<td>Ġ{</td>
+<td>1</td>
+<td>[((), 0.6141546368598938)]</td>
+<td>[]</td>
+<td>[8]</td>
+<td>[]</td>
+<td>[0.6141546368598938]</td>
+<td>[]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">134</td>
+<td>ĠStack</td>
+<td>1</td>
+<td>[(Ġ{, 0.000276499631581828)]</td>
+<td>[(ĠStack, 0.9989708662033081)]</td>
+<td>[9]</td>
+<td>[31]</td>
+<td>[0.000276499631581828]</td>
+<td>[0.9989708662033081]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">135</td>
+<td>&lt;</td>
+<td>1</td>
+<td>[(ĠStack, 0.1649002879858017)]</td>
+<td>[(&lt;, 0.9991776347160339)]</td>
+<td>[10]</td>
+<td>[7]</td>
+<td>[0.1649002879858017]</td>
+<td>[0.9991776347160339]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">136</td>
+<td>Text</td>
+<td>1</td>
+<td>[(&lt;, 0.000326614041114226)]</td>
+<td>[(Text, 0.9993822574615479)]</td>
+<td>[11]</td>
+<td>[8]</td>
+<td>[0.000326614041114226]</td>
+<td>[0.9993822574615479]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">137</td>
+<td>Le</td>
+<td>1</td>
+<td>[(Text, 8.198193972930312e-05)]</td>
+<td>[(Le, 0.999997615814209)]</td>
+<td>[12]</td>
+<td>[9]</td>
+<td>[8.198193972930312e-05]</td>
+<td>[0.999997615814209]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">138</td>
+<td>af</td>
+<td>1</td>
+<td>[(Le, 0.17625275254249573)]</td>
+<td>[(af, 0.999993085861206)]</td>
+<td>[13]</td>
+<td>[10]</td>
+<td>[0.17625275254249573]</td>
+<td>[0.999993085861206]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">139</td>
+<td>&gt;</td>
+<td>1</td>
+<td>[(af, 4.453602377907373e-05)]</td>
+<td>[(&gt;, 0.4462197422981262)]</td>
+<td>[14]</td>
+<td>[11]</td>
+<td>[4.453602377907373e-05]</td>
+<td>[0.4462197422981262]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">140</td>
+<td>Ġparser</td>
+<td>1</td>
+<td>[(&gt;, 3.4169450373155996e-05)]</td>
+<td>[(Parser, 0.0355205237865448), (si, 0.22008731...</td>
+<td>[15]</td>
+<td>[2, 1, 24]</td>
+<td>[3.4169450373155996e-05]</td>
+<td>[0.0355205237865448, 0.22008731961250305, 0.53...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">141</td>
+<td>Ġ=</td>
+<td>1</td>
+<td>[(Ġparser, 0.8924516439437866)]</td>
+<td>[]</td>
+<td>[16]</td>
+<td>[]</td>
+<td>[0.8924516439437866]</td>
+<td>[]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">142</td>
+<td>ĠAn</td>
+<td>1</td>
+<td>[(Ġ=, 2.582160959718749e-06)]</td>
+<td>[(ĠAn, 0.9964381456375122)]</td>
+<td>[17]</td>
+<td>[21]</td>
+<td>[2.582160959718749e-06]</td>
+<td>[0.9964381456375122]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">143</td>
+<td>si</td>
+<td>1</td>
+<td>[(ĠAn, 0.0015574246644973755)]</td>
+<td>[(si, 0.9998873472213745)]</td>
+<td>[18]</td>
+<td>[1]</td>
+<td>[0.0015574246644973755]</td>
+<td>[0.9998873472213745]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">144</td>
+<td>Parser</td>
+<td>1</td>
+<td>[(si, 0.0003541821497492492)]</td>
+<td>[(Parser, 0.9984194040298462)]</td>
+<td>[19]</td>
+<td>[2]</td>
+<td>[0.0003541821497492492]</td>
+<td>[0.9984194040298462]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">145</td>
+<td>.</td>
+<td>1</td>
+<td>[(Parser, 0.08811366558074951), (ĠAn, 0.724938...</td>
+<td>[]</td>
+<td>[20, 18]</td>
+<td>[]</td>
+<td>[0.08811366558074951, 0.7249387502670288]</td>
+<td>[]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">146</td>
+<td>parse</td>
+<td>1</td>
+<td>[(., 0.014552467502653599)]</td>
+<td>[(parse, 0.9985792636871338)]</td>
+<td>[21]</td>
+<td>[25]</td>
+<td>[0.014552467502653599]</td>
+<td>[0.9985792636871338]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">147</td>
+<td>Text</td>
+<td>1</td>
+<td>[(parse, 0.0021428707987070084)]</td>
+<td>[(Text, 0.9984368681907654)]</td>
+<td>[22]</td>
+<td>[33]</td>
+<td>[0.0021428707987070084]</td>
+<td>[0.9984368681907654]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">148</td>
+<td>("</td>
+<td>1</td>
+<td>[(Text, 0.5837852954864502)]</td>
+<td>[]</td>
+<td>[23]</td>
+<td>[]</td>
+<td>[0.5837852954864502]</td>
+<td>[]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">149</td>
+<td>");</td>
+<td>1</td>
+<td>[((", 0.006528949830681086), (Empty, 0.5122650...</td>
+<td>[]</td>
+<td>[24, 7]</td>
+<td>[]</td>
+<td>[0.006528949830681086, 0.5122650265693665]</td>
+<td>[]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">150</td>
+<td>Ġassert</td>
+<td>1</td>
+<td>[(");, 0.008671398274600506)]</td>
+<td>[(), 0.5105903148651123)]</td>
+<td>[25]</td>
+<td>[17]</td>
+<td>[0.008671398274600506]</td>
+<td>[0.5105903148651123]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">151</td>
+<td>That</td>
+<td>1</td>
+<td>[(Ġassert, 0.09876050055027008)]</td>
+<td>[(&lt;/s&gt;, 0.8925181031227112)]</td>
+<td>[26]</td>
+<td>[44]</td>
+<td>[0.09876050055027008]</td>
+<td>[0.8925181031227112]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">152</td>
+<td>(</td>
+<td>1</td>
+<td>[(That, 0.9607610106468201)]</td>
+<td>[]</td>
+<td>[27]</td>
+<td>[]</td>
+<td>[0.9607610106468201]</td>
+<td>[]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">153</td>
+<td>parser</td>
+<td>1</td>
+<td>[((, 1.2671659533225466e-05)]</td>
+<td>[(Parser, 0.10263539850711823), (Ġparse, 0.359...</td>
+<td>[28]</td>
+<td>[23, 37, 42]</td>
+<td>[1.2671659533225466e-05]</td>
+<td>[0.10263539850711823, 0.3599758744239807, 0.74...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">154</td>
+<td>.</td>
+<td>1</td>
+<td>[(parser, 0.8031877875328064)]</td>
+<td>[]</td>
+<td>[29]</td>
+<td>[]</td>
+<td>[0.8031877875328064]</td>
+<td>[]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">155</td>
+<td>get</td>
+<td>1</td>
+<td>[(., 0.05058085173368454), (That, 0.6389041543...</td>
+<td>[]</td>
+<td>[30, 27]</td>
+<td>[]</td>
+<td>[0.05058085173368454, 0.6389041543006897]</td>
+<td>[]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">156</td>
+<td>Text</td>
+<td>1</td>
+<td>[(get, 0.0001957392814802006)]</td>
+<td>[(Text, 0.9992320537567139)]</td>
+<td>[31]</td>
+<td>[33]</td>
+<td>[0.0001957392814802006]</td>
+<td>[0.9992320537567139]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">157</td>
+<td>()</td>
+<td>1</td>
+<td>[(Text, 0.004332142882049084)]</td>
+<td>[(Ġ{, 0.3945482075214386)]</td>
+<td>[32]</td>
+<td>[3]</td>
+<td>[0.004332142882049084]</td>
+<td>[0.3945482075214386]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">158</td>
+<td>).</td>
+<td>1</td>
+<td>[((), 0.2028176635503769), (That, 0.7752642631...</td>
+<td>[]</td>
+<td>[33, 27]</td>
+<td>[]</td>
+<td>[0.2028176635503769, 0.7752642631530762]</td>
+<td>[]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">159</td>
+<td>is</td>
+<td>1</td>
+<td>[()., 0.005320017691701651), (That, 0.94591450...</td>
+<td>[]</td>
+<td>[34, 27]</td>
+<td>[]</td>
+<td>[0.005320017691701651, 0.9459145069122314]</td>
+<td>[]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">160</td>
+<td>E</td>
+<td>1</td>
+<td>[(is, 0.09580342471599579), ()., 0.37910592555...</td>
+<td>[]</td>
+<td>[35, 34]</td>
+<td>[]</td>
+<td>[0.09580342471599579, 0.37910592555999756]</td>
+<td>[]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">161</td>
+<td>qual</td>
+<td>1</td>
+<td>[(E, 0.34926146268844604)]</td>
+<td>[]</td>
+<td>[36]</td>
+<td>[]</td>
+<td>[0.34926146268844604]</td>
+<td>[]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">162</td>
+<td>To</td>
+<td>1</td>
+<td>[(qual, 0.9684934616088867)]</td>
+<td>[]</td>
+<td>[37]</td>
+<td>[]</td>
+<td>[0.9684934616088867]</td>
+<td>[]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">163</td>
+<td>("</td>
+<td>1</td>
+<td>[(To, 0.008859631605446339)]</td>
+<td>[(&gt;, 0.25527673959732056), (si, 0.507836997509...</td>
+<td>[38]</td>
+<td>[11, 22]</td>
+<td>[0.008859631605446339]</td>
+<td>[0.25527673959732056, 0.5078369975090027]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">164</td>
+<td>");</td>
+<td>1</td>
+<td>[((", 0.005594070069491863), (Empty, 0.3316252...</td>
+<td>[]</td>
+<td>[39, 7]</td>
+<td>[]</td>
+<td>[0.005594070069491863, 0.3316252827644348]</td>
+<td>[]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">165</td>
+<td>Ġ}</td>
+<td>1</td>
+<td>[(");, 0.0009953182889148593), (qual, 0.974664...</td>
+<td>[]</td>
+<td>[40, 37]</td>
+<td>[]</td>
+<td>[0.0009953182889148593, 0.9746649861335754]</td>
+<td>[]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">166</td>
+<td>&lt;/s&gt;</td>
+<td>1</td>
+<td>[(Ġ}, 0.49038276076316833)]</td>
+<td>[]</td>
+<td>[41]</td>
+<td>[]</td>
+<td>[0.49038276076316833]</td>
+<td>[]</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="48">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_code_rational_all_set(exp, tensor_n <span class="op">=</span> <span class="dv">1000</span>, BATCH <span class="op">=</span> <span class="dv">100</span>): <span class="co">#When Tensor_n and batch differs then 'from_seq_id' is lost</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>    gc.collect()</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    torch.cuda.empty_cache()</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>    EXP <span class="op">=</span> exp</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>    test_arr_rationals <span class="op">=</span> run_code_rational( </span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>            df_generated_input <span class="op">=</span> df_generated_input,</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>            tensor_size <span class="op">=</span> tensor_n,</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>            experiment <span class="op">=</span> EXP,</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>            batch_size <span class="op">=</span> BATCH, </span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>            model <span class="op">=</span> model, </span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>            verbose <span class="op">=</span> <span class="va">False</span> </span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Saving process</span></span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Saving process'</span>)</span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>    test_arr_rationals.to_json( params[<span class="st">'output_results'</span>] <span class="op">+</span> <span class="st">'rationales_1_gen_02/'</span> <span class="op">+</span> <span class="st">'rationales_[t_1000]_[max_src_100]_[max_tgt_150]_02_[exp:'</span> <span class="op">+</span> EXP <span class="op">+</span><span class="st">']_.json'</span> )</span>
+<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> test_arr_rationals</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tst</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co">#df_test_run = run_code_rational_all_set(exp='0')</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> df_generated_input.columns[<span class="dv">4</span>:<span class="op">-</span><span class="dv">1</span>]: <span class="co">#Only Generated Sequences </span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>    df_test_run <span class="op">=</span> run_code_rational_all_set(i)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="102">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>df_test_run.head(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="102">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">goal_token</th>
+<th data-quarto-table-cell-role="th">from_seq_id</th>
+<th data-quarto-table-cell-role="th">typesets_tgt</th>
+<th data-quarto-table-cell-role="th">typesets_src</th>
+<th data-quarto-table-cell-role="th">rationale_pos_tgt</th>
+<th data-quarto-table-cell-role="th">rationale_pos_src</th>
+<th data-quarto-table-cell-role="th">rationale_prob_tgt</th>
+<th data-quarto-table-cell-role="th">rationale_prob_src</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Test</td>
+<td>0</td>
+<td>[(@, 0.9980469942092896)]</td>
+<td>[]</td>
+<td>[0]</td>
+<td>[]</td>
+<td>[0.9980469942092896]</td>
+<td>[]</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Running all Experiments</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> exp_run_all_rationales():</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>    dict_arr_rations <span class="op">=</span> { key : run_code_rational(</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>        df_generated_input <span class="op">=</span> df_generated_input,</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>        experiment <span class="op">=</span> key,</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>        batch_size <span class="op">=</span> <span class="dv">10</span>, </span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>        model <span class="op">=</span> model, </span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>        verbose <span class="op">=</span> <span class="va">False</span> </span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>    ) <span class="cf">for</span> key <span class="kw">in</span> df_generated_input.columns[<span class="dv">4</span>:<span class="op">-</span><span class="dv">1</span>] }</span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dict_arr_rations</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co">#arr_df_rationale = [pandas_rationales(dict_arr_rations[key]) for key in dict_arr_rations.keys()]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

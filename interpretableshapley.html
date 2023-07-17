@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>code-rationales - Exploratory Data Code Analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="code-rationales - Exploratory Data Code Analysis">
+<meta property="og:image" content="https://WM-SEMERU.github.io/code-rationales/interpretableShapley_files/figure-html/cell-32-output-1.png">
+<meta property="og:site-name" content="code-rationales">
+<meta property="og:image:height" content="273">
+<meta property="og:image:width" content="1184">
+<meta name="twitter:title" content="code-rationales - Exploratory Data Code Analysis">
+<meta name="twitter:image" content="https://WM-SEMERU.github.io/code-rationales/interpretableShapley_files/figure-html/cell-32-output-1.png">
+<meta name="twitter:image-height" content="273">
+<meta name="twitter:image-width" content="1184">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">code-rationales</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools ms-auto">
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./interpretableshapley.html">Exploratory Data Code Analysis</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">code-rationales</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./grammar_loader.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Grammar Loading Module</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bart_sampling_.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Large Scale Encoder-Decoder (BART) Sampling</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gpt_sampling_.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decoder Based Transformer (GPT-2) Sampling</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bart_global_rationalization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rationalization @ Global Granularity</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gpt_global_rationalization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rationalization @ Global Granularity</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mapping_taxonomy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mapping Function</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interpretableshapley.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Exploratory Data Code Analysis</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#universal-tokenizer" id="toc-universal-tokenizer" class="nav-link active" data-scroll-target="#universal-tokenizer">Universal Tokenizer</a></li>
+  <li><a href="#generative-functions" id="toc-generative-functions" class="nav-link" data-scroll-target="#generative-functions">Generative Functions</a></li>
+  <li><a href="#method-size-distribution" id="toc-method-size-distribution" class="nav-link" data-scroll-target="#method-size-distribution">Method Size Distribution</a></li>
+  <li><a href="#token-distribution" id="toc-token-distribution" class="nav-link" data-scroll-target="#token-distribution">Token Distribution</a>
+  <ul class="collapse">
+  <li><a href="#most-popular" id="toc-most-popular" class="nav-link" data-scroll-target="#most-popular">Most Popular</a></li>
+  <li><a href="#special-tokens" id="toc-special-tokens" class="nav-link" data-scroll-target="#special-tokens">Special Tokens</a></li>
+  <li><a href="#taxonomy-countings" id="toc-taxonomy-countings" class="nav-link" data-scroll-target="#taxonomy-countings">Taxonomy Countings</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/WM-SEMERU/code-rationales/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Exploratory Data Code Analysis</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.core.display <span class="im">import</span> display, HTML</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">"&lt;style&gt;.container { width:100% !important; }&lt;/style&gt;"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>DeprecationWarning: Importing display from IPython.core.display is deprecated since IPython 7.14, please import from IPython display
+  from IPython.core.display import display, HTML</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<style>.container { width:100% !important; }</style>
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ! pip install tokenizer #&lt;---- Unk</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ! pip install tokenizers #&lt;--- HugginFace</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ! pip install pandas</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ! pip install matplotlib</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ! pip install seaborn</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tokenizers <span class="im">import</span> ByteLevelBPETokenizer <span class="co">#HugginFace</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>pd.options.display.float_format <span class="op">=</span> <span class="st">'</span><span class="sc">{:.2f}</span><span class="st">'</span>.<span class="bu">format</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#export</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> functools</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sns.set_theme(style<span class="op">=</span><span class="st">"darkgrid"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>NameError: name 'sns' is not defined</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> param_default():</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    corpus <span class="op">=</span> <span class="st">'fm_fc_ms_ff'</span> <span class="co">#&lt;-- Scope</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    data_path <span class="op">=</span> Path(<span class="st">'../athena-datasets/'</span> <span class="op">+</span> corpus <span class="op">+</span> <span class="st">'/'</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    data_path_raw <span class="op">=</span> Path(<span class="st">'../athena-datasets/'</span> <span class="op">+</span> corpus <span class="op">+</span> <span class="st">'/raw/'</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    tokenizer_path <span class="op">=</span> Path(<span class="st">'../tokenizer/'</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">'bpe_path'</span> : tokenizer_path <span class="op">/</span> <span class="st">'universal_tokenizer/universal_tokenizer/roberta_aug_spaces'</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'eval_raw'</span>: [data_path_raw <span class="op">/</span> <span class="st">'eval/input.methods.txt'</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>                        data_path_raw <span class="op">/</span> <span class="st">'eval/output.tests.txt'</span>],</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">'test_raw'</span>: [data_path_raw <span class="op">/</span> <span class="st">'test/input.methods.txt'</span>, </span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                        data_path_raw <span class="op">/</span> <span class="st">'test/output.tests.txt'</span>],</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">'train_raw'</span>: [data_path_raw <span class="op">/</span> <span class="st">'train/input.methods.txt'</span>, </span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>                        data_path_raw <span class="op">/</span> <span class="st">'train/output.tests.txt'</span>],</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">'data_labels'</span> : [<span class="st">'eval_raw'</span>,<span class="st">'test_raw'</span>,<span class="st">'train_raw'</span>],</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">'output_pandas'</span> : data_path <span class="op">/</span> <span class="st">'pandas/'</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> param_default()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>params[<span class="st">'eval_raw'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>[PosixPath('../athena-datasets/fm_fc_ms_ff/raw/eval/input.methods.txt'),
+ PosixPath('../athena-datasets/fm_fc_ms_ff/raw/eval/output.tests.txt')]</code></pre>
+</div>
+</div>
+<section id="universal-tokenizer" class="level2">
+<h2 class="anchored" data-anchor-id="universal-tokenizer">Universal Tokenizer</h2>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_tokenizer( bpe_path ):</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ByteLevelBPETokenizer(<span class="bu">str</span>(bpe_path)<span class="op">+</span><span class="st">'-vocab.json'</span>,<span class="bu">str</span>(bpe_path)<span class="op">+</span><span class="st">'-merges.txt'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#bpe_path = '/tufanodata/work/unit-test-gen/code/universal_tokenizer/universal_tokenizer/roberta_aug_spaces'</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> load_tokenizer(params[<span class="st">'bpe_path'</span>])</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>tokenizer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>Tokenizer(vocabulary_size=50342, model=ByteLevelBPE, add_prefix_space=False, lowercase=False, dropout=None, unicode_normalizer=None, continuing_subword_prefix=None, end_of_word_suffix=None, trim_offsets=False)</code></pre>
+</div>
+</div>
+</section>
+<section id="generative-functions" class="level2">
+<h2 class="anchored" data-anchor-id="generative-functions">Generative Functions</h2>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pretty_print_test(test):</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Working on test number'</span>, test[<span class="st">'id'</span>])</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'The focal method being tested is:</span><span class="ch">\n</span><span class="st">'</span>,prettify_java(test[<span class="st">'source'</span>]))</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">The generated unit test is:</span><span class="ch">\n</span><span class="st">'</span>,prettify_java(test[<span class="st">'top-prediciton'</span>]))</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">The ground truth unit test is:</span><span class="ch">\n</span><span class="st">'</span>,prettify_java(test[<span class="st">'target'</span>]),<span class="st">'</span><span class="ch">\n</span><span class="st">-----------------------------------------------------------------</span><span class="ch">\n</span><span class="st">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prettify_java(minified_java):</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"tries to undo Michele's minification. Works decently, although for loops and sets get newlines inserted, and there are no empty lines or comments"</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    minified_java <span class="op">=</span> minified_java.replace(<span class="st">'{'</span>,<span class="st">'{</span><span class="ch">\n</span><span class="st">'</span>).replace(<span class="st">'}'</span>,<span class="st">'}</span><span class="ch">\n</span><span class="st">'</span>).replace(<span class="st">';'</span>,<span class="st">';</span><span class="ch">\n</span><span class="st">'</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    num_indents <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    pretty_java <span class="op">=</span> <span class="st">''</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> minified_java.splitlines():</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.lstrip().startswith(<span class="st">'}'</span>):</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>            num_indents <span class="op">-=</span> <span class="dv">1</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>        pretty_java <span class="op">+=</span> num_indents<span class="op">*</span><span class="st">'    '</span><span class="op">+</span>line<span class="op">+</span><span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.endswith(<span class="st">'{'</span>):</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>            num_indents <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.endswith(<span class="st">'}'</span>) <span class="kw">and</span> <span class="kw">not</span> line.lstrip().startswith(<span class="st">'}'</span>):</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>            num_indents <span class="op">-=</span> <span class="dv">1</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pretty_java</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> minify(java_code):</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">' '</span>.join(java_code.split())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#export</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> method_size_vector( method_vector ):</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''Return the size of the tokens for a give method based on id</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">        Assuming that method_vector is an array of tokens</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    input_ids <span class="op">=</span> [ <span class="bu">len</span>(mtd) <span class="cf">for</span> mtd <span class="kw">in</span> method_vector ]</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> input_ids</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> super_set_code():</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> {}</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> label <span class="kw">in</span> params[<span class="st">'data_labels'</span>]:</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> val,path_data <span class="kw">in</span> <span class="bu">enumerate</span>(params[ label ]):</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>            df <span class="op">=</span> pd.read_csv( path_data, sep<span class="op">=</span><span class="st">"</span><span class="ch">\n</span><span class="st">"</span>, header<span class="op">=</span><span class="va">None</span>, names<span class="op">=</span>[label<span class="op">+</span><span class="bu">str</span>(val)]) <span class="co">#reading file</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>            df[label<span class="op">+</span><span class="st">'_bpe'</span><span class="op">+</span><span class="bu">str</span>(val)] <span class="op">=</span> [ enc.tokens <span class="cf">for</span> enc <span class="kw">in</span> tokenizer.encode_batch( df[label<span class="op">+</span><span class="bu">str</span>(val)].values ) ] <span class="co">#bpe</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>            df[<span class="st">'method_size'</span><span class="op">+</span><span class="bu">str</span>(val)] <span class="op">=</span> method_size_vector( df[label<span class="op">+</span><span class="st">'_bpe'</span><span class="op">+</span><span class="bu">str</span>(val)].values ) <span class="co">#counting tokens</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>            data[label<span class="op">+</span><span class="bu">str</span>(val)] <span class="op">=</span>  df  </span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">#data[-1].columns = [ label ]</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>super_data <span class="op">=</span> super_set_code()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="45">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>super_data.keys()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="45">
+<pre><code>dict_keys(['eval_raw0', 'eval_raw1', 'test_raw0', 'test_raw1', 'train_raw0', 'train_raw1'])</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="46">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>super_data[<span class="st">'eval_raw0'</span>].head(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="46">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">eval_raw0</th>
+<th data-quarto-table-cell-role="th">eval_raw_bpe0</th>
+<th data-quarto-table-cell-role="th">method_size0</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>RosetteAbstractProcessor extends AbstractProce...</td>
+<td>[Ros, ette, Abstract, Process, or, Ġextends, Ġ...</td>
+<td>220</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tst</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>tokenizer.encode( super_data[<span class="st">'eval_raw0'</span>].eval_raw0.values[<span class="dv">0</span>] )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="47">
+<pre><code>Encoding(num_tokens=220, attributes=[ids, type_ids, tokens, offsets, attention_mask, special_tokens_mask, overflowing])</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># [Checkpoint] Saving</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> checkpoint_1(df_dict):</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> key <span class="kw">in</span> df_dict.keys():</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>        df <span class="op">=</span> df_dict[key]</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>        df.to_json( params[<span class="st">'output_pandas'</span>] <span class="op">/</span> (key <span class="op">+</span><span class="st">'.json'</span>) ) <span class="co">#serialization</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="50">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>checkpoint_1( super_data ) <span class="co">#&lt;--- Data Checkpoint!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loading Json Sets</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_checkpoint_1():</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    super_df <span class="op">=</span> {}</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> label <span class="kw">in</span> params[<span class="st">'data_labels'</span>]:</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> val, _ <span class="kw">in</span> <span class="bu">enumerate</span>(params[ label ]):</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>            super_df[ label<span class="op">+</span><span class="bu">str</span>(val) ] <span class="op">=</span> pd.read_json( params[<span class="st">'output_pandas'</span>] <span class="op">/</span> (label<span class="op">+</span><span class="bu">str</span>(val) <span class="op">+</span><span class="st">'.json'</span>)  )</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"read:"</span>,label<span class="op">+</span><span class="bu">str</span>(val))</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> super_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="method-size-distribution" class="level1">
+<h1>Method Size Distribution</h1>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>super_data <span class="op">=</span> load_checkpoint_1()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>read: eval_raw0
+read: eval_raw1
+read: test_raw0
+read: test_raw1
+read: train_raw0
+read: train_raw1</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>super_data.keys()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>dict_keys(['eval_raw0', 'eval_raw1', 'test_raw0', 'test_raw1', 'train_raw0', 'train_raw1'])</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>super_data[<span class="st">'eval_raw1'</span>].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">eval_raw1</th>
+<th data-quarto-table-cell-role="th">eval_raw_bpe1</th>
+<th data-quarto-table-cell-role="th">method_size1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>@Test(expected = ElasticsearchException.class)...</td>
+<td>[@, Test, (, expected, Ġ=, ĠElastic, search, E...</td>
+<td>123</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>@Test public void testFormatToUserFriendlyForm...</td>
+<td>[@, Test, Ġpublic, Ġvoid, Ġtest, Format, To, U...</td>
+<td>51</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>@Test public void testTESThasDescription() { s...</td>
+<td>[@, Test, Ġpublic, Ġvoid, Ġtest, T, ES, Th, as...</td>
+<td>36</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>@Test public void testNormalizeOutliers(){ ass...</td>
+<td>[@, Test, Ġpublic, Ġvoid, Ġtest, Normal, ize, ...</td>
+<td>236</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>@Test public void evaluateAggregateFunctions()...</td>
+<td>[@, Test, Ġpublic, Ġvoid, Ġevaluate, Agg, rega...</td>
+<td>221</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> method_size_df(super_data_):</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    df_code <span class="op">=</span> {}</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> label <span class="kw">in</span> params[<span class="st">'data_labels'</span>]:</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>        df <span class="op">=</span> pd.concat( [super_data_[label<span class="op">+</span><span class="st">'0'</span>], super_data_[label<span class="op">+</span><span class="st">'1'</span>]], axis<span class="op">=</span><span class="dv">1</span> ) <span class="co">#TODO Generalize the number Hardcoded paths</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>        df_code[label]  <span class="op">=</span> df[[<span class="st">'method_size0'</span>,<span class="st">'method_size1'</span>]]</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df_code</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>df_method_size <span class="op">=</span> method_size_df(super_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="77">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> key <span class="kw">in</span> df_method_size:</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(key)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(df_method_size[key].describe())</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(df_method_size[key].median())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>eval_raw
+       method_size0  method_size1
+count      78534.00      78534.00
+mean         470.26        162.11
+std          853.22        226.00
+min           16.00          7.00
+25%          145.00         60.00
+50%          254.00        105.00
+75%          477.00        188.00
+max        24649.00      23250.00
+method_size0   254.00
+method_size1   105.00
+dtype: float64
+test_raw
+       method_size0  method_size1
+count      78388.00      78388.00
+mean         423.42        159.11
+std          653.26        450.52
+min            8.00          7.00
+25%          143.00         61.00
+50%          248.00        102.00
+75%          446.00        179.00
+max        31638.00      62933.00
+method_size0   248.00
+method_size1   102.00
+dtype: float64
+train_raw
+       method_size0  method_size1
+count     624022.00     624022.00
+mean         409.76        156.49
+std          653.88        259.40
+min           10.00          6.00
+25%          144.00         61.00
+50%          246.00        103.00
+75%          445.00        180.00
+max        27044.00      51295.00
+method_size0   246.00
+method_size1   103.00
+dtype: float64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="76">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#THRS = data.method.mean()</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co">#THRS = df_eval.method_size1.quantile(q=0.90)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="78">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots( figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">4</span>), ncols<span class="op">=</span><span class="dv">3</span> )</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i,key <span class="kw">in</span> <span class="bu">enumerate</span>(df_method_size):</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#plt.figure(i)</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    sns.histplot(data<span class="op">=</span>df_method_size[key], kde<span class="op">=</span><span class="va">True</span>, log_scale<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>axs[i]).set_title(key)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="interpretableShapley_files/figure-html/cell-32-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="110">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#sns.histplot(data=df_eval[df_eval.method_size1 &lt;= THRS], x="method_size1", kde=True)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="79">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots( figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">4</span>), ncols<span class="op">=</span><span class="dv">3</span> )</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i,key <span class="kw">in</span> <span class="bu">enumerate</span>(df_method_size):</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#plt.figure(i)</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>    sns.boxplot(data<span class="op">=</span>df_method_size[key], showfliers<span class="op">=</span><span class="va">False</span>,ax<span class="op">=</span>axs[i]).set_title(key)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="interpretableShapley_files/figure-html/cell-34-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="token-distribution" class="level1">
+<h1>Token Distribution</h1>
+<div class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">#export</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> token_distribution( method_vector ):</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''Return a Counter Object'''</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    cnt <span class="op">=</span> Counter()</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> method <span class="kw">in</span> method_vector:</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> token <span class="kw">in</span> method:</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>            cnt[token] <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cnt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>super_data.keys()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="29">
+<pre><code>dict_keys(['eval_raw0', 'eval_raw1', 'test_raw0', 'test_raw1', 'train_raw0', 'train_raw1'])</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> token_distribution_dict(super_data_):</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>    dct_control <span class="op">=</span> {}</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> label <span class="kw">in</span> params[<span class="st">'data_labels'</span>]:</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>        dct_control[label] <span class="op">=</span> [ token_distribution( super_data_[label<span class="op">+</span><span class="st">'0'</span>][label<span class="op">+</span><span class="st">'_bpe0'</span>].values ), token_distribution( super_data_[label<span class="op">+</span><span class="st">'1'</span>][label<span class="op">+</span><span class="st">'_bpe1'</span>].values )]</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dct_control</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#TODO Save the countings</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>dct_control <span class="op">=</span> token_distribution_dict( super_data ) <span class="co"># [</span><span class="al">WARNING</span><span class="co">!] Time consuming</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="95">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_by_taxonomy( dct_control, k_token <span class="op">=</span> [<span class="st">'assert'</span>], stringent <span class="op">=</span> <span class="va">False</span>, flag <span class="op">=</span> <span class="va">False</span> ):</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Counting the token across BPEs"</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>    dict_most_k_tok <span class="op">=</span> <span class="bu">dict</span>.fromkeys( k_token, <span class="dv">0</span> )</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> dct_control.keys():</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> k_tok <span class="kw">in</span> k_token:</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> stringent:</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> k_tok <span class="op">==</span> k:</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>                    dict_most_k_tok[k_tok] <span class="op">+=</span>  dct_control[ k ]</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> flag:</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">print</span>( k <span class="op">+</span><span class="st">" : "</span><span class="op">+</span> <span class="bu">str</span>(dct_control[ k ]) )</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>                tmp <span class="op">=</span> <span class="st">'Ġ'</span><span class="op">+</span> k_tok</span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>                <span class="co">#if k_tok in k:</span></span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> k_tok <span class="op">==</span> k <span class="kw">or</span> tmp <span class="op">==</span> k:    </span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>                    dict_most_k_tok[k_tok] <span class="op">+=</span>  dct_control[ k ]</span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> flag:</span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">print</span>( k <span class="op">+</span><span class="st">" : "</span><span class="op">+</span> <span class="bu">str</span>(dct_control[ k ]) )</span>
+<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Counter(dict_most_k_tok)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="68">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_by_taxonomy_list(list_dct_control, k_token <span class="op">=</span> [<span class="st">'assert'</span>], stringent <span class="op">=</span> <span class="va">False</span> ):</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">''''Flatting function for Source/Target datasets'''</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [ <span class="bu">dict</span>( count_by_taxonomy( dct_control, k_token , stringent ) ) <span class="cf">for</span> dct_control <span class="kw">in</span> list_dct_control]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="102">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_token_distribution( dict_most, ax, log <span class="op">=</span> <span class="va">False</span>, label<span class="op">=</span>[<span class="st">'Control'</span>], title<span class="op">=</span><span class="st">''</span> ):</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> count, label_ <span class="kw">in</span> <span class="bu">enumerate</span>(label):</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>        ax.bar(dict_most[count].keys(), dict_most[count].values(), width<span class="op">=</span>(<span class="fl">0.3</span><span class="op">*</span>((<span class="op">-</span><span class="dv">1</span>)<span class="op">**</span>count)),  align<span class="op">=</span><span class="st">'edge'</span>, alpha<span class="op">=</span><span class="fl">.6</span>, label<span class="op">=</span>label_)</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">'N. Tokens'</span>)</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="st">'Token by taxonomy '</span><span class="op">+</span> title)</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>    ax.legend()</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> log:</span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>        ax.set_yscale(<span class="st">"log"</span>)</span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">#plt.show()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="most-popular" class="level2">
+<h2 class="anchored" data-anchor-id="most-popular">Most Popular</h2>
+<div class="cell" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>TOK <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>dict_most <span class="op">=</span> {}</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> dct_cnt <span class="kw">in</span> dct_control:</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>    dict_most[dct_cnt] <span class="op">=</span> [</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">dict</span>(dct_control[dct_cnt][<span class="dv">0</span>].most_common( TOK )) ,</span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">dict</span>(dct_control[dct_cnt][<span class="dv">1</span>].most_common( TOK ))    </span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>    ] <span class="co">#&lt;---Hyperparameter</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="75">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co">#printing most popular tokens</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> key <span class="kw">in</span> dict_most:</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>    fig, axs <span class="op">=</span> plt.subplots( figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">4</span>), ncols<span class="op">=</span><span class="dv">2</span> )</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>    print_token_distribution( [dict_most[key][<span class="dv">0</span>]], ax<span class="op">=</span>axs[<span class="dv">0</span>], TOK<span class="op">=</span>TOK, label<span class="op">=</span>[<span class="st">'inputs'</span>], log<span class="op">=</span><span class="va">False</span>, title<span class="op">=</span> <span class="st">'['</span><span class="op">+</span>key<span class="op">+</span><span class="st">']'</span>)</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>    print_token_distribution( [dict_most[key][<span class="dv">1</span>]], ax<span class="op">=</span>axs[<span class="dv">1</span>], TOK<span class="op">=</span>TOK, label<span class="op">=</span>[<span class="st">'outputs'</span>], log<span class="op">=</span><span class="va">False</span>, title<span class="op">=</span> <span class="st">'['</span><span class="op">+</span>key<span class="op">+</span><span class="st">']'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="interpretableShapley_files/figure-html/cell-43-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="interpretableShapley_files/figure-html/cell-43-output-2.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="interpretableShapley_files/figure-html/cell-43-output-3.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="special-tokens" class="level2">
+<h2 class="anchored" data-anchor-id="special-tokens">Special Tokens</h2>
+<div class="cell" data-execution_count="61">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>proposed_token <span class="op">=</span> [<span class="st">'assert'</span>,<span class="st">'private'</span>,<span class="st">'public'</span>,<span class="st">'abstract'</span>,<span class="st">'static'</span>,<span class="st">'if'</span>,<span class="st">'else'</span>,<span class="st">'for'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="69">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>focused_tokens_non <span class="op">=</span> { split :  count_by_taxonomy_list( dct_control[split], k_token <span class="op">=</span> proposed_token )  <span class="cf">for</span> split <span class="kw">in</span> dct_control}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ġpublic : 74951
+Ġif : 121810
+Ġfor : 31690
+Ġstatic : 326130
+Ġprivate : 13613
+Ġelse : 32562
+for : 1756
+Ġabstract : 4408
+Ġassert : 1324
+static : 51
+if : 2763
+else : 641
+public : 473
+private : 140
+assert : 222
+Ġpublic : 74597
+Ġassert : 127151
+if : 1058
+for : 1941
+Ġfor : 6613
+assert : 41381
+Ġif : 3166
+Ġelse : 864
+static : 134
+else : 99
+public : 239
+Ġabstract : 238
+Ġprivate : 549
+private : 214
+Ġstatic : 171
+Ġpublic : 76347
+Ġstatic : 321229
+Ġif : 132416
+Ġelse : 31483
+Ġprivate : 14301
+public : 278
+private : 301
+Ġfor : 29161
+if : 3888
+for : 2401
+Ġabstract : 5562
+else : 363
+Ġassert : 2138
+static : 280
+assert : 408
+Ġpublic : 78445
+Ġassert : 132251
+if : 1110
+private : 329
+public : 376
+Ġfor : 6152
+Ġif : 2884
+Ġelse : 835
+assert : 34718
+Ġstatic : 174
+static : 93
+for : 1938
+Ġprivate : 364
+else : 49
+Ġabstract : 153
+Ġpublic : 599563
+Ġif : 943072
+Ġelse : 241066
+Ġfor : 218163
+else : 2722
+Ġstatic : 2578818
+Ġprivate : 105628
+Ġassert : 10443
+for : 18392
+Ġabstract : 33066
+public : 2774
+assert : 3168
+static : 2217
+if : 25711
+private : 1194
+Ġpublic : 613329
+Ġassert : 1077402
+assert : 236556
+Ġfor : 52982
+Ġif : 23385
+if : 9502
+for : 16323
+public : 3035
+Ġelse : 7727
+else : 525
+Ġprivate : 1951
+static : 1023
+Ġabstract : 873
+Ġstatic : 1033
+private : 1747</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="70">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>focused_tokens <span class="op">=</span> { split :  count_by_taxonomy_list( dct_control[split], k_token <span class="op">=</span> proposed_token , stringent<span class="op">=</span><span class="va">True</span> )  <span class="cf">for</span> split <span class="kw">in</span> dct_control}</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="co">#dict( count_by_taxonomy( dct_control, k_token = proposed_token, stringent=True ) )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>for : 1756
+static : 51
+if : 2763
+else : 641
+public : 473
+private : 140
+assert : 222
+if : 1058
+for : 1941
+assert : 41381
+static : 134
+else : 99
+public : 239
+private : 214
+public : 278
+private : 301
+if : 3888
+for : 2401
+else : 363
+static : 280
+assert : 408
+if : 1110
+private : 329
+public : 376
+assert : 34718
+static : 93
+for : 1938
+else : 49
+else : 2722
+for : 18392
+public : 2774
+assert : 3168
+static : 2217
+if : 25711
+private : 1194
+assert : 236556
+if : 9502
+for : 16323
+public : 3035
+else : 525
+static : 1023
+private : 1747</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="71">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>focused_tokens_non</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="71">
+<pre><code>{'eval_raw': [{'assert': 1546,
+   'private': 13753,
+   'public': 75424,
+   'abstract': 4408,
+   'static': 326181,
+   'if': 124573,
+   'else': 33203,
+   'for': 33446},
+  {'assert': 168532,
+   'private': 763,
+   'public': 74836,
+   'abstract': 238,
+   'static': 305,
+   'if': 4224,
+   'else': 963,
+   'for': 8554}],
+ 'test_raw': [{'assert': 2546,
+   'private': 14602,
+   'public': 76625,
+   'abstract': 5562,
+   'static': 321509,
+   'if': 136304,
+   'else': 31846,
+   'for': 31562},
+  {'assert': 166969,
+   'private': 693,
+   'public': 78821,
+   'abstract': 153,
+   'static': 267,
+   'if': 3994,
+   'else': 884,
+   'for': 8090}],
+ 'train_raw': [{'assert': 13611,
+   'private': 106822,
+   'public': 602337,
+   'abstract': 33066,
+   'static': 2581035,
+   'if': 968783,
+   'else': 243788,
+   'for': 236555},
+  {'assert': 1313958,
+   'private': 3698,
+   'public': 616364,
+   'abstract': 873,
+   'static': 2056,
+   'if': 32887,
+   'else': 8252,
+   'for': 69305}]}</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="93">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co">#printing selected (interesting) tokens</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="co">#print_token_distribution( [focused_tokens_non,focused_tokens] , label=['non-Stringent','Stringent'], log=True )</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="co">#printing most popular tokens</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> key <span class="kw">in</span> params[<span class="st">'data_labels'</span>]:</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>    fig, axs <span class="op">=</span> plt.subplots( figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">4</span>), ncols<span class="op">=</span><span class="dv">2</span> )</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>    print_token_distribution( [focused_tokens_non[key][<span class="dv">0</span>],focused_tokens[key][<span class="dv">0</span>]], ax<span class="op">=</span>axs[<span class="dv">0</span>],  label<span class="op">=</span>[<span class="st">'inputs [non-Stringent]'</span>,<span class="st">'inputs [Stringent]'</span>], log<span class="op">=</span><span class="va">True</span>, title<span class="op">=</span><span class="st">'['</span><span class="op">+</span>key<span class="op">+</span><span class="st">']'</span> )</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>    print_token_distribution( [focused_tokens_non[key][<span class="dv">1</span>],focused_tokens[key][<span class="dv">1</span>]], ax<span class="op">=</span>axs[<span class="dv">1</span>],  label<span class="op">=</span>[<span class="st">'outputs [non-Stringent]'</span>, <span class="st">'outputs [Stringent]'</span>], log<span class="op">=</span><span class="va">True</span>, title<span class="op">=</span><span class="st">'['</span><span class="op">+</span>key<span class="op">+</span><span class="st">']'</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="interpretableShapley_files/figure-html/cell-48-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="interpretableShapley_files/figure-html/cell-48-output-2.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="interpretableShapley_files/figure-html/cell-48-output-3.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="taxonomy-countings" class="level2">
+<h2 class="anchored" data-anchor-id="taxonomy-countings">Taxonomy Countings</h2>
+<div class="cell" data-execution_count="80">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co">#export</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> token_taxonomy() <span class="op">-&gt;</span> <span class="bu">dict</span>:</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"blocks"</span>: {</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;{&gt;"</span>: <span class="st">"{"</span>,</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;}&gt;"</span>: <span class="st">"}"</span>,</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;[&gt;"</span>: <span class="st">"["</span>,</span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;]&gt;"</span>: <span class="st">"]"</span>,</span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;(&gt;"</span>: <span class="st">"("</span>,</span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;)&gt;"</span>: <span class="st">")"</span>,</span>
+<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;;&gt;"</span>: <span class="st">";"</span>,</span>
+<span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;return&gt;"</span>: <span class="st">"return"</span></span>
+<span id="cb61-13"><a href="#cb61-13" aria-hidden="true" tabindex="-1"></a>  },</span>
+<span id="cb61-14"><a href="#cb61-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"exceptions"</span>: {</span>
+<span id="cb61-15"><a href="#cb61-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;catch&gt;"</span>: <span class="st">"catch"</span>,</span>
+<span id="cb61-16"><a href="#cb61-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;try&gt;"</span>: <span class="st">"try"</span>,</span>
+<span id="cb61-17"><a href="#cb61-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;finally&gt;"</span>: <span class="st">"finally"</span>,</span>
+<span id="cb61-18"><a href="#cb61-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;throw&gt;"</span>: <span class="st">"throw"</span>,</span>
+<span id="cb61-19"><a href="#cb61-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;throws&gt;"</span>: <span class="st">"throws"</span></span>
+<span id="cb61-20"><a href="#cb61-20" aria-hidden="true" tabindex="-1"></a>  },</span>
+<span id="cb61-21"><a href="#cb61-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"oop"</span>: {</span>
+<span id="cb61-22"><a href="#cb61-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;class&gt;"</span>: <span class="st">"class"</span>,</span>
+<span id="cb61-23"><a href="#cb61-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;instanceof&gt;"</span>: <span class="st">"instanceof"</span>,</span>
+<span id="cb61-24"><a href="#cb61-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;interface&gt;"</span>: <span class="st">"interface"</span>,</span>
+<span id="cb61-25"><a href="#cb61-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;private&gt;"</span>: <span class="st">"private"</span>,</span>
+<span id="cb61-26"><a href="#cb61-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;protected&gt;"</span>: <span class="st">"protected"</span>,</span>
+<span id="cb61-27"><a href="#cb61-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;public&gt;"</span>: <span class="st">"public"</span>,</span>
+<span id="cb61-28"><a href="#cb61-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;abstract&gt;"</span>: <span class="st">"abstract"</span>,</span>
+<span id="cb61-29"><a href="#cb61-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;extends&gt;"</span>: <span class="st">"extends"</span>,</span>
+<span id="cb61-30"><a href="#cb61-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;package&gt;"</span>: <span class="st">"package"</span>,</span>
+<span id="cb61-31"><a href="#cb61-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;this&gt;"</span>: <span class="st">"this"</span>,</span>
+<span id="cb61-32"><a href="#cb61-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;implements&gt;"</span>: <span class="st">"implements"</span>,</span>
+<span id="cb61-33"><a href="#cb61-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;import&gt;"</span>: <span class="st">"import"</span>,</span>
+<span id="cb61-34"><a href="#cb61-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;new&gt;"</span>: <span class="st">"new"</span>,</span>
+<span id="cb61-35"><a href="#cb61-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;super&gt;"</span>: <span class="st">"super"</span></span>
+<span id="cb61-36"><a href="#cb61-36" aria-hidden="true" tabindex="-1"></a>  },</span>
+<span id="cb61-37"><a href="#cb61-37" aria-hidden="true" tabindex="-1"></a>  <span class="st">"tests"</span>: {</span>
+<span id="cb61-38"><a href="#cb61-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;assert&gt;"</span>: <span class="st">"assert"</span></span>
+<span id="cb61-39"><a href="#cb61-39" aria-hidden="true" tabindex="-1"></a>  },</span>
+<span id="cb61-40"><a href="#cb61-40" aria-hidden="true" tabindex="-1"></a>  <span class="st">"declarations"</span>: {</span>
+<span id="cb61-41"><a href="#cb61-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;native&gt;"</span>: <span class="st">"native"</span>,</span>
+<span id="cb61-42"><a href="#cb61-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;static&gt;"</span>: <span class="st">"static"</span>,</span>
+<span id="cb61-43"><a href="#cb61-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;synchronized&gt;"</span>: <span class="st">"synchronized"</span>,</span>
+<span id="cb61-44"><a href="#cb61-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;transient&gt;"</span>: <span class="st">"transient"</span>,</span>
+<span id="cb61-45"><a href="#cb61-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;volatile&gt;"</span>: <span class="st">"volatile"</span>,</span>
+<span id="cb61-46"><a href="#cb61-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;void&gt;"</span>: <span class="st">"void"</span>,</span>
+<span id="cb61-47"><a href="#cb61-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;final&gt;"</span>: <span class="st">"final"</span>,</span>
+<span id="cb61-48"><a href="#cb61-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;enum&gt;"</span>: <span class="st">"enum"</span></span>
+<span id="cb61-49"><a href="#cb61-49" aria-hidden="true" tabindex="-1"></a>  },</span>
+<span id="cb61-50"><a href="#cb61-50" aria-hidden="true" tabindex="-1"></a>  <span class="st">"conditionals"</span>: {</span>
+<span id="cb61-51"><a href="#cb61-51" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;else&gt;"</span>: <span class="st">"else"</span>,</span>
+<span id="cb61-52"><a href="#cb61-52" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;if&gt;"</span>: <span class="st">"if"</span>,</span>
+<span id="cb61-53"><a href="#cb61-53" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;switch&gt;"</span>: <span class="st">"switch"</span>,</span>
+<span id="cb61-54"><a href="#cb61-54" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;case&gt;"</span>: <span class="st">"case"</span>,</span>
+<span id="cb61-55"><a href="#cb61-55" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;default&gt;"</span>: <span class="st">"default"</span></span>
+<span id="cb61-56"><a href="#cb61-56" aria-hidden="true" tabindex="-1"></a>  },</span>
+<span id="cb61-57"><a href="#cb61-57" aria-hidden="true" tabindex="-1"></a>  <span class="st">"loops"</span>: {</span>
+<span id="cb61-58"><a href="#cb61-58" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;break&gt;"</span>: <span class="st">"break"</span>,</span>
+<span id="cb61-59"><a href="#cb61-59" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;do&gt;"</span>: <span class="st">"do"</span>,</span>
+<span id="cb61-60"><a href="#cb61-60" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;for&gt;"</span>: <span class="st">"for"</span>,</span>
+<span id="cb61-61"><a href="#cb61-61" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;while&gt;"</span>: <span class="st">"while"</span>,</span>
+<span id="cb61-62"><a href="#cb61-62" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;continue&gt;"</span>: <span class="st">"continue"</span></span>
+<span id="cb61-63"><a href="#cb61-63" aria-hidden="true" tabindex="-1"></a>  },</span>
+<span id="cb61-64"><a href="#cb61-64" aria-hidden="true" tabindex="-1"></a>  <span class="st">"operators"</span>: {</span>
+<span id="cb61-65"><a href="#cb61-65" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;=&gt;"</span>: <span class="st">"="</span>,</span>
+<span id="cb61-66"><a href="#cb61-66" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;+&gt;"</span>: <span class="st">"+"</span>,</span>
+<span id="cb61-67"><a href="#cb61-67" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;-&gt;"</span>: <span class="st">"-"</span>,</span>
+<span id="cb61-68"><a href="#cb61-68" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;*&gt;"</span>: <span class="st">"*"</span>,</span>
+<span id="cb61-69"><a href="#cb61-69" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;/&gt;"</span>: <span class="st">"/"</span>,</span>
+<span id="cb61-70"><a href="#cb61-70" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;%&gt;"</span>: <span class="st">"%"</span>,</span>
+<span id="cb61-71"><a href="#cb61-71" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;++&gt;"</span>: <span class="st">"++"</span>,</span>
+<span id="cb61-72"><a href="#cb61-72" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;--&gt;"</span>: <span class="st">"--"</span>,</span>
+<span id="cb61-73"><a href="#cb61-73" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;!&gt;"</span>: <span class="st">"!"</span>,</span>
+<span id="cb61-74"><a href="#cb61-74" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;==&gt;"</span>: <span class="st">"=="</span>,</span>
+<span id="cb61-75"><a href="#cb61-75" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;!=&gt;"</span>: <span class="st">"!="</span>,</span>
+<span id="cb61-76"><a href="#cb61-76" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;greater_equal&gt;"</span>: <span class="st">"&gt;="</span>,</span>
+<span id="cb61-77"><a href="#cb61-77" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;lesser_equal&gt;"</span>: <span class="st">"&lt;="</span>,</span>
+<span id="cb61-78"><a href="#cb61-78" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;&amp;&amp;&gt;"</span>: <span class="st">"&amp;&amp;"</span>,</span>
+<span id="cb61-79"><a href="#cb61-79" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;||&gt;"</span>: <span class="st">"||"</span>,</span>
+<span id="cb61-80"><a href="#cb61-80" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;?&gt;"</span>: <span class="st">"?"</span>,</span>
+<span id="cb61-81"><a href="#cb61-81" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;:&gt;"</span>: <span class="st">":"</span>,</span>
+<span id="cb61-82"><a href="#cb61-82" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;~&gt;"</span>: <span class="st">"~"</span>,</span>
+<span id="cb61-83"><a href="#cb61-83" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;double_lesser&gt;"</span>: <span class="st">"&lt;&lt;"</span>,</span>
+<span id="cb61-84"><a href="#cb61-84" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;double_greater&gt;"</span>: <span class="st">"&gt;&gt;"</span>,</span>
+<span id="cb61-85"><a href="#cb61-85" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;triple_greater&gt;"</span>: <span class="st">"&gt;&gt;&gt;"</span>,</span>
+<span id="cb61-86"><a href="#cb61-86" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;&amp;&gt;"</span>: <span class="st">"&amp;"</span>,</span>
+<span id="cb61-87"><a href="#cb61-87" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;^&gt;"</span>: <span class="st">"^"</span>,</span>
+<span id="cb61-88"><a href="#cb61-88" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;|&gt;"</span>: <span class="st">"|"</span></span>
+<span id="cb61-89"><a href="#cb61-89" aria-hidden="true" tabindex="-1"></a>  },</span>
+<span id="cb61-90"><a href="#cb61-90" aria-hidden="true" tabindex="-1"></a>  <span class="st">"datatypes"</span>: {</span>
+<span id="cb61-91"><a href="#cb61-91" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;byte&gt;"</span>: <span class="st">"byte"</span>,</span>
+<span id="cb61-92"><a href="#cb61-92" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;char&gt;"</span>: <span class="st">"char"</span>,</span>
+<span id="cb61-93"><a href="#cb61-93" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;float&gt;"</span>: <span class="st">"float"</span>,</span>
+<span id="cb61-94"><a href="#cb61-94" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;boolean&gt;"</span>: <span class="st">"boolean"</span>,</span>
+<span id="cb61-95"><a href="#cb61-95" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;double&gt;"</span>: <span class="st">"double"</span>,</span>
+<span id="cb61-96"><a href="#cb61-96" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;int&gt;"</span>: <span class="st">"int"</span>,</span>
+<span id="cb61-97"><a href="#cb61-97" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;long&gt;"</span>: <span class="st">"long"</span>,</span>
+<span id="cb61-98"><a href="#cb61-98" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;short&gt;"</span>: <span class="st">"short"</span>,</span>
+<span id="cb61-99"><a href="#cb61-99" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;strictfp&gt;"</span>: <span class="st">"strictfp"</span></span>
+<span id="cb61-100"><a href="#cb61-100" aria-hidden="true" tabindex="-1"></a>  },</span>
+<span id="cb61-101"><a href="#cb61-101" aria-hidden="true" tabindex="-1"></a>  <span class="st">"extra_tokens"</span>: {</span>
+<span id="cb61-102"><a href="#cb61-102" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;@&gt;"</span>: <span class="st">"@"</span>,</span>
+<span id="cb61-103"><a href="#cb61-103" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;...&gt;"</span>: <span class="st">"..."</span>,</span>
+<span id="cb61-104"><a href="#cb61-104" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;null&gt;"</span>: <span class="st">"null"</span>,</span>
+<span id="cb61-105"><a href="#cb61-105" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;true&gt;"</span>: <span class="st">"true"</span>,</span>
+<span id="cb61-106"><a href="#cb61-106" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;false&gt;"</span>: <span class="st">"false"</span>,</span>
+<span id="cb61-107"><a href="#cb61-107" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;n&gt;"</span>: <span class="st">"</span><span class="ch">\n</span><span class="st">"</span></span>
+<span id="cb61-108"><a href="#cb61-108" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb61-109"><a href="#cb61-109" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="81">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>tkn_taxonomy <span class="op">=</span> token_taxonomy()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="86">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>tkn_taxonomy[<span class="st">'extra_tokens'</span>].values()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="86">
+<pre><code>dict_values(['@', '...', 'null', 'true', 'false', '\n'])</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="87">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>dct_control.keys()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="87">
+<pre><code>dict_keys(['eval_raw', 'test_raw', 'train_raw'])</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="96">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> taxonomy_counting_v1( tkn_taxonomy, dct_control, stringent<span class="op">=</span><span class="va">False</span> ):</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">''''Hardcoded version of taxonomy counting'''</span></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>    dict_tokens <span class="op">=</span> {}</span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> split <span class="kw">in</span> dct_control:</span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>        to_flat_tax_dict <span class="op">=</span> { tax :  count_by_taxonomy_list( dct_control[split], k_token <span class="op">=</span> tkn_taxonomy[tax].values() , stringent<span class="op">=</span>stringent )  <span class="cf">for</span> tax <span class="kw">in</span> tkn_taxonomy }</span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>        to_flat_tax_dict <span class="op">=</span> { tax : [ functools.<span class="bu">reduce</span>(<span class="kw">lambda</span> a, b: a<span class="op">+</span>b, list_dict.values() ) <span class="cf">for</span> list_dict <span class="kw">in</span> to_flat_tax_dict[tax] ] <span class="cf">for</span> tax <span class="kw">in</span> to_flat_tax_dict }</span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>        dict_tokens[split] <span class="op">=</span> [ </span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a>                { tax: to_flat_tax_dict[tax][<span class="dv">0</span>] <span class="cf">for</span> tax <span class="kw">in</span> to_flat_tax_dict }, <span class="co">#Hardcoded Input</span></span>
+<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>                { tax: to_flat_tax_dict[tax][<span class="dv">1</span>] <span class="cf">for</span> tax <span class="kw">in</span> to_flat_tax_dict } <span class="co">#Hardcoded Output</span></span>
+<span id="cb67-10"><a href="#cb67-10" aria-hidden="true" tabindex="-1"></a>            ]</span>
+<span id="cb67-11"><a href="#cb67-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dict_tokens</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="99">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>flat_dict_foc_tax_non <span class="op">=</span> taxonomy_counting_v1( tkn_taxonomy, dct_control, stringent<span class="op">=</span><span class="va">False</span> )</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>flat_dict_foc_tax_str <span class="op">=</span> taxonomy_counting_v1( tkn_taxonomy, dct_control, stringent<span class="op">=</span><span class="va">True</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="104">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co">#flat_dict_foc_tax_str</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="co">#print_token_distribution( [flat_dict_foc_tax_non,flat_dict_foc_tax] , label=['non-Stringent','Stringent'], log=True, TOK=15 )</span></span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> key <span class="kw">in</span> params[<span class="st">'data_labels'</span>]:</span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>    fig, axs <span class="op">=</span> plt.subplots( figsize<span class="op">=</span>(<span class="dv">30</span>,<span class="dv">4</span>), ncols<span class="op">=</span><span class="dv">2</span> )</span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a>    print_token_distribution( [flat_dict_foc_tax_non[key][<span class="dv">0</span>],flat_dict_foc_tax_str[key][<span class="dv">0</span>]], ax<span class="op">=</span>axs[<span class="dv">0</span>],  label<span class="op">=</span>[<span class="st">'inputs [non-Stringent]'</span>,<span class="st">'inputs [Stringent]'</span>], log<span class="op">=</span><span class="va">True</span>, title<span class="op">=</span><span class="st">'['</span><span class="op">+</span>key<span class="op">+</span><span class="st">']'</span> )</span>
+<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a>    print_token_distribution( [flat_dict_foc_tax_non[key][<span class="dv">1</span>],flat_dict_foc_tax_str[key][<span class="dv">1</span>]], ax<span class="op">=</span>axs[<span class="dv">1</span>],  label<span class="op">=</span>[<span class="st">'outputs [non-Stringent]'</span>, <span class="st">'outputs [Stringent]'</span>], log<span class="op">=</span><span class="va">True</span>, title<span class="op">=</span><span class="st">'['</span><span class="op">+</span>key<span class="op">+</span><span class="st">']'</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="interpretableShapley_files/figure-html/cell-55-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="interpretableShapley_files/figure-html/cell-55-output-2.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="interpretableShapley_files/figure-html/cell-55-output-3.png" class="img-fluid"></p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
