@@ -2,9 +2,9 @@ export TOTAL_NUM_UPDATES=100000
 export WARMUP_UPDATES=10000
 export LR=4.2e-05
 export UPDATE_FREQ=8
-export DIR=/workspaces/code-rationales/datax/bart_fairseq/checkpoint_dir_base
+export DIR=/workspaces/code-rationales/data/bart-fairseq/checkpoint_dir_athena_ms/models
 export MAX_TOKENS=1024
-export DATA_DIR=/workspaces/code-rationales/datax/methods2test/corpus/preprocessed/fm_fc_ms_ff/bin
+export DATA_DIR=/workspaces/code-rationales/semeru-datasets/athena_test/fm_fc_ms_ff/raw/test
 export SRC_LANG=input.methods
 export TRG_LANG=output.tests
 
