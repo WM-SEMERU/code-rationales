@@ -1,8 +1,8 @@
 /usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (2.0.2) or chardet (3.0.4) doesn't match a supported version!
   warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
-2023-08-17 21:34:57.301116: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+2023-08-17 21:36:30.603336: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
 To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2023-08-17 21:34:57.461089: E tensorflow/stream_executor/cuda/cuda_blas.cc:2981] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2023-08-17 21:36:30.761956: E tensorflow/stream_executor/cuda/cuda_blas.cc:2981] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
 [nltk_data] Downloading package punkt to /root/nltk_data...
 [nltk_data]   Package punkt is already up-to-date!
 [nltk_data] Downloading package averaged_perceptron_tagger to
@@ -43,18 +43,6 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 **********Tagging rationals for exp: 28**********
 **********Tagging rationals for exp: 29**********
 **********Aggregrating rationals for exp: 0**********
-Traceback (most recent call last):
-  File "/workspaces/code-rationales/scripts/global_aggregates/global_aggregation.py", line 334, in aggregate_rationals
-    [global_results[target_tag][rational_tag].append(eval(experiment_result['rationale_prob_tgt'][target_idx])[rational_idx]) for rational_tag in experiment_result['tags'][rational_pos] for target_tag in experiment_result['tags'][target_idx]]
-  File "/workspaces/code-rationales/scripts/global_aggregates/global_aggregation.py", line 334, in <listcomp>
-    [global_results[target_tag][rational_tag].append(eval(experiment_result['rationale_prob_tgt'][target_idx])[rational_idx]) for rational_tag in experiment_result['tags'][rational_pos] for target_tag in experiment_result['tags'][target_idx]]
-KeyError: None
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/workspaces/code-rationales/scripts/global_aggregates/global_aggregation.py", line 389, in <module>
-    global_aggregated_results = clean_results(aggregate_rationals(global_tagged_results, node_types, pos_types))
-  File "/workspaces/code-rationales/scripts/global_aggregates/global_aggregation.py", line 336, in aggregate_rationals
-    print('An Error Occurred: ' + e)
-TypeError: can only concatenate str (not "KeyError") to str
+**********Aggregrating rationals for exp: 1**********
+**********Aggregrating rationals for exp: 2**********
+**********Aggregrating rationals for exp: 3**********
