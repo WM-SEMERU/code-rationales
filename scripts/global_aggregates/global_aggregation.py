@@ -28,16 +28,16 @@ nltk.download('tagsets')
 # %%
 def param_default():
     return {
-        #'dataset' : 'code_completion_random_cut_5k_30_512_tokens',
+        'dataset' : 'code_completion_random_cut_5k_30_512_tokens',
         #'dataset' : 'code_completion_docstring_random_cut_3.8k_30_150_tokens',
         #'dataset' : 'code_completion_docstring_signature_3.8k_30_150_tokens',
-        'dataset' : 'code_completion_docstring_5k_30_150_tokens',
+        #'dataset' : 'code_completion_docstring_5k_30_150_tokens',
         'rational_results': '/workspaces/code-rationales/data/rationales/gpt',
         'global_ast_results': '/workspaces/code-rationales/data/global_ast_results/gpt',
         'global_taxonomy_results': '/workspaces/code-rationales/data/global_taxonomy_results/gpt',
         'delimiter_sequence': '',
         'num_samples' : 100, 
-        'size_samples' : 157,
+        'size_samples' : 44,
         'num_experiments': 30, 
         'bootstrapping' : 500
     }
@@ -247,6 +247,10 @@ def map_to_taxonomy(taxonomy_dict: dict, result_dict: dict):
             mappings[search_category_by_token(taxonomy_dict, target_token)][search_category_by_token(taxonomy_dict, source_token)]+=probs
     return clean_results(mappings)
 
+# %%
+def map_global_results_to_taxonomy(taxonomy_dict:dict, global_results: dict):
+    return dict(zip(global_results.keys(), map(lambda aggegrations: map_to_taxonomy(taxonomy_dict, aggegrations), global_results.values())))
+
 # %% [markdown]
 # ##  Rationals Tagging
 
@@ -324,18 +328,21 @@ def tag_rationals(experiment_paths: list, nl_ast_types: list, nl_pos_types: list
 
 # %%
 def aggregate_rationals(global_tagged_results: dict, ast_node_types: list, nl_pos_types: list):
-    global_results = {node_type : {node_type : [] for node_type in ast_node_types + nl_pos_types} for node_type in ast_node_types + nl_pos_types}
+    aggregation_results = {exp_id: None for exp_id in global_tagged_results.keys()}
     for exp_idx, experiment_results in global_tagged_results.items():
+        experiment_aggregation_results = {node_type : {node_type : [] for node_type in ast_node_types + nl_pos_types} for node_type in ast_node_types + nl_pos_types}
         print('*'*10 +'Aggregrating rationals for exp: ' +str(exp_idx) + '*'*10)
-        for experiment_result in experiment_results:
+        for result_idx, experiment_result in enumerate(experiment_results):
             for target_idx in range(len(experiment_result)):
                 for rational_idx, rational_pos in enumerate(eval(experiment_result['rationale_pos_tgt'][target_idx])):
                     try:
-                        [global_results[target_tag][rational_tag].append(eval(experiment_result['rationale_prob_tgt'][target_idx])[rational_idx]) if target_tag and rational_tag else None \
+                        [experiment_aggregation_results[target_tag][rational_tag].append(eval(experiment_result['rationale_prob_tgt'][target_idx])[rational_idx]) if target_tag and rational_tag else None \
                          for rational_tag in experiment_result['tags'][rational_pos] for target_tag in experiment_result['tags'][target_idx]]
                     except Exception as e:
                         print('An Error Occurred')
-    return global_results
+            print('r-'+str(result_idx))
+        aggregation_results[exp_idx] = clean_results(experiment_aggregation_results)
+    return aggregation_results
 
 # %% [markdown]
 # ## Bootstrapping
@@ -364,9 +371,10 @@ def bootstrapping( np_data, np_func, size ):
 
 # %%
 def bootstrap_samples_global_results(global_results: dict, size: int):
-    for target_type, target_value in global_results.items():
-        for source_type, source_value in target_value.items():
-            global_results[target_type][source_type] = bootstrapping(source_value, np.mean, size).tolist()
+    for exp_id in global_results.keys():
+        for target_type, target_value in global_results.items():
+            for source_type, source_value in target_value.items():
+                global_results[exp_id][target_type][source_type] = bootstrapping(source_value, np.mean, size).tolist()
 
 # %% [markdown]
 # ## Running Experiment
@@ -374,7 +382,7 @@ def bootstrap_samples_global_results(global_results: dict, size: int):
 # %%
 ### Retrieve experiments
 get_experiment_path =  lambda samples, size, exp: params['rational_results'] + '/' + params['dataset'] + '/' + '[t_'+str(samples)+']_[max_tgt_'+str(size)+']_[exp:'+str(exp)+'].csv'
-experiment_paths = [get_experiment_path(params['num_samples'], params['size_samples'], exp) for exp in range(params['num_experiments'])]
+experiment_paths = [get_experiment_path(params['num_samples'], params['size_samples'], exp) for exp in range(params['num_experiments'])][:1]
 ### Define parser
 parser, node_types = create_parser('python')
 ### Defines pos tags 
@@ -386,16 +394,13 @@ nl_ast_types = ['comment','identifier','string']
 global_tagged_results = tag_rationals(experiment_paths, nl_ast_types, pos_types, params['delimiter_sequence'], parser)
 
 # %%
-
-
-# %%
 ###AGGREGATE RATIONALS - TAKES TIME
-global_aggregated_results = clean_results(aggregate_rationals(global_tagged_results, node_types, pos_types))
+global_aggregated_results = aggregate_rationals(global_tagged_results, node_types, pos_types)
 
 # %%
 ###GROUP AGGREGATES BY TAXONOMY
 taxonomy = {**pl_taxonomy_python(), **nl_pos_taxonomy()}
-global_taxonomy_results = map_to_taxonomy(taxonomy, global_aggregated_results.copy())
+global_taxonomy_results = map_global_results_to_taxonomy(taxonomy, global_aggregated_results.copy())
 
 # %%
 ### BOOTSTRAPPING - TAKES TIME
@@ -405,11 +410,13 @@ bootstrap_samples_global_results(global_taxonomy_results, params['bootstrapping'
 # ## Storing Results
 
 # %%
-with open(params['global_ast_results'] + '/' + params['dataset'] + '.txt', 'w') as file:
-  file.write(json.dumps(global_aggregated_results))
+for exp_id, exp_aggregation in global_aggregated_results.items():
+    with open(params['global_ast_results'] + '/' + params['dataset'] +'_exp_' + str(exp_id) +'.txt', 'w') as file:
+        file.write(json.dumps(exp_aggregation))
 
 # %%
-with open(params['global_taxonomy_results'] + '/' + params['dataset'] + '.txt', 'w') as file:
-  file.write(json.dumps(global_taxonomy_results))
+for exp_id, exp_aggregation in global_taxonomy_results.items():
+    with open(params['global_taxonomy_results'] + '/' + params['dataset'] +'_exp_' + str(exp_id) +'.txt', 'w') as file:
+        file.write(json.dumps(exp_aggregation))
 
 
