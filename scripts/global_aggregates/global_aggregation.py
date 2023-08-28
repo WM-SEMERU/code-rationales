@@ -28,16 +28,16 @@ nltk.download('tagsets')
 # %%
 def param_default():
     return {
-        'dataset' : 'code_completion_random_cut_5k_30_512_tokens',
+        #'dataset' : 'code_completion_random_cut_5k_30_512_tokens',
         #'dataset' : 'code_completion_docstring_random_cut_3.8k_30_150_tokens',
         #'dataset' : 'code_completion_docstring_signature_3.8k_30_150_tokens',
-        #'dataset' : 'code_completion_docstring_5k_30_150_tokens',
+        'dataset' : 'code_completion_docstring_5k_30_150_tokens',
         'rational_results': '/workspaces/code-rationales/data/rationales/gpt',
         'global_ast_results': '/workspaces/code-rationales/data/global_ast_results/gpt',
         'global_taxonomy_results': '/workspaces/code-rationales/data/global_taxonomy_results/gpt',
         'delimiter_sequence': '',
         'num_samples' : 100, 
-        'size_samples' : 44,
+        'size_samples' : 157,
         'num_experiments': 30, 
         'bootstrapping' : 500
     }
@@ -372,9 +372,11 @@ def bootstrapping( np_data, np_func, size ):
 # %%
 def bootstrap_samples_global_results(global_results: dict, size: int):
     for exp_id in global_results.keys():
+        experiment_result = global_results[exp_id]
         for target_type, target_value in global_results.items():
             for source_type, source_value in target_value.items():
-                global_results[exp_id][target_type][source_type] = bootstrapping(source_value, np.mean, size).tolist()
+                experiment_result[target_type][source_type] = bootstrapping(source_value, np.mean, size).tolist()
+        global_results[exp_id] = experiment_result
 
 # %% [markdown]
 # ## Running Experiment
@@ -382,7 +384,7 @@ def bootstrap_samples_global_results(global_results: dict, size: int):
 # %%
 ### Retrieve experiments
 get_experiment_path =  lambda samples, size, exp: params['rational_results'] + '/' + params['dataset'] + '/' + '[t_'+str(samples)+']_[max_tgt_'+str(size)+']_[exp:'+str(exp)+'].csv'
-experiment_paths = [get_experiment_path(params['num_samples'], params['size_samples'], exp) for exp in range(params['num_experiments'])][:1]
+experiment_paths = [get_experiment_path(params['num_samples'], params['size_samples'], exp) for exp in range(params['num_experiments'])]
 ### Define parser
 parser, node_types = create_parser('python')
 ### Defines pos tags 
