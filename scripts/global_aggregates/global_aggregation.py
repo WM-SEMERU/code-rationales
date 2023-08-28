@@ -29,15 +29,15 @@ nltk.download('tagsets')
 def param_default():
     return {
         #'dataset' : 'code_completion_random_cut_5k_30_512_tokens',
-        'dataset' : 'code_completion_docstring_random_cut_3.8k_30_150_tokens',
+        #'dataset' : 'code_completion_docstring_random_cut_3.8k_30_150_tokens',
         #'dataset' : 'code_completion_docstring_signature_3.8k_30_150_tokens',
-        #'dataset' : 'code_completion_docstring_5k_30_150_tokens',
+        'dataset' : 'code_completion_docstring_5k_30_150_tokens',
         'rational_results': '/workspaces/code-rationales/data/rationales/gpt',
         'global_ast_results': '/workspaces/code-rationales/data/global_ast_results/gpt',
         'global_taxonomy_results': '/workspaces/code-rationales/data/global_taxonomy_results/gpt',
-        'delimiter_sequence': 'and code starts with',
+        'delimiter_sequence': '',
         'num_samples' : 100, 
-        'size_samples' : 146,
+        'size_samples' : 157,
         'num_experiments': 30, 
         'bootstrapping' : 500
     }
