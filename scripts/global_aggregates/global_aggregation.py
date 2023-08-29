@@ -373,7 +373,7 @@ def bootstrapping( np_data, np_func, size ):
 def bootstrap_samples_global_results(global_results: dict, size: int):
     for exp_id in global_results.keys():
         experiment_result = global_results[exp_id]
-        for target_type, target_value in global_results.items():
+        for target_type, target_value in global_results[exp_id].items():
             for source_type, source_value in target_value.items():
                 experiment_result[target_type][source_type] = bootstrapping(source_value, np.mean, size).tolist()
         global_results[exp_id] = experiment_result
