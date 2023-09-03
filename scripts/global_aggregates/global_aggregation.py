@@ -30,14 +30,14 @@ def param_default():
     return {
         #'dataset' : 'code_completion_random_cut_5k_30_512_tokens',
         #'dataset' : 'code_completion_docstring_random_cut_3.8k_30_150_tokens',
-        #'dataset' : 'code_completion_docstring_signature_3.8k_30_150_tokens',
-        'dataset' : 'code_completion_docstring_5k_30_150_tokens',
+        'dataset' : 'code_completion_docstring_signature_3.8k_30_150_tokens',
+        #'dataset' : 'code_completion_docstring_5k_30_150_tokens',
         'rational_results': '/workspaces/code-rationales/data/rationales/gpt',
         'global_ast_results': '/workspaces/code-rationales/data/global_ast_results/gpt',
         'global_taxonomy_results': '/workspaces/code-rationales/data/global_taxonomy_results/gpt',
-        'delimiter_sequence': '',
+        'delimiter_sequence': 'and signature is',
         'num_samples' : 100, 
-        'size_samples' : 157,
+        'size_samples' : 146,
         'num_experiments': 30, 
         'bootstrapping' : 500
     }
@@ -168,9 +168,7 @@ def get_node_span(node, lines):
 
 # %%
 def is_token_span_in_node_span(tok_span, node_span):
-    if (node_span[0] <= tok_span[0] and tok_span[0] < node_span[1]) or (node_span[0] < tok_span[1] and tok_span[1] <= node_span[1]):
-        return True
-    return False
+    return node_span[0] <= tok_span[0] and tok_span[1] <= node_span[1]
 
 # %%
 def get_token_type(
@@ -194,7 +192,7 @@ def get_token_nodes(
     results = []
     def traverse_and_get_types(tok_span, node, lines, results) -> None:
         node_span = get_node_span(node, lines)
-        if (node_span[0] <= tok_span[0] and tok_span[0] < node_span[1]) or (node_span[0] < tok_span[1] and tok_span[1] <= node_span[1]):
+        if is_token_span_in_node_span(tok_span, node_span):
             results.append(node)
         for n in node.children:
             traverse_and_get_types(tok_span, n, lines, results)
