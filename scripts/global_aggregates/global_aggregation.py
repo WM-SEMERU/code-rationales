@@ -29,16 +29,16 @@ nltk.download('tagsets')
 def param_default():
     return {
         #'dataset' : 'code_completion_random_cut_5k_30_512_tokens',
-        #'dataset' : 'code_completion_docstring_random_cut_3.8k_30_150_tokens',
-        'dataset' : 'code_completion_docstring_signature_3.8k_30_150_tokens',
+        'dataset' : 'code_completion_docstring_random_cut_3.8k_30_150_tokens',
+        #'dataset' : 'code_completion_docstring_signature_3.8k_30_150_tokens',
         #'dataset' : 'code_completion_docstring_5k_30_150_tokens',
         'rational_results': '/workspaces/code-rationales/data/rationales/gpt',
         'global_ast_results': '/workspaces/code-rationales/data/global_ast_results/gpt',
         'global_taxonomy_results': '/workspaces/code-rationales/data/global_taxonomy_results/gpt',
-        'delimiter_sequence': 'and signature is',
+        'delimiter_sequence': 'and code starts with',
         'num_samples' : 100, 
         'size_samples' : 146,
-        'num_experiments': 30, 
+        'num_experiments': 1, 
         'bootstrapping' : 500
     }
 params = param_default()
@@ -253,7 +253,7 @@ def map_global_results_to_taxonomy(taxonomy_dict:dict, global_results: dict):
 # ##  Rationals Tagging
 
 # %%
-calculate_right_span = lambda start_idx, end_idx, df : len(''.join(map(str, df.loc[start_idx:end_idx, 'goal_token'].tolist())))
+calculate_right_span = lambda start_idx, end_idx, initial_token, df : len(initial_token + ''.join(map(str, df.loc[start_idx:end_idx, 'goal_token'].tolist())))
 calculate_span = lambda right_span, token : (right_span-len(str(token)), right_span)
 
 # %%
@@ -290,7 +290,7 @@ def fill_nl_tags_in_experiment_result(df, nl_ast_types, nl_pos_types, parser):
                             str(df['goal_token'][token_idx]) in nl_target_node.text.decode('utf-8'):
                             tagged_token_list = list(filter(lambda tagged_token: tagged_token[0] in str(df['goal_token'][token_idx]), \
                                                         nltk.pos_tag( nltk.word_tokenize(nl_target_node.text.decode('utf-8')))))
-                            if len(tagged_token_list)>0 and tagged_token_list[0][1] in nl_pos_types and tagged_token_list[0][1] not in df['tags'][token_idx]: df['tags'][token_idx].append(tagged_token_list[0][1])
+                            if len(tagged_token_list)>0 and tagged_token_list[0][1] in nl_pos_types and tagged_token_list[0][1] not in df['tags'][token_idx]: df.at[token_idx, 'tags'] = df['tags'][token_idx] + [tagged_token_list[0][1]]
 
 # %%
 def fill_ast_tags_in_experiment_result(df, parser):
@@ -333,12 +333,12 @@ def aggregate_rationals(global_tagged_results: dict, ast_node_types: list, nl_po
         for result_idx, experiment_result in enumerate(experiment_results):
             for target_idx in range(len(experiment_result)):
                 for rational_idx, rational_pos in enumerate(eval(experiment_result['rationale_pos_tgt'][target_idx])):
-                    try:
-                        [experiment_aggregation_results[target_tag][rational_tag].append(eval(experiment_result['rationale_prob_tgt'][target_idx])[rational_idx]) if target_tag and rational_tag else None \
-                         for rational_tag in experiment_result['tags'][rational_pos] for target_tag in experiment_result['tags'][target_idx]]
-                    except Exception as e:
-                        print('An Error Occurred')
-            print('r-'+str(result_idx))
+                    if rational_pos > 0: #initial token is ignored IMPORTANT
+                        try:
+                            [experiment_aggregation_results[target_tag][rational_tag].append(eval(experiment_result['rationale_prob_tgt'][target_idx])[rational_idx]) if target_tag and rational_tag else None \
+                            for rational_tag in experiment_result['tags'][rational_pos - 1] for target_tag in experiment_result['tags'][target_idx]]
+                        except Exception as e:
+                            print('An Error Occurred')
         aggregation_results[exp_idx] = clean_results(experiment_aggregation_results)
     return aggregation_results
 
