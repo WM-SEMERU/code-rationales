@@ -29,16 +29,16 @@ nltk.download('tagsets')
 def param_default():
     return {
         #'dataset' : 'code_completion_random_cut_5k_30_512_tokens',
-        'dataset' : 'code_completion_docstring_random_cut_3.8k_30_150_tokens',
+        #'dataset' : 'code_completion_docstring_random_cut_3.8k_30_150_tokens',
         #'dataset' : 'code_completion_docstring_signature_3.8k_30_150_tokens',
-        #'dataset' : 'code_completion_docstring_5k_30_150_tokens',
+        'dataset' : 'code_completion_docstring_5k_30_150_tokens',
         'rational_results': '/workspaces/code-rationales/data/rationales/gpt',
         'global_ast_results': '/workspaces/code-rationales/data/global_ast_results/gpt',
         'global_taxonomy_results': '/workspaces/code-rationales/data/global_taxonomy_results/gpt',
-        'delimiter_sequence': 'and code starts with',
+        'delimiter_sequence': '',
         'num_samples' : 100, 
-        'size_samples' : 146,
-        'num_experiments': 1, 
+        'size_samples' : 157,
+        'num_experiments': 30, 
         'bootstrapping' : 500
     }
 params = param_default()
@@ -269,8 +269,7 @@ def add_auxiliary_columns_to_experiment_result(df, delimiter_sequence: str):
     df['token_type'] = token_type_column
     ### TOKEN SPAN COLUMN - CHECK FOR DATASETS
     src_initial_token_idx = df[df['token_type']== 'src'].first_valid_index()
-    df['span'] = [None] * len(df[:src_initial_token_idx]) + [calculate_span(calculate_right_span(src_initial_token_idx, index, df), token) for index, token in df[src_initial_token_idx:]['goal_token'].items()]
-
+    df['span'] = [None] * len(df[:src_initial_token_idx]) + [calculate_span(calculate_right_span(src_initial_token_idx, index, initial_token, df), token) for index, token in df[src_initial_token_idx:]['goal_token'].items()]
 
 # %%
 def fill_nl_tags_in_experiment_result(df, nl_ast_types, nl_pos_types, parser):
