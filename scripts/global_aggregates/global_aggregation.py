@@ -63,7 +63,7 @@ def pl_taxonomy_python() -> dict:
   "functional":['lambda','lambda_parameters'],
   "with" : ['with','with_item','with_statement','with_clause'], 
   "return" :['return'],
-  "structural" : ['attribute','module', 'argument_list','parenthesized_expression','pattern_list','class_definition','function_definition','block'],
+  "structural" : ['attribute', 'argument_list','parenthesized_expression','pattern_list','class_definition','function_definition','block'],
   "statements" : ['return_statement','break_statement','assignment','while_statement','expression_statement','assert_statement'],
   "expression": ['call','exec','async','ellipsis','unary_operator','binary_operator','as_pattern_target','boolean_operator','as_pattern','comparison_operator','conditional_expression','named_expression','not_operator','primary_expression','as_pattern'],
   "errors": ["ERROR"],
@@ -92,10 +92,6 @@ def nl_pos_taxonomy() -> dict: return {
 
 # %% [markdown]
 # ## AST Mapping
-
-# %%
-languages=['python', 'java']
-download_grammars(languages)
 
 # %%
 def unroll_node_types(
@@ -167,24 +163,26 @@ def get_node_span(node, lines):
     
 
 # %%
-def is_token_span_in_node_span(tok_span, node_span):
-    return node_span[0] <= tok_span[0] and tok_span[1] <= node_span[1]
+def is_token_span_in_node_span(tok_span, token: str, node_span, node_text: str):
+    return (node_span[0] <= tok_span[0] and tok_span[1] <= node_span[1]) or \
+            (node_span[0]-1 <= tok_span[0] and tok_span[1] <= node_span[1] and node_text in token)
 
 # %%
 def get_token_type(
     tok_span: tuple, # (start, end) position of a token in tokenizer
+    token: str,   # token value
     nodes: list,     # list of tree-sitter nodes
     lines: list,     # list of lines in the code
 ) -> tuple: # (parent_type, token_type) of the token
     """Get the parent AST type and token AST type of a token."""
-    node_spans = [get_node_span(node, lines) for node in nodes]
-    for i, span in enumerate(node_spans):
-        if is_token_span_in_node_span(tok_span, span):
+    for i, node in enumerate(nodes):
+        if is_token_span_in_node_span(tok_span, token, get_node_span(node, lines), node.text.decode('utf-8')):
             return nodes[i].parent.type, nodes[i].type
 
 # %%
 def get_token_nodes(
     tok_span: tuple, # (start, end) position of a token in tokenizer
+    token: str,      #actual token
     node,            # tree-sitter node
     lines: list,     # list of lines in the code
 ) -> list: 
@@ -192,7 +190,7 @@ def get_token_nodes(
     results = []
     def traverse_and_get_types(tok_span, node, lines, results) -> None:
         node_span = get_node_span(node, lines)
-        if is_token_span_in_node_span(tok_span, node_span):
+        if is_token_span_in_node_span(tok_span, token, node_span, node.text.decode('utf-8')):
             results.append(node)
         for n in node.children:
             traverse_and_get_types(tok_span, n, lines, results)
@@ -207,7 +205,6 @@ def get_nodes_by_type(
     def traverse_and_search(node, node_types, results):
         if node.type in node_types:
             results.append(node)
-            return
         for n in node.children:
             traverse_and_search(n, node_types ,results)
     results = []
@@ -253,12 +250,22 @@ def map_global_results_to_taxonomy(taxonomy_dict:dict, global_results: dict):
 # ##  Rationals Tagging
 
 # %%
-calculate_right_span = lambda start_idx, end_idx, initial_token, df : len(initial_token + ''.join(map(str, df.loc[start_idx:end_idx, 'goal_token'].tolist())))
+calculate_right_span = lambda start_idx, end_idx, df : len(''.join(map(str, df.loc[start_idx:end_idx, 'goal_token'].tolist())))
 calculate_span = lambda right_span, token : (right_span-len(str(token)), right_span)
+delete_leading_spaces = lambda string: re.sub(r'^\s+', '', string)
+delete_leading_breaks = lambda string: re.sub(r'^\n+', '', string)
+
+# %%
+def add_first_token_row(df):
+    df.loc[-1] = [df['typesets_tgt'][0][0][0], df['from_seq_id'][0], None, None, None]
+    df.index = df.index + 1
+    df = df.sort_index()
+    return df
 
 # %%
 def add_auxiliary_columns_to_experiment_result(df, delimiter_sequence: str):
-    initial_token = eval(df['typesets_tgt'][0])[0][0]
+    df.insert(0, 'rational_pos', [i for i in range(len(df))])
+    initial_token = df['goal_token'][0]
     ### TOKEN TYPE COLUMN
     token_type_column = ['src'] * len(df)
     sequence = initial_token
@@ -267,15 +274,15 @@ def add_auxiliary_columns_to_experiment_result(df, delimiter_sequence: str):
             token_type_column[idx] = 'nl'
             sequence+=goal_token
     df['token_type'] = token_type_column
-    ### TOKEN SPAN COLUMN - CHECK FOR DATASETS
-    src_initial_token_idx = df[df['token_type']== 'src'].first_valid_index()
-    df['span'] = [None] * len(df[:src_initial_token_idx]) + [calculate_span(calculate_right_span(src_initial_token_idx, index, initial_token, df), token) for index, token in df[src_initial_token_idx:]['goal_token'].items()]
+    src_initial_token_idx = df[df['token_type'] == 'src'].first_valid_index()
+    df['span'] = [None] * len(df[:src_initial_token_idx]) + [calculate_span(calculate_right_span(src_initial_token_idx, index, df), token) for index, token in df[src_initial_token_idx:]['goal_token'].items()]
+
 
 # %%
 def fill_nl_tags_in_experiment_result(df, nl_ast_types, nl_pos_types, parser):
-    initial_token = eval(df['typesets_tgt'][0])[0][0]
+    #initial_token = df['typesets_tgt'][0][0][0] if df[df['token_type'] == 'src'].first_valid_index() == 0 else ''
     ##### POS TAGS FOR NL PART
-    target_nl = initial_token + ''.join(df[df['token_type'] == 'nl']['goal_token'].map(lambda value: str(value)))
+    target_nl = ''.join(df[df['token_type'] == 'nl']['goal_token'].map(lambda value: str(value)))
     pos_tags = nltk.pos_tag(nltk.word_tokenize(target_nl))
     for idx in range(df[df['token_type']== 'src'].first_valid_index()):
         nl_tags = list(map(lambda tag: tag[1] if tag[1] in nl_pos_types else None, filter(lambda tag: tag[0] in str(df['goal_token'][idx]), pos_tags)))
@@ -285,20 +292,20 @@ def fill_nl_tags_in_experiment_result(df, nl_ast_types, nl_pos_types, parser):
     nl_target_nodes = get_nodes_by_type(parser.parse(bytes(target_code, 'utf8')).root_node, nl_ast_types)
     for token_idx in range(df[df['token_type'] == 'src'].first_valid_index(), len(df['span'])):
                 for nl_target_node in nl_target_nodes:
-                    if is_token_span_in_node_span(df['span'][token_idx], get_node_span(nl_target_node, target_code.split("\n"))) and \
-                            str(df['goal_token'][token_idx]) in nl_target_node.text.decode('utf-8'):
-                            tagged_token_list = list(filter(lambda tagged_token: tagged_token[0] in str(df['goal_token'][token_idx]), \
+                    if is_token_span_in_node_span(df['span'][token_idx], df['goal_token'][token_idx], get_node_span(nl_target_node, target_code.split("\n")), nl_target_node.text.decode('utf-8')) and \
+                            (str(df['goal_token'][token_idx]) in nl_target_node.text.decode('utf-8') or nl_target_node.text.decode('utf-8') in str(df['goal_token'][token_idx])):
+                            tagged_token_list = list(filter(lambda tagged_token: str(tagged_token[0]).replace(' ','') in str(df['goal_token'][token_idx]).replace(' ','') or str(df['goal_token'][token_idx]).replace(' ','') in str(tagged_token[0]).replace(' ',''), \
                                                         nltk.pos_tag( nltk.word_tokenize(nl_target_node.text.decode('utf-8')))))
                             if len(tagged_token_list)>0 and tagged_token_list[0][1] in nl_pos_types and tagged_token_list[0][1] not in df['tags'][token_idx]: df.at[token_idx, 'tags'] = df['tags'][token_idx] + [tagged_token_list[0][1]]
 
 # %%
 def fill_ast_tags_in_experiment_result(df, parser):
-    initial_token = eval(df['typesets_tgt'][0])[0][0] if df[df['token_type'] == 'src'].first_valid_index() == 0 else ''
-    target_code = initial_token + ''.join(df[df['token_type'] == 'src']['goal_token'].map(lambda value: str(value)))
-    src_initial_token_idx = df[df['token_type']== 'src'].first_valid_index()
+    target_code = ''.join(df[df['token_type'] == 'src']['goal_token'].map(lambda value: str(value)))
+    #target_code = delete_leading_breaks(delete_leading_spaces(target_code))
+    src_initial_token_idx = df[df['token_type'] == 'src'].first_valid_index()
     target_ast = parser.parse(bytes(target_code, 'utf8')).root_node
     for token_idx in range(src_initial_token_idx, len(df)):
-        df.at[token_idx, 'tags'] = df['tags'][token_idx] + list(map(lambda node: node.type, get_token_nodes(df['span'][token_idx], target_ast, target_code.split("\n"))))
+        df.at[token_idx, 'tags'] = df['tags'][token_idx] + list(map(lambda node: node.type, get_token_nodes(df['span'][token_idx], df['goal_token'][token_idx], target_ast, target_code.split("\n"))))
 
 # %%
 def tag_rationals(experiment_paths: list, nl_ast_types: list, nl_pos_types: list, delimiter_sequence: str, parser):
@@ -311,6 +318,8 @@ def tag_rationals(experiment_paths: list, nl_ast_types: list, nl_pos_types: list
                                                     for sample_idx in range(params['num_samples'])]
         print('*'*10 +'Tagging rationals for exp: ' +str(exp_idx) + '*'*10)
         for experiment_rational_result in experiment_rational_results:
+            experiment_rational_result = experiment_rational_result.drop('index', axis=1)
+            experiment_rational_result = add_first_token_row(experiment_rational_result)
             add_auxiliary_columns_to_experiment_result(experiment_rational_result, delimiter_sequence)
             experiment_rational_result['tags'] = [[]]*len(experiment_rational_result)
             fill_nl_tags_in_experiment_result(experiment_rational_result, nl_ast_types, nl_pos_types, parser)
@@ -318,7 +327,6 @@ def tag_rationals(experiment_paths: list, nl_ast_types: list, nl_pos_types: list
             experiment_results.append(experiment_rational_result)
         experiments[exp_idx] = experiment_results
     return experiments
-            
 
 # %% [markdown]
 # ## Rationals Aggregation
@@ -331,11 +339,11 @@ def aggregate_rationals(global_tagged_results: dict, ast_node_types: list, nl_po
         print('*'*10 +'Aggregrating rationals for exp: ' +str(exp_idx) + '*'*10)
         for result_idx, experiment_result in enumerate(experiment_results):
             for target_idx in range(len(experiment_result)):
-                for rational_idx, rational_pos in enumerate(eval(experiment_result['rationale_pos_tgt'][target_idx])):
-                    if rational_pos > 0: #initial token is ignored IMPORTANT
+                if target_idx > 0: # INITIAL TOKEN IS IGNORED
+                    for rational_idx, rational_pos in enumerate(eval(experiment_result['rationale_pos_tgt'][target_idx])):
                         try:
                             [experiment_aggregation_results[target_tag][rational_tag].append(eval(experiment_result['rationale_prob_tgt'][target_idx])[rational_idx]) if target_tag and rational_tag else None \
-                            for rational_tag in experiment_result['tags'][rational_pos - 1] for target_tag in experiment_result['tags'][target_idx]]
+                            for rational_tag in experiment_result['tags'][rational_pos] for target_tag in experiment_result['tags'][target_idx]]
                         except Exception as e:
                             print('An Error Occurred')
         aggregation_results[exp_idx] = clean_results(experiment_aggregation_results)
