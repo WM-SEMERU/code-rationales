@@ -50,44 +50,44 @@ params = param_default()
 #Programming Language Taxonomy
 def pl_taxonomy_python() -> dict:
     return {
-  "punctuation": ['{', '}', '[', ']', '(', ')','\"', ',', '.', '...', ';', ':'], 
-  "exceptions": ['raise_statement','catch', 'try', 'finally', 'throw', 'throws', 'except'],
-  "oop": ['def','class','instanceof','interface','private','protected','public','abstract','extends','package','this','implements','import','new','super'],
-  "asserts": ['assert'],
-  "types": ['tuple','set','list','pair','subscript','type','none','dictionary','integer','native','static','synchronized','transient','volatile','void','final','enum','byte','char','float','boolean','double','int','long','short','strictfp'],
-  "conditionals": ['else', 'if', 'switch', 'case', 'default'],
-  "loops": ['break', 'do', 'for', 'while', 'continue'],
-  "operators": ['as','yield','is','@','in','and','or','not','**','slice','%','+','<','>','=','+','-','*','/','%','++','--','!','==','!=','>=','<=','&&','||','?',':','~','<<','>>','>>>','&','^','|','//'],
-  "indentation": ['\n','\t'],
-  "bool": ['true', 'false'], 
-  "functional":['lambda','lambda_parameters'],
-  "with" : ['with','with_item','with_statement','with_clause'], 
-  "return" :['return'],
-  "structural" : ['attribute', 'argument_list','parenthesized_expression','pattern_list','class_definition','function_definition','block'],
-  "statements" : ['return_statement','break_statement','assignment','while_statement','expression_statement','assert_statement'],
-  "expression": ['call','exec','async','ellipsis','unary_operator','binary_operator','as_pattern_target','boolean_operator','as_pattern','comparison_operator','conditional_expression','named_expression','not_operator','primary_expression','as_pattern'],
-  "errors": ["ERROR"],
-  "identifier":["identifier"],  
-  "comment":["comment"],
-  "string": ['string','interpolation','string_content','string_end','string_start','escape_sequence'], 
+  "punctuation": ['{', '}', '[', ']', '(', ')','\"', ',', '.', '...', ';', ':'], #NO SEMANTIC
+  "exceptions": ['raise_statement','catch', 'try', 'finally', 'throw', 'throws', 'except'], #SEMANTIC
+  "oop": ['def','class','instanceof','interface','private','protected','public','abstract','extends','package','this','implements','import','new','super'], #SEMANTIC
+  "asserts": ['assert'], #SEMANTIC
+  "types": ['tuple','set','list','pair','subscript','type','none','dictionary','integer','native','static','synchronized','transient','volatile','void','final','enum','byte','char','float','boolean','double','int','long','short','strictfp'], #SEMANTIC
+  "conditionals": ['else', 'if', 'switch', 'case', 'default'], #SEMANTIC
+  "loops": ['break', 'do', 'for', 'while', 'continue'], #SEMANTIC
+  "operators": ['as','yield','is','@','in','and','or','not','**','slice','%','+','<','>','=','+','-','*','/','%','++','--','!','==','!=','>=','<=','&&','||','?',':','~','<<','>>','>>>','&','^','|','//'],#NO SEMANTIC
+  "indentation": ['\n','\t'],#NO SEMANTIC
+  "bool": ['true', 'false'], #SEMANTIC
+  "functional":['lambda','lambda_parameters'],#NO SEMANTIC
+  "with" : ['with','with_item','with_statement','with_clause'], #SEMANTIC
+  "return" :['return'],  #NO SEMANTIC
+  "structural" : ['attribute', 'argument_list','parenthesized_expression','pattern_list','class_definition','function_definition','block'], #SEMANTIC
+  "statements" : ['return_statement','break_statement','assignment','while_statement','expression_statement','assert_statement'],#SEMANTIC
+  "expression": ['call','exec','async','ellipsis','unary_operator','binary_operator','as_pattern_target','boolean_operator','as_pattern','comparison_operator','conditional_expression','named_expression','not_operator','primary_expression','as_pattern'], #NO SEMANTIC
+  "errors": ["ERROR"], #ERROR
+  "identifier":["identifier"],  #NL
+  "comment":["comment"], #NL
+  "string": ['string','interpolation','string_content','string_end','string_start','escape_sequence'], #NL
   "unknown": []
 }
 
 # %%
 def nl_pos_taxonomy() -> dict: return {
-    "nl_verb" : ['VBN', 'VBG', 'VBZ', 'VBP', 'VBD', 'VB'],
-    "nl_noun" : ['NN', 'NNPS', 'NNS', 'NNP'],
-    "nl_pronoun" : ['WP', 'PRP', 'PRP$', 'WP','WP$'], 
-    "nl_adverb" : ['RBS','RBR', 'RB', 'WRB'], 
-    "nl_adjetive" : ['JJR', 'JJS', 'JJ'], 
-    "nl_determier" : ['DT','WDT','PDT'], 
-    "nl_preposition" : ['IN', 'TO'],
-    "nl_particle" : ['RP'],
-    "nl_modal" : ['MD'],
-    "nl_conjunction" : ['CC'],
-    "nl_cardinal" : ['CD'],
-    "nl_list": ['LS'],
-    "nl_other" : ['FW', 'EX', 'SYM' , 'UH', 'POS', "''", '--',':', '(', ')', '.', ',', '``', '$']
+    "nl_verb" : ['VBN', 'VBG', 'VBZ', 'VBP', 'VBD', 'VB'], # SEMANTIC
+    "nl_noun" : ['NN', 'NNPS', 'NNS', 'NNP'], #SEMANTIC
+    "nl_pronoun" : ['WP', 'PRP', 'PRP$', 'WP','WP$'],  #SEMANTIC
+    "nl_adverb" : ['RBS','RBR', 'RB', 'WRB'], # NOS
+    "nl_adjetive" : ['JJR', 'JJS', 'JJ'], #SEMANTIC
+    "nl_determier" : ['DT','WDT','PDT'], # NOS
+    "nl_preposition" : ['IN', 'TO'],# NOS
+    "nl_particle" : ['RP'],# NOS
+    "nl_modal" : ['MD'],# NOS
+    "nl_conjunction" : ['CC'],# NOS
+    "nl_cardinal" : ['CD'],# NOS
+    "nl_list": ['LS'],# NOS
+    "nl_other" : ['FW', 'EX', 'SYM' , 'UH', 'POS', "''", '--',':', '(', ')', '.', ',', '``', '$']# NOS
 }
 
 # %% [markdown]
@@ -165,7 +165,7 @@ def get_node_span(node, lines):
 # %%
 def is_token_span_in_node_span(tok_span, token: str, node_span, node_text: str):
     return (node_span[0] <= tok_span[0] and tok_span[1] <= node_span[1]) or \
-            (node_span[0]-1 <= tok_span[0] and tok_span[1] <= node_span[1] and node_text in token)
+            (node_span[0]-1 <= tok_span[0] and tok_span[1] <= node_span[1] and str(node_text) in str(token))
 
 # %%
 def get_token_type(
@@ -408,10 +408,6 @@ global_aggregated_results = aggregate_rationals(global_tagged_results, node_type
 ###GROUP AGGREGATES BY TAXONOMY
 taxonomy = {**pl_taxonomy_python(), **nl_pos_taxonomy()}
 global_taxonomy_results = map_global_results_to_taxonomy(taxonomy, global_aggregated_results.copy())
-
-# %%
-### BOOTSTRAPPING - TAKES TIME
-bootstrap_samples_global_results(global_taxonomy_results, params['bootstrapping'])
 
 # %% [markdown]
 # ## Storing Results

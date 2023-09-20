@@ -1,8 +1,8 @@
 /usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (2.0.2) or chardet (3.0.4) doesn't match a supported version!
   warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
-2023-09-14 18:27:33.305212: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+2023-09-19 20:57:20.293209: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
 To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2023-09-14 18:27:33.462799: E tensorflow/stream_executor/cuda/cuda_blas.cc:2981] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2023-09-19 20:57:20.448341: E tensorflow/stream_executor/cuda/cuda_blas.cc:2981] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
 [nltk_data] Downloading package punkt to /root/nltk_data...
 [nltk_data]   Package punkt is already up-to-date!
 [nltk_data] Downloading package averaged_perceptron_tagger to
@@ -44,3 +44,30 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 **********Aggregrating rationals for exp: 0**********
 **********Aggregrating rationals for exp: 1**********
 **********Aggregrating rationals for exp: 2**********
+**********Aggregrating rationals for exp: 3**********
+**********Aggregrating rationals for exp: 4**********
+**********Aggregrating rationals for exp: 5**********
+**********Aggregrating rationals for exp: 6**********
+**********Aggregrating rationals for exp: 7**********
+**********Aggregrating rationals for exp: 8**********
+**********Aggregrating rationals for exp: 9**********
+**********Aggregrating rationals for exp: 10**********
+**********Aggregrating rationals for exp: 11**********
+**********Aggregrating rationals for exp: 12**********
+**********Aggregrating rationals for exp: 13**********
+**********Aggregrating rationals for exp: 14**********
+**********Aggregrating rationals for exp: 15**********
+**********Aggregrating rationals for exp: 16**********
+**********Aggregrating rationals for exp: 17**********
+**********Aggregrating rationals for exp: 18**********
+**********Aggregrating rationals for exp: 19**********
+**********Aggregrating rationals for exp: 20**********
+**********Aggregrating rationals for exp: 21**********
+**********Aggregrating rationals for exp: 22**********
+**********Aggregrating rationals for exp: 23**********
+**********Aggregrating rationals for exp: 24**********
+**********Aggregrating rationals for exp: 25**********
+**********Aggregrating rationals for exp: 26**********
+**********Aggregrating rationals for exp: 27**********
+**********Aggregrating rationals for exp: 28**********
+**********Aggregrating rationals for exp: 29**********
