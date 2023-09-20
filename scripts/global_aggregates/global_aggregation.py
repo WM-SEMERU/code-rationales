@@ -14,293 +14,84 @@ from code_rationales.loader import download_grammars
 from tree_sitter import Language, Parser
 import code_rationales
 
+# %%
+import nltk
+
 # %% [markdown]
-# ## Java Taxonomy
+# ## Setup
 
 # %%
-#Programming Language Taxonomy
-def pl_taxonomy_java() -> dict:
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('tagsets')
+
+# %%
+def param_default():
     return {
-  "parenthesis": { #Category-Level Label
-    "<{>": "{", #Token-Level Label
-    "<}>": "}",
-    "<[>": "[",
-    "<]>": "]",
-    "<(>": "(",
-    "<)>": ")"    
-  },
-  "semi_colon":{
-    "<;>": ";",
-    "<:>": ":"
-  },
-  "comma_dot":{
-    "<,>": ",",
-    "<.>": ".",
-    "<...>": "..."
-  },
-  "exceptions": {
-    "<catch>": "catch",
-    "<try>": "try",
-    "<finally>": "finally",
-    "<throw>": "throw",
-    "<throws>": "throws"
-  },
-  "oop": {
-    "<class>": "class",
-    "<instanceof>": "instanceof",
-    "<interface>": "interface",
-    "<private>": "private",
-    "<protected>": "protected",
-    "<public>": "public",
-    "<abstract>": "abstract",
-    "<extends>": "extends",
-    "<package>": "package",
-    "<this>": "this",
-    "<implements>": "implements",
-    "<import>": "import",
-    "<new>": "new",
-    "<super>": "super"
-  },
-  "asserts": {
-    "<assert>": "assert"
-  },
-  "types": {
-    "<native>": "native",
-    "<static>": "static",
-    "<synchronized>": "synchronized",
-    "<transient>": "transient",
-    "<volatile>": "volatile",
-    "<void>": "void",
-    "<final>": "final",
-    "<enum>": "enum",
-    "<byte>": "byte",
-    "<char>": "char",
-    "<float>": "float",
-    "<boolean>": "boolean",
-    "<double>": "double",
-    "<int>": "int",
-    "<long>": "long",
-    "<short>": "short",
-    "<strictfp>": "strictfp"
-  },
-  "conditionals": {
-    "<else>": "else",
-    "<if>": "if",
-    "<switch>": "switch",
-    "<case>": "case",
-    "<default>": "default"
-  },
-  "loops": {
-    "<break>": "break",
-    "<do>": "do",
-    "<for>": "for",
-    "<while>": "while",
-    "<continue>": "continue"
-  },
-  "operators": {
-    "<=>": "=",
-    "<+>": "+",
-    "<->": "-",
-    "<*>": "*",
-    "</>": "/",
-    "<%>": "%",
-    "<++>": "++",
-    "<-->": "--",
-    "<!>": "!",
-    "<==>": "==",
-    "<!=>": "!=",
-    "<greater_equal>": ">=",
-    "<lesser_equal>": "<=",
-    "<&&>": "&&",
-    "<||>": "||",
-    "<?>": "?",
-    "<:>": ":",
-    "<~>": "~",
-    "<double_lesser>": "<<",
-    "<double_greater>": ">>",
-    "<triple_greater>": ">>>",
-    "<&>": "&",
-    "<^>": "^",
-    "<|>": "|"
-  },
-  "newline": {
-    "<n>": "\n"
-  },
-  "tab": {
-    "<t>": "\t"
-  },
-  "ampersand": {
-    "<@>": "@"
-  },
-  "bool": {
-    "<true>": "true",
-    "<false>": "false",
-  }
-}
-
-# %%
-def map_from_preprocessed_java( preprocessed_sequence ) -> list:
-    a = preprocessed_sequence
-    return list(a)
+        #'dataset' : 'code_completion_random_cut_5k_30_512_tokens',
+        #'dataset' : 'code_completion_docstring_random_cut_3.8k_30_150_tokens',
+        #'dataset' : 'code_completion_docstring_signature_3.8k_30_150_tokens',
+        'dataset' : 'code_completion_docstring_5k_30_150_tokens',
+        'rational_results': '/workspaces/code-rationales/data/rationales/gpt',
+        'global_ast_results': '/workspaces/code-rationales/data/global_ast_results/gpt',
+        'global_taxonomy_results': '/workspaces/code-rationales/data/global_taxonomy_results/gpt',
+        'delimiter_sequence': '',
+        'num_samples' : 100, 
+        'size_samples' : 157,
+        'num_experiments': 30, 
+        'bootstrapping' : 500
+    }
+params = param_default()
 
 # %% [markdown]
-# ## Python Taxonomy
+# ## Taxonomy Definitions
 
 # %%
 #Programming Language Taxonomy
 def pl_taxonomy_python() -> dict:
     return {
-  "parenthesis": { #Category-Level Label
-    "<{>": "{", #Token-Level Label
-    "<}>": "}",
-    "<[>": "[",
-    "<]>": "]",
-    "<(>": "(",
-    "<)>": ")"    
-  },
-  "semi_colon":{
-    "<;>": ";",
-    "<:>": ":"
-  },
-  "comma_dot":{
-    "<,>": ",",
-    "<.>": ".",
-    "<...>": "..."
-  },
-  "exceptions": {
-    "<catch>": "catch",
-    "<try>": "try",
-    "<finally>": "finally",
-    "<throw>": "throw",
-    "<throws>": "throws"
-  },
-  "oop": {
-    "<class>": "class",
-    "<instanceof>": "instanceof",
-    "<interface>": "interface",
-    "<private>": "private",
-    "<protected>": "protected",
-    "<public>": "public",
-    "<abstract>": "abstract",
-    "<extends>": "extends",
-    "<package>": "package",
-    "<this>": "this",
-    "<implements>": "implements",
-    "<import>": "import",
-    "<new>": "new",
-    "<super>": "super"
-  },
-  "asserts": {
-    "<assert>": "assert"
-  },
-  "types": {
-    "<native>": "native",
-    "<static>": "static",
-    "<synchronized>": "synchronized",
-    "<transient>": "transient",
-    "<volatile>": "volatile",
-    "<void>": "void",
-    "<final>": "final",
-    "<enum>": "enum",
-    "<byte>": "byte",
-    "<char>": "char",
-    "<float>": "float",
-    "<boolean>": "boolean",
-    "<double>": "double",
-    "<int>": "int",
-    "<long>": "long",
-    "<short>": "short",
-    "<strictfp>": "strictfp"
-  },
-  "conditionals": {
-    "<else>": "else",
-    "<if>": "if",
-    "<switch>": "switch",
-    "<case>": "case",
-    "<default>": "default"
-  },
-  "loops": {
-    "<break>": "break",
-    "<do>": "do",
-    "<for>": "for",
-    "<while>": "while",
-    "<continue>": "continue"
-  },
-  "operators": {
-    "<=>": "=",
-    "<+>": "+",
-    "<->": "-",
-    "<*>": "*",
-    "</>": "/",
-    "<%>": "%",
-    "<++>": "++",
-    "<-->": "--",
-    "<!>": "!",
-    "<==>": "==",
-    "<!=>": "!=",
-    "<greater_equal>": ">=",
-    "<lesser_equal>": "<=",
-    "<&&>": "&&",
-    "<||>": "||",
-    "<?>": "?",
-    "<:>": ":",
-    "<~>": "~",
-    "<double_lesser>": "<<",
-    "<double_greater>": ">>",
-    "<triple_greater>": ">>>",
-    "<&>": "&",
-    "<^>": "^",
-    "<|>": "|"
-  },
-  "newline": {
-    "<n>": "\n"
-  },
-  "tab": {
-    "<t>": "\t"
-  },
-  "ampersand": {
-    "<@>": "@"
-  },
-  "bool": {
-    "<true>": "true",
-    "<false>": "false",
-  }
+  "punctuation": ['{', '}', '[', ']', '(', ')','\"', ',', '.', '...', ';', ':'], 
+  "exceptions": ['raise_statement','catch', 'try', 'finally', 'throw', 'throws', 'except'],
+  "oop": ['def','class','instanceof','interface','private','protected','public','abstract','extends','package','this','implements','import','new','super'],
+  "asserts": ['assert'],
+  "types": ['tuple','set','list','pair','subscript','type','none','dictionary','integer','native','static','synchronized','transient','volatile','void','final','enum','byte','char','float','boolean','double','int','long','short','strictfp'],
+  "conditionals": ['else', 'if', 'switch', 'case', 'default'],
+  "loops": ['break', 'do', 'for', 'while', 'continue'],
+  "operators": ['as','yield','is','@','in','and','or','not','**','slice','%','+','<','>','=','+','-','*','/','%','++','--','!','==','!=','>=','<=','&&','||','?',':','~','<<','>>','>>>','&','^','|','//'],
+  "indentation": ['\n','\t'],
+  "bool": ['true', 'false'], 
+  "functional":['lambda','lambda_parameters'],
+  "with" : ['with','with_item','with_statement','with_clause'], 
+  "return" :['return'],
+  "structural" : ['attribute', 'argument_list','parenthesized_expression','pattern_list','class_definition','function_definition','block'],
+  "statements" : ['return_statement','break_statement','assignment','while_statement','expression_statement','assert_statement'],
+  "expression": ['call','exec','async','ellipsis','unary_operator','binary_operator','as_pattern_target','boolean_operator','as_pattern','comparison_operator','conditional_expression','named_expression','not_operator','primary_expression','as_pattern'],
+  "errors": ["ERROR"],
+  "identifier":["identifier"],  
+  "comment":["comment"],
+  "string": ['string','interpolation','string_content','string_end','string_start','escape_sequence'], 
+  "unknown": []
+}
+
+# %%
+def nl_pos_taxonomy() -> dict: return {
+    "nl_verb" : ['VBN', 'VBG', 'VBZ', 'VBP', 'VBD', 'VB'],
+    "nl_noun" : ['NN', 'NNPS', 'NNS', 'NNP'],
+    "nl_pronoun" : ['WP', 'PRP', 'PRP$', 'WP','WP$'], 
+    "nl_adverb" : ['RBS','RBR', 'RB', 'WRB'], 
+    "nl_adjetive" : ['JJR', 'JJS', 'JJ'], 
+    "nl_determier" : ['DT','WDT','PDT'], 
+    "nl_preposition" : ['IN', 'TO'],
+    "nl_particle" : ['RP'],
+    "nl_modal" : ['MD'],
+    "nl_conjunction" : ['CC'],
+    "nl_cardinal" : ['CD'],
+    "nl_list": ['LS'],
+    "nl_other" : ['FW', 'EX', 'SYM' , 'UH', 'POS', "''", '--',':', '(', ')', '.', ',', '``', '$']
 }
 
 # %% [markdown]
 # ## AST Mapping
-
-# %% [markdown]
-# ### Calculate Spans
-
-# %%
-#df_rationals = pd.read_csv('/workspaces/code-rationales/data/rationales/gpt/testing/[t_100]_[max_tgt_44]_[exp:0]_.csv',index_col=0)
-
-# %%
-#df_rationals = df_rationals[df_rationals['from_seq_id'] == 0]
-
-# %%
-### Retrieve the generated output
-#initial_token = eval(df_rationals['typesets_tgt'][0])[0][0]
-#code = initial_token + ''.join(df_rationals['goal_token'])
-#code
-
-# %%
-#### Add Span column
-#calculate_left_span = lambda index : len(initial_token + ''.join(df_rationals['goal_token'][:index]))
-#calculate_right_span = lambda left_span, token : len(left_span) + len(token)
-#span_col = list(map(lambda tuple: (tuple[0],tuple[0]+len(tuple[1])),[(calculate_left_span(index),token) for index, token in df_rationals['goal_token'].items()]))
-#df_rationals.insert(loc=df_rationals.columns.get_loc('goal_token')+1, column='span', value=span_col)
-
-# %%
-#df_rationals
-
-# %% [markdown]
-# ### Map Tokens with Nodes
-
-# %%
-languages=['python', 'java']
-download_grammars(languages)
 
 # %%
 def unroll_node_types(
@@ -372,20 +163,26 @@ def get_node_span(node, lines):
     
 
 # %%
+def is_token_span_in_node_span(tok_span, token: str, node_span, node_text: str):
+    return (node_span[0] <= tok_span[0] and tok_span[1] <= node_span[1]) or \
+            (node_span[0]-1 <= tok_span[0] and tok_span[1] <= node_span[1] and node_text in token)
+
+# %%
 def get_token_type(
     tok_span: tuple, # (start, end) position of a token in tokenizer
+    token: str,   # token value
     nodes: list,     # list of tree-sitter nodes
     lines: list,     # list of lines in the code
 ) -> tuple: # (parent_type, token_type) of the token
     """Get the parent AST type and token AST type of a token."""
-    node_spans = [get_node_span(node, lines) for node in nodes]
-    for i, span in enumerate(node_spans):
-        if (span[0] <= tok_span[0] and tok_span[0] < span[1]) or (span[0] < tok_span[1] and tok_span[1] <= span[1]):
+    for i, node in enumerate(nodes):
+        if is_token_span_in_node_span(tok_span, token, get_node_span(node, lines), node.text.decode('utf-8')):
             return nodes[i].parent.type, nodes[i].type
 
 # %%
 def get_token_nodes(
     tok_span: tuple, # (start, end) position of a token in tokenizer
+    token: str,      #actual token
     node,            # tree-sitter node
     lines: list,     # list of lines in the code
 ) -> list: 
@@ -393,89 +190,32 @@ def get_token_nodes(
     results = []
     def traverse_and_get_types(tok_span, node, lines, results) -> None:
         node_span = get_node_span(node, lines)
-        if (node_span[0] <= tok_span[0] and tok_span[0] < node_span[1]) or (node_span[0] < tok_span[1] and tok_span[1] <= node_span[1]):
-            results.append(node.type)
+        if is_token_span_in_node_span(tok_span, token, node_span, node.text.decode('utf-8')):
+            results.append(node)
         for n in node.children:
             traverse_and_get_types(tok_span, n, lines, results)
     traverse_and_get_types(tok_span, node, lines, results)
     return results
 
 # %%
-#parser, node_types = create_parser('python')
-
-# %%
-#nodes = traverse(parser.parse(bytes(code, 'utf8')).root_node)
-
-# %%
-#print(get_token_type(df_rationals['span'][40], nodes, code.split("\n")))
-
-# %%
-#print(get_token_nodes(df_rationals['span'][42], parser.parse(bytes(code, 'utf8')).root_node, code.split("\n")))
-
-# %%
-#print(eval(df_rationals['rationale_pos_tgt'][2]))
-#print(eval(df_rationals['rationale_prob_tgt'][2]))
-
-# %%
-#print(df_rationals['goal_token'][eval(df_rationals['rationale_pos_tgt'][2])[0]-1])
-#print(df_rationals['span'][eval(df_rationals['rationale_pos_tgt'][2])[0]-1])
-
+def get_nodes_by_type(
+    node, 
+    node_types: list
+) -> list :
+    def traverse_and_search(node, node_types, results):
+        if node.type in node_types:
+            results.append(node)
+        for n in node.children:
+            traverse_and_search(n, node_types ,results)
+    results = []
+    traverse_and_search(node, node_types, results)
+    return results
 
 # %% [markdown]
-# ##  Rational Global Aggregates
+# ## Taxonomy Mapping 
 
 # %%
-def param_default():
-    return {
-        'dataset' : 'code_completion_random_cut_5k_30_512_tokens',
-        #'dataset' : 'code_completion_docstring_random_cut_3.8k_30_150_tokens',
-        #'dataset' : 'code_completion_docstring_signature_3.8k_30_150_tokens',
-        #'dataset' : 'code_completion_docstring_5k_30_150_tokens',
-        'rational_results': '/workspaces/code-rationales/data/rationales/gpt',
-        'global_results': '/workspaces/code-rationales/data/global_results/gpt',
-        'num_samples' : 100, 
-        'size_samples' : 44,
-        'num_experiments': 30, 
-        'bootstrapping' : 500
-    }
-params = param_default()
-
-# %%
-get_experiment_path =  lambda samples, size, exp: params['rational_results'] + '/' + params['dataset'] + '/' + '[t_'+str(samples)+']_[max_tgt_'+str(size)+']_[exp:'+str(exp)+']_.csv'
-calculate_left_span = lambda index, initial_token, df_rationals : len(str(initial_token) + ''.join(str(df_rationals['goal_token'][:index])))
-calculate_right_span = lambda left_span, token : len(left_span) + len(token)
-
-# %%
-### Retrieve experiments
-experiment_paths = [get_experiment_path(params['num_samples'], params['size_samples'], exp) for exp in range(params['num_experiments'])]
-### Define parser
-parser, node_types = create_parser('python')
-
-# %%
-def aggregate_rationals(experiment_paths: list, parser, node_types: list):
-    global_results = {node_type : {node_type : [] for node_type in node_types} for node_type in node_types}
-    for exp_idx, experiment_path in enumerate(experiment_paths):
-        df_experiment = pd.read_csv(experiment_path, index_col=0)
-        experiment_rational_results = [df_experiment[(df_experiment['from_seq_id'] == sample_idx) | (df_experiment['from_seq_id'] == str(sample_idx))].reset_index() for sample_idx in range(params['num_samples'])]
-        print('*'*10 +'Aggregating rationales for exp: ' +str(exp_idx) + '*'*10)
-        for experiment_rational_result in experiment_rational_results:
-            initial_token = eval(experiment_rational_result['typesets_tgt'][0])[0][0]
-            experiment_rational_result.insert(loc=experiment_rational_result.columns.get_loc('goal_token')+1, column='span', value=list(map(lambda tuple: (tuple[0],tuple[0]+len(tuple[1])),[(calculate_left_span(index, initial_token, experiment_rational_result), str(token)) for index, token in experiment_rational_result['goal_token'].items()])))
-            target_code = eval(experiment_rational_result['typesets_tgt'][0])[0][0] + ''.join(str(experiment_rational_result['goal_token']))
-            target_ast = parser.parse(bytes(target_code, 'utf8')).root_node
-            for target_token_idx in range(len(experiment_rational_result['span'])):
-                target_node_types = get_token_nodes(experiment_rational_result['span'][target_token_idx], target_ast, target_code.split("\n"))
-                for rational_idx, rational_pos in enumerate(eval(experiment_rational_result['rationale_pos_tgt'][target_token_idx])):
-                    if eval(experiment_rational_result['rationale_pos_tgt'][target_token_idx])[rational_idx] > 0: #rational 1 position.
-                        try:
-                            rational_node_types = get_token_nodes(experiment_rational_result['span'][eval(experiment_rational_result['rationale_pos_tgt'][target_token_idx])[rational_idx]-1], target_ast, target_code.split("\n"))
-                            [global_results[target_node_type][rational_node_type].append(eval(experiment_rational_result['rationale_prob_tgt'][target_token_idx])[rational_idx]) for target_node_type in target_node_types for rational_node_type in rational_node_types]
-                        except Exception as e:
-                            print('rational pos out of range')
-    return global_results
-
-# %%
-def clean_global_results(global_results):
+def clean_results(global_results):
     def clean_dictonary(result_dict):
         clean_dict = result_dict.copy()
         for key, value in result_dict.items():
@@ -485,6 +225,132 @@ def clean_global_results(global_results):
     for key, value in global_results.items():
         global_results[key] = clean_dictonary(value)
     return clean_dictonary(global_results)
+
+# %%
+def search_category_by_token(taxonomy_dict: dict, token_type: str):
+    for key, value in taxonomy_dict.items():
+        if token_type in value:
+            return key
+    return 'unknown'
+
+# %%
+def map_to_taxonomy(taxonomy_dict: dict, result_dict: dict):
+    result_dict = result_dict.copy()
+    mappings = {token: {category : [] for category in taxonomy_dict.keys()} for token in taxonomy_dict.keys()}
+    for target_token, value in result_dict.items():
+        for source_token, probs in value.items():
+            mappings[search_category_by_token(taxonomy_dict, target_token)][search_category_by_token(taxonomy_dict, source_token)]+=probs
+    return clean_results(mappings)
+
+# %%
+def map_global_results_to_taxonomy(taxonomy_dict:dict, global_results: dict):
+    return dict(zip(global_results.keys(), map(lambda aggegrations: map_to_taxonomy(taxonomy_dict, aggegrations), global_results.values())))
+
+# %% [markdown]
+# ##  Rationals Tagging
+
+# %%
+calculate_right_span = lambda start_idx, end_idx, df : len(''.join(map(str, df.loc[start_idx:end_idx, 'goal_token'].tolist())))
+calculate_span = lambda right_span, token : (right_span-len(str(token)), right_span)
+delete_leading_spaces = lambda string: re.sub(r'^\s+', '', string)
+delete_leading_breaks = lambda string: re.sub(r'^\n+', '', string)
+
+# %%
+def add_first_token_row(df):
+    df.loc[-1] = [df['typesets_tgt'][0][0][0], df['from_seq_id'][0], None, None, None]
+    df.index = df.index + 1
+    df = df.sort_index()
+    return df
+
+# %%
+def add_auxiliary_columns_to_experiment_result(df, delimiter_sequence: str):
+    df.insert(0, 'rational_pos', [i for i in range(len(df))])
+    initial_token = df['goal_token'][0]
+    ### TOKEN TYPE COLUMN
+    token_type_column = ['src'] * len(df)
+    sequence = initial_token
+    for idx, goal_token in enumerate(df['goal_token']):
+        if delimiter_sequence not in sequence:
+            token_type_column[idx] = 'nl'
+            sequence+=goal_token
+    df['token_type'] = token_type_column
+    src_initial_token_idx = df[df['token_type'] == 'src'].first_valid_index()
+    df['span'] = [None] * len(df[:src_initial_token_idx]) + [calculate_span(calculate_right_span(src_initial_token_idx, index, df), token) for index, token in df[src_initial_token_idx:]['goal_token'].items()]
+
+
+# %%
+def fill_nl_tags_in_experiment_result(df, nl_ast_types, nl_pos_types, parser):
+    #initial_token = df['typesets_tgt'][0][0][0] if df[df['token_type'] == 'src'].first_valid_index() == 0 else ''
+    ##### POS TAGS FOR NL PART
+    target_nl = ''.join(df[df['token_type'] == 'nl']['goal_token'].map(lambda value: str(value)))
+    pos_tags = nltk.pos_tag(nltk.word_tokenize(target_nl))
+    for idx in range(df[df['token_type']== 'src'].first_valid_index()):
+        nl_tags = list(map(lambda tag: tag[1] if tag[1] in nl_pos_types else None, filter(lambda tag: tag[0] in str(df['goal_token'][idx]), pos_tags)))
+        if nl_tags: df.at[idx, 'tags'] = df['tags'][idx] + [nl_tags[-1]]
+    ##### POS TAGS FOR CODE PART
+    target_code = ''.join(df[df['token_type'] == 'src']['goal_token'].map(lambda value: str(value)))
+    nl_target_nodes = get_nodes_by_type(parser.parse(bytes(target_code, 'utf8')).root_node, nl_ast_types)
+    for token_idx in range(df[df['token_type'] == 'src'].first_valid_index(), len(df['span'])):
+                for nl_target_node in nl_target_nodes:
+                    if is_token_span_in_node_span(df['span'][token_idx], df['goal_token'][token_idx], get_node_span(nl_target_node, target_code.split("\n")), nl_target_node.text.decode('utf-8')) and \
+                            (str(df['goal_token'][token_idx]) in nl_target_node.text.decode('utf-8') or nl_target_node.text.decode('utf-8') in str(df['goal_token'][token_idx])):
+                            tagged_token_list = list(filter(lambda tagged_token: str(tagged_token[0]).replace(' ','') in str(df['goal_token'][token_idx]).replace(' ','') or str(df['goal_token'][token_idx]).replace(' ','') in str(tagged_token[0]).replace(' ',''), \
+                                                        nltk.pos_tag( nltk.word_tokenize(nl_target_node.text.decode('utf-8')))))
+                            if len(tagged_token_list)>0 and tagged_token_list[0][1] in nl_pos_types and tagged_token_list[0][1] not in df['tags'][token_idx]: df.at[token_idx, 'tags'] = df['tags'][token_idx] + [tagged_token_list[0][1]]
+
+# %%
+def fill_ast_tags_in_experiment_result(df, parser):
+    target_code = ''.join(df[df['token_type'] == 'src']['goal_token'].map(lambda value: str(value)))
+    #target_code = delete_leading_breaks(delete_leading_spaces(target_code))
+    src_initial_token_idx = df[df['token_type'] == 'src'].first_valid_index()
+    target_ast = parser.parse(bytes(target_code, 'utf8')).root_node
+    for token_idx in range(src_initial_token_idx, len(df)):
+        df.at[token_idx, 'tags'] = df['tags'][token_idx] + list(map(lambda node: node.type, get_token_nodes(df['span'][token_idx], df['goal_token'][token_idx], target_ast, target_code.split("\n"))))
+
+# %%
+def tag_rationals(experiment_paths: list, nl_ast_types: list, nl_pos_types: list, delimiter_sequence: str, parser):
+    experiments = {}
+    for exp_idx, experiment_path in enumerate(experiment_paths):
+        experiment_results = []
+        df_experiment = pd.read_csv(experiment_path, index_col=0)
+        experiment_rational_results = [df_experiment[(df_experiment['from_seq_id'] == sample_idx) | \
+                                                     (df_experiment['from_seq_id'] == str(sample_idx))].reset_index() \
+                                                    for sample_idx in range(params['num_samples'])]
+        print('*'*10 +'Tagging rationals for exp: ' +str(exp_idx) + '*'*10)
+        for experiment_rational_result in experiment_rational_results:
+            experiment_rational_result = experiment_rational_result.drop('index', axis=1)
+            experiment_rational_result = add_first_token_row(experiment_rational_result)
+            add_auxiliary_columns_to_experiment_result(experiment_rational_result, delimiter_sequence)
+            experiment_rational_result['tags'] = [[]]*len(experiment_rational_result)
+            fill_nl_tags_in_experiment_result(experiment_rational_result, nl_ast_types, nl_pos_types, parser)
+            fill_ast_tags_in_experiment_result(experiment_rational_result, parser)
+            experiment_results.append(experiment_rational_result)
+        experiments[exp_idx] = experiment_results
+    return experiments
+
+# %% [markdown]
+# ## Rationals Aggregation
+
+# %%
+def aggregate_rationals(global_tagged_results: dict, ast_node_types: list, nl_pos_types: list):
+    aggregation_results = {exp_id: None for exp_id in global_tagged_results.keys()}
+    for exp_idx, experiment_results in global_tagged_results.items():
+        experiment_aggregation_results = {node_type : {node_type : [] for node_type in ast_node_types + nl_pos_types} for node_type in ast_node_types + nl_pos_types}
+        print('*'*10 +'Aggregrating rationals for exp: ' +str(exp_idx) + '*'*10)
+        for result_idx, experiment_result in enumerate(experiment_results):
+            for target_idx in range(len(experiment_result)):
+                if target_idx > 0: # INITIAL TOKEN IS IGNORED
+                    for rational_idx, rational_pos in enumerate(eval(experiment_result['rationale_pos_tgt'][target_idx])):
+                        try:
+                            [experiment_aggregation_results[target_tag][rational_tag].append(eval(experiment_result['rationale_prob_tgt'][target_idx])[rational_idx]) if target_tag and rational_tag else None \
+                            for rational_tag in experiment_result['tags'][rational_pos] for target_tag in experiment_result['tags'][target_idx]]
+                        except Exception as e:
+                            print('An Error Occurred')
+        aggregation_results[exp_idx] = clean_results(experiment_aggregation_results)
+    return aggregation_results
+
+# %% [markdown]
+# ## Bootstrapping
 
 # %%
 def bootstrapping( np_data, np_func, size ):
@@ -510,25 +376,54 @@ def bootstrapping( np_data, np_func, size ):
 
 # %%
 def bootstrap_samples_global_results(global_results: dict, size: int):
-    for target_type, target_value in global_results.items():
-        for source_type, source_value in target_value.items():
-            global_results[target_type][source_type] = bootstrapping(source_value, np.mean, size).tolist()
+    for exp_id in global_results.keys():
+        experiment_result = global_results[exp_id]
+        for target_type, target_value in global_results[exp_id].items():
+            for source_type, source_value in target_value.items():
+                experiment_result[target_type][source_type] = bootstrapping(source_value, np.mean, size).tolist()
+        global_results[exp_id] = experiment_result
+
+# %% [markdown]
+# ## Running Experiment
 
 # %%
-### WARNING TAKES TIME
-global_results = clean_global_results(aggregate_rationals(experiment_paths, parser, node_types))
+### Retrieve experiments
+get_experiment_path =  lambda samples, size, exp: params['rational_results'] + '/' + params['dataset'] + '/' + '[t_'+str(samples)+']_[max_tgt_'+str(size)+']_[exp:'+str(exp)+'].csv'
+experiment_paths = [get_experiment_path(params['num_samples'], params['size_samples'], exp) for exp in range(params['num_experiments'])]
+### Define parser
+parser, node_types = create_parser('python')
+### Defines pos tags 
+pos_types = list(nltk.data.load('help/tagsets/upenn_tagset.pickle'))
 
 # %%
-### WARNING TAKES TIME
-bootstrap_samples_global_results(global_results, params['bootstrapping'])
+###TAG EXPERIMENTS RESULTS - TAKES TIME
+nl_ast_types = ['comment','identifier','string']
+global_tagged_results = tag_rationals(experiment_paths, nl_ast_types, pos_types, params['delimiter_sequence'], parser)
 
 # %%
-with open(params['global_results'] + '/' + params['dataset'] + '.txt', 'w') as file:
-    file.write(json.dumps(global_results))
+###AGGREGATE RATIONALS - TAKES TIME
+global_aggregated_results = aggregate_rationals(global_tagged_results, node_types, pos_types)
 
 # %%
-with open(params['global_results'] + '/' + params['dataset'] + '.txt', 'r') as file:
-    global_results = json.load(file)
-print(global_results['identifier']['identifier'])
+###GROUP AGGREGATES BY TAXONOMY
+taxonomy = {**pl_taxonomy_python(), **nl_pos_taxonomy()}
+global_taxonomy_results = map_global_results_to_taxonomy(taxonomy, global_aggregated_results.copy())
+
+# %%
+### BOOTSTRAPPING - TAKES TIME
+bootstrap_samples_global_results(global_taxonomy_results, params['bootstrapping'])
+
+# %% [markdown]
+# ## Storing Results
+
+# %%
+for exp_id, exp_aggregation in global_aggregated_results.items():
+    with open(params['global_ast_results'] + '/' + params['dataset'] +'_exp_' + str(exp_id) +'.txt', 'w') as file:
+        file.write(json.dumps(exp_aggregation))
+
+# %%
+for exp_id, exp_aggregation in global_taxonomy_results.items():
+    with open(params['global_taxonomy_results'] + '/' + params['dataset'] +'_exp_' + str(exp_id) +'.txt', 'w') as file:
+        file.write(json.dumps(exp_aggregation))
 
 
