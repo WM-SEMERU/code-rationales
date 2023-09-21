@@ -193,7 +193,7 @@ def get_node_span(node, lines):
 # %%
 def is_token_span_in_node_span(tok_span, token: str, node_span, node_text: str):
     return (node_span[0] <= tok_span[0] and tok_span[1] <= node_span[1]) or \
-            (node_span[0]-1 <= tok_span[0] and tok_span[1] <= node_span[1] and node_text in token)
+            (node_span[0]-1 <= tok_span[0] and tok_span[1] <= node_span[1] and node_text in str(token))
 
 # %%
 def get_token_type(
@@ -301,7 +301,7 @@ delete_leading_breaks = lambda string: re.sub(r'^\n+', '', string)
 
 # %%
 def add_first_token_row(df):
-    df.loc[-1] = [df['typesets_tgt'][0][0][0], df['from_seq_id'][0], None, None, None, df['exp'][0]]
+    df.loc[-1] = [eval(df['typesets_tgt'][0])[0][0], df['from_seq_id'][0], None, None, None, df['exp'][0]]
     df.index = df.index + 1
     df = df.sort_index()
     return df
@@ -451,6 +451,9 @@ tagged_results = tag_rationals(rationales_results_dfs, nl_ast_types, pos_types, 
 
 # %%
 tagged_results = merge_experiments(tagged_results)
+
+# %%
+tagged_results[0][tagged_results[0]['from_seq_id']==1]
 
 # %% [markdown]
 # ### Storing the results
