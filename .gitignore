@@ -164,6 +164,9 @@ scripts/compatibility/santacoder/logs/*
 /workspaces/code-rationales/scripts/global_aggregates/logs/
 /workspaces/code-rationales/scripts/global_aggregates/logs/*
 
+/workspaces/code-rationales/scripts/rationales_tagging/logs
+/workspaces/code-rationales/scripts/rationales_tagging/logs/*
+
 /semeru-datasets/
 /data/
 /datax/
