@@ -78,26 +78,27 @@ nltk.download('tagsets')
 #Programming Language Taxonomy
 def pl_taxonomy_python() -> dict:
     return {
-  "punctuation": ['{', '}', '[', ']', '(', ')','\"', ',', '.', '...', ';', ':'], 
-  "exceptions": ['raise_statement','catch', 'try', 'finally', 'throw', 'throws', 'except'],
-  "oop": ['def','class','instanceof','interface','private','protected','public','abstract','extends','package','this','implements','import','new','super'],
-  "asserts": ['assert'],
-  "types": ['tuple','set','list','pair','subscript','type','none','dictionary','integer','native','static','synchronized','transient','volatile','void','final','enum','byte','char','float','boolean','double','int','long','short','strictfp'],
-  "conditionals": ['else', 'if', 'switch', 'case', 'default'],
-  "loops": ['break', 'do', 'for', 'while', 'continue'],
-  "operators": ['as','yield','is','@','in','and','or','not','**','slice','%','+','<','>','=','+','-','*','/','%','++','--','!','==','!=','>=','<=','&&','||','?',':','~','<<','>>','>>>','&','^','|','//'],
-  "indentation": ['\n','\t'],
-  "bool": ['true', 'false'], 
-  "functional":['lambda','lambda_parameters'],
-  "with" : ['with','with_item','with_statement','with_clause'], 
-  "return" :['return'],
-  "structural" : ['attribute', 'argument_list','parenthesized_expression','pattern_list','class_definition','function_definition','block'],
-  "statements" : ['return_statement','break_statement','assignment','while_statement','expression_statement','assert_statement'],
-  "expression": ['call','exec','async','ellipsis','unary_operator','binary_operator','as_pattern_target','boolean_operator','as_pattern','comparison_operator','conditional_expression','named_expression','not_operator','primary_expression','as_pattern'],
-  "errors": ["ERROR"],
-  "identifier":["identifier"],  
-  "comment":["comment"],
-  "string": ['string','interpolation','string_content','string_end','string_start','escape_sequence'], 
+  "punctuation": ['{', '}', '[', ']', '(', ')','\"', ',', '.', '...', ';', ':'], #NO SEMANTIC
+  "exceptions": ['raise_statement','catch', 'try', 'finally', 'throw', 'throws', 'except'], #SEMANTIC
+  "oop": ['def','class','instanceof','interface','private','protected','public','abstract','extends','package','this','implements','import','new','super'], #SEMANTIC
+  "asserts": ['assert'], #SEMANTIC
+  "types": ['tuple','set','list','pair','subscript','type','none','dictionary','integer','native','static','synchronized','transient','volatile','void','final','enum','byte','char','float','boolean','double','int','long','short','strictfp'], #SEMANTIC
+  "conditionals": ['else', 'if', 'switch', 'case', 'default'], #SEMANTIC
+  "loops": ['break', 'do', 'for', 'while', 'continue'], #SEMANTIC
+  "operators": ['as','yield','is','@','in','and','or','not','**','slice','%','+','<','>','=','+','-','*','/','%','++','--','!','==','!=','>=','<=','&&','||','?',':','~','<<','>>','>>>','&','^','|','//'],#NO SEMANTIC
+  "indentation": ['\n','\t'],#NO SEMANTIC
+  "bool": ['true', 'false'], #SEMANTIC
+  "functional":['lambda','lambda_parameters'],#NO SEMANTIC
+  "with" : ['with','with_item','with_statement','with_clause'], #SEMANTIC
+  "return" :['return'],  #NO SEMANTIC
+  "structural" : ['attribute', 'argument_list','parenthesized_expression','pattern_list','class_definition','function_definition','block'], #SEMANTIC
+  "statements" : ['return_statement','break_statement','assignment','while_statement','expression_statement','assert_statement'],#SEMANTIC
+  "expression": ['call','exec','async','ellipsis','unary_operator','binary_operator','as_pattern_target','boolean_operator','as_pattern','comparison_operator','conditional_expression','named_expression','not_operator','primary_expression','as_pattern'], #NO SEMANTIC
+  "errors": ["ERROR"], #ERROR
+  "identifier":["identifier"],  #NL
+  "comment":["comment"], #NL
+  "string": ['string','interpolation','string_content','string_end','string_start','escape_sequence'], #NL
+  "excluded": ['module'], ### EXCLUDED CATEGORY
   "unknown": []
 }
 
@@ -108,7 +109,7 @@ def nl_pos_taxonomy() -> dict: return {
     "nl_pronoun" : ['WP', 'PRP', 'PRP$', 'WP','WP$'], 
     "nl_adverb" : ['RBS','RBR', 'RB', 'WRB'], 
     "nl_adjetive" : ['JJR', 'JJS', 'JJ'], 
-    "nl_determier" : ['DT','WDT','PDT'], 
+    "nl_determiner" : ['DT','WDT','PDT'], 
     "nl_preposition" : ['IN', 'TO'],
     "nl_particle" : ['RP'],
     "nl_modal" : ['MD'],
