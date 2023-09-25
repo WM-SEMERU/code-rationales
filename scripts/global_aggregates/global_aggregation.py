@@ -70,6 +70,7 @@ def pl_taxonomy_python() -> dict:
   "identifier":["identifier"],  #NL
   "comment":["comment"], #NL
   "string": ['string','interpolation','string_content','string_end','string_start','escape_sequence'], #NL
+  "excluded": ['module'], ### EXCLUDED CATEGORY
   "unknown": []
 }
 
@@ -80,7 +81,7 @@ def nl_pos_taxonomy() -> dict: return {
     "nl_pronoun" : ['WP', 'PRP', 'PRP$', 'WP','WP$'],  #SEMANTIC
     "nl_adverb" : ['RBS','RBR', 'RB', 'WRB'], # NOS
     "nl_adjetive" : ['JJR', 'JJS', 'JJ'], #SEMANTIC
-    "nl_determier" : ['DT','WDT','PDT'], # NOS
+    "nl_determiner" : ['DT','WDT','PDT'], # NOS
     "nl_preposition" : ['IN', 'TO'],# NOS
     "nl_particle" : ['RP'],# NOS
     "nl_modal" : ['MD'],# NOS
