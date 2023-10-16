@@ -9,4 +9,10 @@ d = { 'settings': { 'branch': 'main',
                                       'code_rationales.core.method_size_vector': ( 'bart_preprocessing.html#method_size_vector',
                                                                                    'code_rationales/core.py')},
             'code_rationales.loader': { 'code_rationales.loader.download_grammars': ( 'grammar_loader.html#download_grammars',
-                                                                                      'code_rationales/loader.py')}}}
+                                                                                      'code_rationales/loader.py')},
+            'code_rationales.taxonomies': { 'code_rationales.taxonomies.global_groups': ( 'taxonomies.html#global_groups',
+                                                                                          'code_rationales/taxonomies.py'),
+                                            'code_rationales.taxonomies.nl_pos_taxonomy': ( 'taxonomies.html#nl_pos_taxonomy',
+                                                                                            'code_rationales/taxonomies.py'),
+                                            'code_rationales.taxonomies.pl_taxonomy_python': ( 'taxonomies.html#pl_taxonomy_python',
+                                                                                               'code_rationales/taxonomies.py')}}}
