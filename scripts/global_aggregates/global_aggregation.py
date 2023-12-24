@@ -122,7 +122,7 @@ def get_node_span(node, lines):
 # %%
 def is_token_span_in_node_span(tok_span, token: str, node_span, node_text: str):
     return (node_span[0] <= tok_span[0] and tok_span[1] <= node_span[1]) or \
-            (node_span[0]-1 <= tok_span[0] and tok_span[1] <= node_span[1] and node_text in token) or \
+            (node_span[0]-1 <= tok_span[0] and tok_span[1] <= node_span[1] and node_text in str(token)) or \
             (tok_span[0] <= node_span[0] and node_span[1] <= tok_span[1])
 
 # %%
