@@ -40,9 +40,9 @@ def param_default():
         'global_ast_results': '/workspaces/code-rationales/data/global_ast_results/gpt',
         'global_taxonomy_results': '/workspaces/code-rationales/data/global_taxonomy_results/gpt',
         'delimiter_sequence': '',
-        'num_samples' : 100, 
+        'num_samples' : 100,
         'size_samples' : 157,
-        'num_experiments': 30, 
+        'num_experiments': 30,
         'bootstrapping' : 500
     }
 params = param_default()
@@ -222,10 +222,9 @@ def map_to_taxonomy(sc_taxonomy_dict:dict, nl_taxonomy_dict: dict, result_dict: 
     for target_token, value in result_dict.items():
         for source_token, rationales_values in value.items():
             try: 
-                if source_token[:2] == 'sc':
-                    mappings[search_category_by_token(sc_taxonomy_dict, target_token.split('_|_')[1])][search_category_by_token(sc_taxonomy_dict, source_token.split('_|_')[1])] += rationales_values 
-                elif source_token[:2] == 'nl':
-                    mappings[search_category_by_token(sc_taxonomy_dict, target_token.split('_|_')[1])][search_category_by_token(nl_taxonomy_dict, source_token.split('_|_')[1])] += rationales_values
+                target_key = search_category_by_token(sc_taxonomy_dict, target_token.split('_|_')[1]) if target_token[:2] == 'sc' else search_category_by_token(nl_taxonomy_dict, target_token.split('_|_')[1])
+                source_key = search_category_by_token(sc_taxonomy_dict, source_token.split('_|_')[1]) if source_token[:2] == 'sc' else search_category_by_token(nl_taxonomy_dict, source_token.split('_|_')[1])
+                mappings[target_key][source_key] += rationales_values
             except Exception as e:
                 print(e)
     return clean_results(mappings)
