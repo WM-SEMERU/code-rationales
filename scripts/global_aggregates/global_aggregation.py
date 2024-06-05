@@ -32,16 +32,16 @@ nltk.download('tagsets')
 # %%
 def param_default():
     return {
-        #'dataset' : 'code_completion_random_cut_5k_30_512_tokens',
+        'dataset' : 'code_completion_random_cut_5k_30_512_tokens',
         #'dataset' : 'code_completion_docstring_random_cut_3.8k_30_150_tokens',
         #'dataset' : 'code_completion_docstring_signature_3.8k_30_150_tokens',
-        'dataset' : 'code_completion_docstring_5k_30_150_tokens',
+        #'dataset' : 'code_completion_docstring_5k_30_150_tokens',
         'rational_results': '/workspaces/code-rationales/data/rationales/gpt',
-        'global_ast_results': '/workspaces/code-rationales/data/global_ast_results/gpt',
-        'global_taxonomy_results': '/workspaces/code-rationales/data/global_taxonomy_results/gpt',
+        'global_ast_results': '/workspaces/code-rationales/data/global_ast_results/gpt/pure_code',
+        'global_taxonomy_results': '/workspaces/code-rationales/data/global_taxonomy_results/gpt/pure_code',
         'delimiter_sequence': '',
         'num_samples' : 100,
-        'size_samples' : 157,
+        'size_samples' : 44,
         'num_experiments': 30,
         'bootstrapping' : 500
     }
@@ -259,32 +259,34 @@ def add_auxiliary_columns_to_experiment_result(df, delimiter_sequence: str):
     for idx, goal_token in enumerate(df['goal_token']):
         if delimiter_sequence not in sequence:
             token_type_column[idx] = 'nl'
-            sequence+=goal_token
+            sequence+=str(goal_token)
     df['token_type'] = token_type_column
     src_initial_token_idx = df[df['token_type'] == 'src'].first_valid_index()
-    df['span'] = [None] * len(df[:src_initial_token_idx]) + [calculate_span(calculate_right_span(src_initial_token_idx, index, df), token) for index, token in df[src_initial_token_idx:]['goal_token'].items()]
-
+    df['span'] = [None] * len(df[:src_initial_token_idx]) + [calculate_span(calculate_right_span(src_initial_token_idx, index, df), token) for index, token in df[src_initial_token_idx:]['goal_token'].items()] if src_initial_token_idx is not None else [None] * len(df)
 
 # %%
 def fill_nl_tags_in_experiment_result(df, nl_ast_types, nl_pos_types, parser):
     #initial_token = df['typesets_tgt'][0][0][0] if df[df['token_type'] == 'src'].first_valid_index() == 0 else ''
-    ##### POS TAGS FOR NL PART
+    ##### POS TAGS FOR NL PART IN PROMPT
     target_nl = ''.join(df[df['token_type'] == 'nl']['goal_token'].map(lambda value: str(value)))
     pos_tags = nltk.pos_tag(nltk.word_tokenize(target_nl))
-    for idx in range(df[df['token_type']== 'src'].first_valid_index()):
+    first_src_token_index = df[df['token_type']== 'src'].first_valid_index()
+    nl_stop_index = first_src_token_index if first_src_token_index is not None else len(df)
+    for idx in range(nl_stop_index):
         nl_tags = list(map(lambda tag: tag[1] if tag[1] in nl_pos_types else None, filter(lambda tag: tag[0] in str(df['goal_token'][idx]), pos_tags)))
         if nl_tags: df.at[idx, 'tags'] = df['tags'][idx] + [('nl',nl_tags[-1],0)]
     ##### POS TAGS FOR CODE PART
     target_code = ''.join(df[df['token_type'] == 'src']['goal_token'].map(lambda value: str(value)))
     nl_target_nodes = get_nodes_by_type(parser.parse(bytes(target_code, 'utf8')).root_node, nl_ast_types)
-    for token_idx in range(df[df['token_type'] == 'src'].first_valid_index(), len(df['span'])):
-                for nl_target_node in nl_target_nodes:
-                    if is_token_span_in_node_span(df['span'][token_idx], df['goal_token'][token_idx], get_node_span(nl_target_node, target_code.split("\n")), nl_target_node.text.decode('utf-8')) and \
-                            (str(df['goal_token'][token_idx]) in nl_target_node.text.decode('utf-8') or nl_target_node.text.decode('utf-8') in str(df['goal_token'][token_idx])):
-                            tagged_token_list = list(filter(lambda tagged_token: str(tagged_token[0]).replace(' ','') in str(df['goal_token'][token_idx]).replace(' ','') or str(df['goal_token'][token_idx]).replace(' ','') in str(tagged_token[0]).replace(' ',''), \
+    if first_src_token_index is not None:
+        for token_idx in range(first_src_token_index, len(df['span'])):
+                    for nl_target_node in nl_target_nodes:
+                        if is_token_span_in_node_span(df['span'][token_idx], df['goal_token'][token_idx], get_node_span(nl_target_node, target_code.split("\n")), nl_target_node.text.decode('utf-8')) and \
+                                (str(df['goal_token'][token_idx]) in nl_target_node.text.decode('utf-8') or nl_target_node.text.decode('utf-8') in str(df['goal_token'][token_idx])):
+                                tagged_token_list = list(filter(lambda tagged_token: str(tagged_token[0]).replace(' ','') in str(df['goal_token'][token_idx]).replace(' ','') or str(df['goal_token'][token_idx]).replace(' ','') in str(tagged_token[0]).replace(' ',''), \
                                                         nltk.pos_tag( nltk.word_tokenize(nl_target_node.text.decode('utf-8')))))
-                            if len(tagged_token_list)>0 and tagged_token_list[0][1] in nl_pos_types and tagged_token_list[0][1] not in df['tags'][token_idx]: 
-                                    df.at[token_idx, 'tags'] = df['tags'][token_idx] + [('nl', tagged_token_list[0][1],0)]
+                                if len(tagged_token_list)>0 and tagged_token_list[0][1] in nl_pos_types and tagged_token_list[0][1] not in df['tags'][token_idx]: 
+                                        df.at[token_idx, 'tags'] = df['tags'][token_idx] + [('nl', tagged_token_list[0][1],0)]
 
 # %%
 def fill_ast_tags_in_experiment_result(df, parser):
@@ -293,10 +295,11 @@ def fill_ast_tags_in_experiment_result(df, parser):
     target_ast = parser.parse(bytes(target_code, 'utf8')).root_node
     nodes_information = augment_ast(target_ast, target_code.split("\n"))
     identation_spans = get_identation_spans(target_code)
-    for token_idx in range(src_initial_token_idx, len(df)):
-        df.at[token_idx, 'tags'] = df['tags'][token_idx] + list(map(lambda node: ('sc', node.type, nodes_information[node.id]['height']), 
+    if src_initial_token_idx is not None:
+        for token_idx in range(src_initial_token_idx, len(df)):
+            df.at[token_idx, 'tags'] = df['tags'][token_idx] + list(map(lambda node: ('sc', node.type, nodes_information[node.id]['height']), 
                                                                     get_token_nodes(df['span'][token_idx], df['goal_token'][token_idx], target_code.split("\n"), nodes_information)))
-        df.at[token_idx, 'tags'] = df['tags'][token_idx] + list(map(lambda iden_span: ('sc','identation', 0), filter(lambda iden_span: is_token_span_in_node_span(df['span'][token_idx],  df['goal_token'][token_idx], iden_span, target_code[iden_span[0]:iden_span[1]+1]), identation_spans)))
+            df.at[token_idx, 'tags'] = df['tags'][token_idx] + list(map(lambda iden_span: ('sc','identation', 0), filter(lambda iden_span: is_token_span_in_node_span(df['span'][token_idx],  df['goal_token'][token_idx], iden_span, target_code[iden_span[0]:iden_span[1]+1]), identation_spans)))
 
 # %%
 def tag_rationals(experiment_paths: list, nl_ast_types: list, nl_pos_types: list, delimiter_sequence: str, parser):
