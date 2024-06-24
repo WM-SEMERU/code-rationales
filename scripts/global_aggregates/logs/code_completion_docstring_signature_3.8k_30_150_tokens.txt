@@ -57,3 +57,17 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 **********Aggregrating rationals for exp: 13**********
 **********Aggregrating rationals for exp: 14**********
 **********Aggregrating rationals for exp: 15**********
+**********Aggregrating rationals for exp: 16**********
+**********Aggregrating rationals for exp: 17**********
+**********Aggregrating rationals for exp: 18**********
+**********Aggregrating rationals for exp: 19**********
+**********Aggregrating rationals for exp: 20**********
+**********Aggregrating rationals for exp: 21**********
+**********Aggregrating rationals for exp: 22**********
+**********Aggregrating rationals for exp: 23**********
+**********Aggregrating rationals for exp: 24**********
+**********Aggregrating rationals for exp: 25**********
+**********Aggregrating rationals for exp: 26**********
+**********Aggregrating rationals for exp: 27**********
+**********Aggregrating rationals for exp: 28**********
+**********Aggregrating rationals for exp: 29**********
