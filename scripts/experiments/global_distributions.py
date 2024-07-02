@@ -24,7 +24,7 @@
 def param_default():
     return {
         'model': 'codeparrot',
-        'modality' : 'nl_sc',
+        'modality' : 'sc',
         'datasets' : {
             'SG_BD' : 'code_completion_random_cut_5k_30_512_tokens', 
             'DC_SG_BD' : 'code_completion_docstring_random_cut_3.8k_30_150_tokens', 
@@ -39,7 +39,7 @@ def param_default():
         'rationales_distributions': '/workspaces/code-rationales/data/experiments/rationales_distributions',
         'num_experiments': 30,
         'num_samples': 100,
-        'bootstrapping_size' : 'none'
+        'bootstrapping_size' : 1000
     }
     
 params = param_default()
@@ -122,7 +122,7 @@ def flat_rationales_probabilities(rationales_results):
         experiments_rationales_values = {rational_key: [] for target_values in experiment_result.values() for rational_key in target_values.keys()}
         [experiments_rationales_values[rational_key].extend(rational_values) for target_values in experiment_result.values() for rational_key, rational_values in target_values.items()]
         for key, values in experiments_rationales_values.items(): rational_distributions.setdefault(key, []).extend(values)
-    #for rational_key in rational_distributions.keys(): rational_distributions[rational_key] = bootstrapping(rational_distributions[rational_key], np.mean, params['bootstrapping_size']) ## to reduce dimentionality
+    for rational_key in rational_distributions.keys(): rational_distributions[rational_key] = bootstrapping(rational_distributions[rational_key], np.mean, params['bootstrapping_size']) ## to reduce dimentionality
     return rational_distributions
 
 # %%
