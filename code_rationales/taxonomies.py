@@ -21,7 +21,7 @@ def pl_taxonomy_python() -> dict:
   "with" : ['with','with_item','with_statement','with_clause'], #SEMANTIC
   "return" :['return'],  #NO SEMANTIC
   "structural" : ['attribute', 'argument_list','parenthesized_expression','pattern_list','class_definition','function_definition','block'], #SEMANTIC
-  "statements" : ['return_statement','break_statement','assignment','while_statement','expression_statement','assert_statement'],#SEMANTIC
+  "statements" : ['return_statement','break_statement','assignment','while_statement','expression_statement','assert_statement','for_statement'],#SEMANTIC
   "expression": ['call','exec','async','ellipsis','unary_operator','binary_operator','as_pattern_target','boolean_operator','as_pattern','comparison_operator','conditional_expression','named_expression','not_operator','primary_expression','as_pattern'], #NO SEMANTIC
   "errors": ["ERROR"], #ERROR
   "identifier":["identifier"],  #NL
