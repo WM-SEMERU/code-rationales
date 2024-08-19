@@ -8,6 +8,7 @@ from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer
 import json
 import random
 import numpy as np
+import re
 
 # %%
 from code_rationales.loader import download_grammars
@@ -16,6 +17,9 @@ import code_rationales
 
 # %%
 import nltk
+
+# %%
+from code_rationales.taxonomies import *
 
 # %% [markdown]
 # ## Setup
@@ -28,68 +32,20 @@ nltk.download('tagsets')
 # %%
 def param_default():
     return {
-        #'dataset' : 'code_completion_random_cut_5k_30_512_tokens',
+        'dataset' : 'code_completion_random_cut_5k_30_512_tokens',
         #'dataset' : 'code_completion_docstring_random_cut_3.8k_30_150_tokens',
         #'dataset' : 'code_completion_docstring_signature_3.8k_30_150_tokens',
-        'dataset' : 'code_completion_docstring_5k_30_150_tokens',
+        #'dataset' : 'code_completion_docstring_5k_30_150_tokens',
         'rational_results': '/workspaces/code-rationales/data/rationales/gpt',
-        'global_ast_results': '/workspaces/code-rationales/data/global_ast_results/gpt',
-        'global_taxonomy_results': '/workspaces/code-rationales/data/global_taxonomy_results/gpt',
+        'global_ast_results': '/workspaces/code-rationales/data/global_ast_results/gpt/pure_code',
+        'global_taxonomy_results': '/workspaces/code-rationales/data/global_taxonomy_results/gpt/pure_code',
         'delimiter_sequence': '',
-        'num_samples' : 100, 
-        'size_samples' : 157,
-        'num_experiments': 30, 
+        'num_samples' : 100,
+        'size_samples' : 44,
+        'num_experiments': 30,
         'bootstrapping' : 500
     }
 params = param_default()
-
-# %% [markdown]
-# ## Taxonomy Definitions
-
-# %%
-#Programming Language Taxonomy
-def pl_taxonomy_python() -> dict:
-    return {
-  "punctuation": ['{', '}', '[', ']', '(', ')','\"', ',', '.', '...', ';', ':'], #NO SEMANTIC
-  "exceptions": ['raise_statement','catch', 'try', 'finally', 'throw', 'throws', 'except'], #SEMANTIC
-  "oop": ['def','class','instanceof','interface','private','protected','public','abstract','extends','package','this','implements','import','new','super'], #SEMANTIC
-  "asserts": ['assert'], #SEMANTIC
-  "types": ['tuple','set','list','pair','subscript','type','none','dictionary','integer','native','static','synchronized','transient','volatile','void','final','enum','byte','char','float','boolean','double','int','long','short','strictfp'], #SEMANTIC
-  "conditionals": ['else', 'if', 'switch', 'case', 'default'], #SEMANTIC
-  "loops": ['break', 'do', 'for', 'while', 'continue'], #SEMANTIC
-  "operators": ['as','yield','is','@','in','and','or','not','**','slice','%','+','<','>','=','+','-','*','/','%','++','--','!','==','!=','>=','<=','&&','||','?',':','~','<<','>>','>>>','&','^','|','//'],#NO SEMANTIC
-  "indentation": ['\n','\t'],#NO SEMANTIC
-  "bool": ['true', 'false'], #SEMANTIC
-  "functional":['lambda','lambda_parameters'],#NO SEMANTIC
-  "with" : ['with','with_item','with_statement','with_clause'], #SEMANTIC
-  "return" :['return'],  #NO SEMANTIC
-  "structural" : ['attribute', 'argument_list','parenthesized_expression','pattern_list','class_definition','function_definition','block'], #SEMANTIC
-  "statements" : ['return_statement','break_statement','assignment','while_statement','expression_statement','assert_statement'],#SEMANTIC
-  "expression": ['call','exec','async','ellipsis','unary_operator','binary_operator','as_pattern_target','boolean_operator','as_pattern','comparison_operator','conditional_expression','named_expression','not_operator','primary_expression','as_pattern'], #NO SEMANTIC
-  "errors": ["ERROR"], #ERROR
-  "identifier":["identifier"],  #NL
-  "comment":["comment"], #NL
-  "string": ['string','interpolation','string_content','string_end','string_start','escape_sequence'], #NL
-  "excluded": ['module'], ### EXCLUDED CATEGORY
-  "unknown": []
-}
-
-# %%
-def nl_pos_taxonomy() -> dict: return {
-    "nl_verb" : ['VBN', 'VBG', 'VBZ', 'VBP', 'VBD', 'VB'], # SEMANTIC
-    "nl_noun" : ['NN', 'NNPS', 'NNS', 'NNP'], #SEMANTIC
-    "nl_pronoun" : ['WP', 'PRP', 'PRP$', 'WP','WP$'],  #SEMANTIC
-    "nl_adverb" : ['RBS','RBR', 'RB', 'WRB'], # NOS
-    "nl_adjetive" : ['JJR', 'JJS', 'JJ'], #SEMANTIC
-    "nl_determiner" : ['DT','WDT','PDT'], # NOS
-    "nl_preposition" : ['IN', 'TO'],# NOS
-    "nl_particle" : ['RP'],# NOS
-    "nl_modal" : ['MD'],# NOS
-    "nl_conjunction" : ['CC'],# NOS
-    "nl_cardinal" : ['CD'],# NOS
-    "nl_list": ['LS'],# NOS
-    "nl_other" : ['FW', 'EX', 'SYM' , 'UH', 'POS', "''", '--',':', '(', ')', '.', ',', '``', '$']# NOS
-}
 
 # %% [markdown]
 # ## AST Mapping
@@ -166,7 +122,8 @@ def get_node_span(node, lines):
 # %%
 def is_token_span_in_node_span(tok_span, token: str, node_span, node_text: str):
     return (node_span[0] <= tok_span[0] and tok_span[1] <= node_span[1]) or \
-            (node_span[0]-1 <= tok_span[0] and tok_span[1] <= node_span[1] and str(node_text) in str(token))
+            (node_span[0]-1 <= tok_span[0] and tok_span[1] <= node_span[1] and node_text in str(token)) or \
+            (tok_span[0] <= node_span[0] and node_span[1] <= tok_span[1])
 
 # %%
 def get_token_type(
@@ -184,19 +141,35 @@ def get_token_type(
 def get_token_nodes(
     tok_span: tuple, # (start, end) position of a token in tokenizer
     token: str,      #actual token
-    node,            # tree-sitter node
-    lines: list,     # list of lines in the code
+    lines: list,     # list of lines in the code, 
+    nodes_information: dict # dict with augmented information of each ast node
 ) -> list: 
     """Get all AST types for the given token span"""
     results = []
-    def traverse_and_get_types(tok_span, node, lines, results) -> None:
-        node_span = get_node_span(node, lines)
-        if is_token_span_in_node_span(tok_span, token, node_span, node.text.decode('utf-8')):
-            results.append(node)
-        for n in node.children:
-            traverse_and_get_types(tok_span, n, lines, results)
-    traverse_and_get_types(tok_span, node, lines, results)
+    for node_id, node_info in nodes_information.items():
+        if is_token_span_in_node_span(tok_span, token, node_info['span'], node_info['node'].text.decode('utf-8')):
+            results.append(node_info['node'])   
     return results
+
+# %%
+def get_node_height(node):
+    if not node.children: 
+        return 0
+    children_heights = []
+    for child in node.children:
+        children_heights.append(get_node_height(child))
+    return max(children_heights) + 1
+
+# %%
+def augment_ast(node, lines):
+    """Get an array with additional infor for each node in the AST, Appends the height and span"""
+    information = {}
+    def traverse_and_append_info(node, lines, information):
+        information[node.id] = {'height': get_node_height(node), 'span': get_node_span(node, lines), 'node': node}
+        for child in node.children:
+            traverse_and_append_info(child, lines, information)
+    traverse_and_append_info(node, lines, information)
+    return information 
 
 # %%
 def get_nodes_by_type(
@@ -213,6 +186,14 @@ def get_nodes_by_type(
     return results
 
 # %% [markdown]
+# ### Identation Mappings
+
+# %%
+def get_identation_spans(source_code:str):
+    pattern = '\s+(?=\w)|\t|\n'
+    return [(m.start(0), m.end(0)-1) for m in re.finditer(pattern, source_code)]
+
+# %% [markdown]
 # ## Taxonomy Mapping 
 
 # %%
@@ -220,12 +201,12 @@ def clean_results(global_results):
     def clean_dictonary(result_dict):
         clean_dict = result_dict.copy()
         for key, value in result_dict.items():
-            if not value:
+            if not value: 
                 clean_dict.pop(key)
         return clean_dict
     for key, value in global_results.items():
         global_results[key] = clean_dictonary(value)
-    return clean_dictonary(global_results)
+    return global_results
 
 # %%
 def search_category_by_token(taxonomy_dict: dict, token_type: str):
@@ -235,17 +216,22 @@ def search_category_by_token(taxonomy_dict: dict, token_type: str):
     return 'unknown'
 
 # %%
-def map_to_taxonomy(taxonomy_dict: dict, result_dict: dict):
+def map_to_taxonomy(sc_taxonomy_dict:dict, nl_taxonomy_dict: dict, result_dict: dict):
     result_dict = result_dict.copy()
-    mappings = {token: {category : [] for category in taxonomy_dict.keys()} for token in taxonomy_dict.keys()}
+    mappings = {token: {category : [] for category in {**sc_taxonomy_dict, **nl_taxonomy_dict}.keys()} for token in {**sc_taxonomy_dict, **nl_taxonomy_dict}.keys()}
     for target_token, value in result_dict.items():
-        for source_token, probs in value.items():
-            mappings[search_category_by_token(taxonomy_dict, target_token)][search_category_by_token(taxonomy_dict, source_token)]+=probs
+        for source_token, rationales_values in value.items():
+            try: 
+                target_key = search_category_by_token(sc_taxonomy_dict, target_token.split('_|_')[1]) if target_token[:2] == 'sc' else search_category_by_token(nl_taxonomy_dict, target_token.split('_|_')[1])
+                source_key = search_category_by_token(sc_taxonomy_dict, source_token.split('_|_')[1]) if source_token[:2] == 'sc' else search_category_by_token(nl_taxonomy_dict, source_token.split('_|_')[1])
+                mappings[target_key][source_key] += rationales_values
+            except Exception as e:
+                print(e)
     return clean_results(mappings)
 
 # %%
-def map_global_results_to_taxonomy(taxonomy_dict:dict, global_results: dict):
-    return dict(zip(global_results.keys(), map(lambda aggegrations: map_to_taxonomy(taxonomy_dict, aggegrations), global_results.values())))
+def map_global_results_to_taxonomy(sc_taxonomy_dict:dict, nl_taxonomy_dict:dict, results: dict):
+    return dict(zip(results.keys(), map(lambda aggegrations: map_to_taxonomy(sc_taxonomy_dict, nl_taxonomy_dict, aggegrations), results.values())))
 
 # %% [markdown]
 # ##  Rationals Tagging
@@ -273,40 +259,47 @@ def add_auxiliary_columns_to_experiment_result(df, delimiter_sequence: str):
     for idx, goal_token in enumerate(df['goal_token']):
         if delimiter_sequence not in sequence:
             token_type_column[idx] = 'nl'
-            sequence+=goal_token
+            sequence+=str(goal_token)
     df['token_type'] = token_type_column
     src_initial_token_idx = df[df['token_type'] == 'src'].first_valid_index()
-    df['span'] = [None] * len(df[:src_initial_token_idx]) + [calculate_span(calculate_right_span(src_initial_token_idx, index, df), token) for index, token in df[src_initial_token_idx:]['goal_token'].items()]
-
+    df['span'] = [None] * len(df[:src_initial_token_idx]) + [calculate_span(calculate_right_span(src_initial_token_idx, index, df), token) for index, token in df[src_initial_token_idx:]['goal_token'].items()] if src_initial_token_idx is not None else [None] * len(df)
 
 # %%
 def fill_nl_tags_in_experiment_result(df, nl_ast_types, nl_pos_types, parser):
     #initial_token = df['typesets_tgt'][0][0][0] if df[df['token_type'] == 'src'].first_valid_index() == 0 else ''
-    ##### POS TAGS FOR NL PART
+    ##### POS TAGS FOR NL PART IN PROMPT
     target_nl = ''.join(df[df['token_type'] == 'nl']['goal_token'].map(lambda value: str(value)))
     pos_tags = nltk.pos_tag(nltk.word_tokenize(target_nl))
-    for idx in range(df[df['token_type']== 'src'].first_valid_index()):
+    first_src_token_index = df[df['token_type']== 'src'].first_valid_index()
+    nl_stop_index = first_src_token_index if first_src_token_index is not None else len(df)
+    for idx in range(nl_stop_index):
         nl_tags = list(map(lambda tag: tag[1] if tag[1] in nl_pos_types else None, filter(lambda tag: tag[0] in str(df['goal_token'][idx]), pos_tags)))
-        if nl_tags: df.at[idx, 'tags'] = df['tags'][idx] + [nl_tags[-1]]
+        if nl_tags: df.at[idx, 'tags'] = df['tags'][idx] + [('nl',nl_tags[-1],0)]
     ##### POS TAGS FOR CODE PART
     target_code = ''.join(df[df['token_type'] == 'src']['goal_token'].map(lambda value: str(value)))
     nl_target_nodes = get_nodes_by_type(parser.parse(bytes(target_code, 'utf8')).root_node, nl_ast_types)
-    for token_idx in range(df[df['token_type'] == 'src'].first_valid_index(), len(df['span'])):
-                for nl_target_node in nl_target_nodes:
-                    if is_token_span_in_node_span(df['span'][token_idx], df['goal_token'][token_idx], get_node_span(nl_target_node, target_code.split("\n")), nl_target_node.text.decode('utf-8')) and \
-                            (str(df['goal_token'][token_idx]) in nl_target_node.text.decode('utf-8') or nl_target_node.text.decode('utf-8') in str(df['goal_token'][token_idx])):
-                            tagged_token_list = list(filter(lambda tagged_token: str(tagged_token[0]).replace(' ','') in str(df['goal_token'][token_idx]).replace(' ','') or str(df['goal_token'][token_idx]).replace(' ','') in str(tagged_token[0]).replace(' ',''), \
+    if first_src_token_index is not None:
+        for token_idx in range(first_src_token_index, len(df['span'])):
+                    for nl_target_node in nl_target_nodes:
+                        if is_token_span_in_node_span(df['span'][token_idx], df['goal_token'][token_idx], get_node_span(nl_target_node, target_code.split("\n")), nl_target_node.text.decode('utf-8')) and \
+                                (str(df['goal_token'][token_idx]) in nl_target_node.text.decode('utf-8') or nl_target_node.text.decode('utf-8') in str(df['goal_token'][token_idx])):
+                                tagged_token_list = list(filter(lambda tagged_token: str(tagged_token[0]).replace(' ','') in str(df['goal_token'][token_idx]).replace(' ','') or str(df['goal_token'][token_idx]).replace(' ','') in str(tagged_token[0]).replace(' ',''), \
                                                         nltk.pos_tag( nltk.word_tokenize(nl_target_node.text.decode('utf-8')))))
-                            if len(tagged_token_list)>0 and tagged_token_list[0][1] in nl_pos_types and tagged_token_list[0][1] not in df['tags'][token_idx]: df.at[token_idx, 'tags'] = df['tags'][token_idx] + [tagged_token_list[0][1]]
+                                if len(tagged_token_list)>0 and tagged_token_list[0][1] in nl_pos_types and tagged_token_list[0][1] not in df['tags'][token_idx]: 
+                                        df.at[token_idx, 'tags'] = df['tags'][token_idx] + [('nl', tagged_token_list[0][1],0)]
 
 # %%
 def fill_ast_tags_in_experiment_result(df, parser):
     target_code = ''.join(df[df['token_type'] == 'src']['goal_token'].map(lambda value: str(value)))
-    #target_code = delete_leading_breaks(delete_leading_spaces(target_code))
     src_initial_token_idx = df[df['token_type'] == 'src'].first_valid_index()
     target_ast = parser.parse(bytes(target_code, 'utf8')).root_node
-    for token_idx in range(src_initial_token_idx, len(df)):
-        df.at[token_idx, 'tags'] = df['tags'][token_idx] + list(map(lambda node: node.type, get_token_nodes(df['span'][token_idx], df['goal_token'][token_idx], target_ast, target_code.split("\n"))))
+    nodes_information = augment_ast(target_ast, target_code.split("\n"))
+    identation_spans = get_identation_spans(target_code)
+    if src_initial_token_idx is not None:
+        for token_idx in range(src_initial_token_idx, len(df)):
+            df.at[token_idx, 'tags'] = df['tags'][token_idx] + list(map(lambda node: ('sc', node.type, nodes_information[node.id]['height']), 
+                                                                    get_token_nodes(df['span'][token_idx], df['goal_token'][token_idx], target_code.split("\n"), nodes_information)))
+            df.at[token_idx, 'tags'] = df['tags'][token_idx] + list(map(lambda iden_span: ('sc','identation', 0), filter(lambda iden_span: is_token_span_in_node_span(df['span'][token_idx],  df['goal_token'][token_idx], iden_span, target_code[iden_span[0]:iden_span[1]+1]), identation_spans)))
 
 # %%
 def tag_rationals(experiment_paths: list, nl_ast_types: list, nl_pos_types: list, delimiter_sequence: str, parser):
@@ -336,14 +329,15 @@ def tag_rationals(experiment_paths: list, nl_ast_types: list, nl_pos_types: list
 def aggregate_rationals(global_tagged_results: dict, ast_node_types: list, nl_pos_types: list):
     aggregation_results = {exp_id: None for exp_id in global_tagged_results.keys()}
     for exp_idx, experiment_results in global_tagged_results.items():
-        experiment_aggregation_results = {node_type : {node_type : [] for node_type in ast_node_types + nl_pos_types} for node_type in ast_node_types + nl_pos_types}
+        experiment_aggregation_results = {node_type: {**{ 'sc'+'_|_'+node_type : [] for node_type in ast_node_types }, **{ 'nl'+'_|_'+node_type: [] for node_type in nl_pos_types }} 
+                                          for node_type in {**{ 'sc'+'_|_'+node_type : {'values': [], 'rationales': []} for node_type in ast_node_types }, **{ 'nl'+'_|_'+node_type : {'values': [], 'rationales': []} for node_type in nl_pos_types }}}
         print('*'*10 +'Aggregrating rationals for exp: ' +str(exp_idx) + '*'*10)
         for result_idx, experiment_result in enumerate(experiment_results):
             for target_idx in range(len(experiment_result)):
                 if target_idx > 0: # INITIAL TOKEN IS IGNORED
                     for rational_idx, rational_pos in enumerate(eval(experiment_result['rationale_pos_tgt'][target_idx])):
                         try:
-                            [experiment_aggregation_results[target_tag][rational_tag].append(eval(experiment_result['rationale_prob_tgt'][target_idx])[rational_idx]) if target_tag and rational_tag else None \
+                            [experiment_aggregation_results[target_tag[0]+'_|_'+target_tag[1]][rational_tag[0]+'_|_'+rational_tag[1]].append(eval(experiment_result['rationale_prob_tgt'][target_idx])[rational_idx]) if target_tag[1] and rational_tag[1] else None \
                             for rational_tag in experiment_result['tags'][rational_pos] for target_tag in experiment_result['tags'][target_idx]]
                         except Exception as e:
                             print('An Error Occurred')
@@ -393,6 +387,7 @@ get_experiment_path =  lambda samples, size, exp: params['rational_results'] + '
 experiment_paths = [get_experiment_path(params['num_samples'], params['size_samples'], exp) for exp in range(params['num_experiments'])]
 ### Define parser
 parser, node_types = create_parser('python')
+node_types += ['identation']
 ### Defines pos tags 
 pos_types = list(nltk.data.load('help/tagsets/upenn_tagset.pickle'))
 
@@ -407,8 +402,7 @@ global_aggregated_results = aggregate_rationals(global_tagged_results, node_type
 
 # %%
 ###GROUP AGGREGATES BY TAXONOMY
-taxonomy = {**pl_taxonomy_python(), **nl_pos_taxonomy()}
-global_taxonomy_results = map_global_results_to_taxonomy(taxonomy, global_aggregated_results.copy())
+global_taxonomy_results = map_global_results_to_taxonomy(pl_taxonomy_python(), nl_pos_taxonomy(), global_aggregated_results.copy())
 
 # %% [markdown]
 # ## Storing Results

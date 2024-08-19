@@ -1,0 +1,2 @@
+/usr/local/lib/python3.8/dist-packages/numpy/lib/arraysetops.py:583: FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
+  mask |= (ar1 == a)
