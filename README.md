@@ -27,8 +27,6 @@ In recent years, Language Models for Code (LMC) have significantly changed the l
 Additionally, the interpretability tensor can be explored further to generate post-hoc global explanations, with specific statistical analyses.
 
 
-![formalcodeq2 (1)](https://github.com/user-attachments/assets/580bf7ef-12c8-4ef7-9503-c20df4dc3dba)
-
 ## Used taxonomy 
 ![sec_5_fig_case_study](https://github.com/user-attachments/assets/7ef7c5c0-ecf2-4991-9088-93a39f0a68b3)
 
