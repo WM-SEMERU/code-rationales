@@ -27,11 +27,21 @@ Additionally, the interpretability tensor can be explored further to generate po
 
 ![formalcodeq2 (1)](https://github.com/user-attachments/assets/580bf7ef-12c8-4ef7-9503-c20df4dc3dba)
 
+## Used taxonomy 
+![sec_5_fig_case_study](https://github.com/user-attachments/assets/7ef7c5c0-ecf2-4991-9088-93a39f0a68b3)
+
+
 ## Code rationales artifacts
 
+| **Artifact**           | **Repository Folder**         | **Description**                                                     |
+|------------------------|-------------------------------|---------------------------------------------------------------------|
+| _Documented Notebooks_ | experimental_notebooks        | Statistical analysis for global explanation                         |
+| _Source code_          | code_rationales, nbs, scripts | Nbdev format notebooks with the code rationales experimentation     |
+| _User study analysis_  | survey-artifacts              | Spreadsheets with participant answers and statistical summarization |
+| _Models_               | **_Upon accepted paper_**     |                                                                     |
+| _Experimental data_    | **_Upon accepted paper_**     |                                                                     |
 
 
-![dependency_map4 (1)](https://github.com/user-attachments/assets/0396e629-f033-4c24-b3f7-8495aa59a5e3)
+## Survey example
 
 ![fig4_survey_ss](https://github.com/user-attachments/assets/223b19b3-d37f-4897-abe3-fd69e21493e6)
-![sec_5_fig_case_study](https://github.com/user-attachments/assets/7ef7c5c0-ecf2-4991-9088-93a39f0a68b3)
