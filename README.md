@@ -14,17 +14,24 @@ In recent years, Language Models for Code (LMC) have significantly changed the l
 
 3. **Building Interpretability Tensors**: The third step involves applying the **CodeQ** method, which is designed to interpret predictions made by language models. **CodeQ** is compatible with both encoder-decoder and decoder-only models and introduces three mathematical components to transform tokens from a snippet into an "interpretability tensor".
 
-![approach-rationales](https://github.com/user-attachments/assets/582968ce-6bae-4877-90b7-6a4691dcc268)
+
+![approach-rationales TOSEM drawio](https://github.com/user-attachments/assets/c6ec631b-8f4e-4232-af51-76e906302f06)
+
+4. The interpretability approach uses the tensor $\Phi$ to generate local post-hoc explanations, such as dependency maps. These maps reveal three levels of human-interpretable concepts: 
+- $L_1$: fine-grain level rationales, 
+- $L_2$: concept rationales, 
+- $L_3$: modality.
+
+Additionally, the interpretability tensor can be explored further to generate post-hoc global explanations, with specific statistical analyses.
 
 
 ![formalcodeq2 (1)](https://github.com/user-attachments/assets/580bf7ef-12c8-4ef7-9503-c20df4dc3dba)
 
+## Code rationales artifacts
 
 
 
 ![dependency_map4 (1)](https://github.com/user-attachments/assets/0396e629-f033-4c24-b3f7-8495aa59a5e3)
-![ewash2 (1)](https://github.com/user-attachments/assets/d6c68cab-a38f-41ca-b311-51dab472e400)
 
-![experiment_pipeline (1)](https://github.com/user-attachments/assets/a5b3aa79-31dc-4a9a-b7c6-5ed6482e0780)
 ![fig4_survey_ss](https://github.com/user-attachments/assets/223b19b3-d37f-4897-abe3-fd69e21493e6)
 ![sec_5_fig_case_study](https://github.com/user-attachments/assets/7ef7c5c0-ecf2-4991-9088-93a39f0a68b3)
