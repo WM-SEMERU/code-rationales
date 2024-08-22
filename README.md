@@ -25,7 +25,7 @@ Below we provide links to the **CodeQ** artifacts such as experimental notebooks
 ### Documented Notebooks
 This folder contains the dataset analysis  with the exploratory analysis for both Natural Language (NL) and Source code (NC)
 
-1. [Exploratory Data Analysis - Frequency of NL and SC](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/code_completion/1_proportionality_nl_sc.ipynb)
+1. [Exploratory Data Analysis - Frequency of NL and SC](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/code_completion/1_frequency_nl_sc.ipynb)
 2. [Exploratory Data Analysis - Distribution of Meaningful and Meaningless Concepts](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/code_completion/2_distribution_meaningful_meaningless_rationales.ipynb)
 3. [Exploratory Data Analysis - Distribution of Rationales Probabilities Across Different Datasets](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/code_completion/3_distribution_rationales.ipynb)
 4. [Exploratory Data Analysis - Proportionality of NL and SC](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/code_completion/4_proportionality_nl_sc.ipynb)
@@ -33,11 +33,11 @@ This folder contains the dataset analysis  with the exploratory analysis for bot
 
 After running the experiments across datasets with the exploratory data analysis we captured different analyses for each datasets. For instance, **capture** folder inside _experimental_notebooks_ contains the result for the comulative rationales probabilities per dataset:
 
-![Distribution](https://github.com/WM-SEMERU/code-rationales/blob/master/experimental_notebooks/captures/distributions/sc/level_1_rationales_distributions.jpg)
+![Distribution](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/captures/distributions/sc/level_0_rationales_distributions.jpg)
 
 As a global analysis for rationales we generated several heatmaps that related the input rationales and generated code combining concepts at the AST level 1 and 2
 
-![heatmap](https://github.com/WM-SEMERU/code-rationales/blob/master/experimental_notebooks/captures/heatmaps/nl_sc/level_2_1.jpg)
+![heatmap](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/captures/heatmaps/nl_sc/level_2_1.jpg)
 
 
 ### User Study Analysis
@@ -79,9 +79,11 @@ Additionally, the interpretability tensor can be explored further to generate po
 ---------
 
 
-## Used taxonomy 
+## Intepretability Concepts $\mathcal{C}$ for code generation
 
-We propose two taxonomies $\mathcal{C}$: one for code generation and one for test generation. The first taxonomy is based on Abstract Syntax Trees (ASTs), allowing tokens to be associated with Object-Oriented Programming (OOP) concepts. We also incorporated natural language (NL) concepts using [NLTK](https://www.nltk.org) to map and explain AST nodes like comments and identifiers. The second taxonomy is based on context windows from [eWASH](https://github.com/microsoft/methods2test).
+We propose two taxonomies $\mathcal{C}$: one for code generation and one for test generation. The first taxonomy is based on Abstract Syntax Trees (ASTs), allowing tokens to be associated with Object-Oriented Programming (OOP) concepts. We also incorporated natural language (NL) concepts using [NLTK](https://www.nltk.org) to map and explain AST nodes like comments and identifiers. The second taxonomy is based on context windows from [eWASH](https://github.com/microsoft/methods2test). 
+
+The following figure ilustrates on the left (1) case(a) code generation example and the erroneous generated code, case (b) a test generation example. On the right (2) interpretability concepts for code generation.
 
 ![sec_5_fig_case_study](https://github.com/user-attachments/assets/7ef7c5c0-ecf2-4991-9088-93a39f0a68b3)
 
