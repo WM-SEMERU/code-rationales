@@ -43,6 +43,10 @@ As a global analysis for rationales we generated several heatmaps that related t
 ![heatmap](https://github.com/WM-SEMERU/code-rationales/blob/master/experimental_notebooks/captures/heatmaps/nl_sc/level_2_1.jpg)
 
 
+### User Study Analysis
+
+
+
 ---------
 
 ## Code rationales approach
