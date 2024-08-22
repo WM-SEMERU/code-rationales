@@ -34,7 +34,7 @@ This folder contains the dataset analysis  with the exploratory analysis for bot
 4. [Exploratory Data Analysis - Proportionality of NL and SC](https://github.com/WM-SEMERU/code-rationales/blob/master/experimental_notebooks/%5B1.4.0.1%5D_%5B1.4.0.3%5D.ipynb)
 5. [Exploratory Data Analysis - Dependencies between rationales and targets](https://github.com/WM-SEMERU/code-rationales/blob/master/experimental_notebooks/%5B1.4.1%5D_%5B1.4.2%5D_%5B1.4.3%5D.ipynb)
 
-
+---------
 
 ## Code rationales approach
 
@@ -58,10 +58,20 @@ This folder contains the dataset analysis  with the exploratory analysis for bot
 
 Additionally, the interpretability tensor can be explored further to generate post-hoc global explanations, with specific statistical analyses.
 
+### Research questions
+
+* **RQ1 [Applicability]:** *How applicable is **CodeQ** to globally interpret code generation?* This RQ explores the use of **CodeQ** in creating understandable explanations for the behavior of language models in code generation tasks. The hypothesis is that greedy rationalization can identify key rationales leading to predictions, providing insights into the model's prediction dependencies.
+
+* **RQ2 [Usability]:** *How useful is **CodeQ** in practical settings?* This RQ assesses the practical usefulness of **CodeQ** through a user study, evaluating qualitative metrics such as usefulness, reliability, readability, and how well **CodeQ** helps in aligning language models.
+
+
 ---------
 
 
 ## Used taxonomy 
+
+We propose two taxonomies $\mathcal{C}$: one for code generation and one for test generation. The first taxonomy is based on Abstract Syntax Trees (ASTs), allowing tokens to be associated with Object-Oriented Programming (OOP) concepts. We also incorporated natural language (NL) concepts using [NLTK](https://www.nltk.org) to map and explain AST nodes like comments and identifiers. The second taxonomy is based on context windows from [eWASH](https://github.com/microsoft/methods2test).
+
 ![sec_5_fig_case_study](https://github.com/user-attachments/assets/7ef7c5c0-ecf2-4991-9088-93a39f0a68b3)
 
 
