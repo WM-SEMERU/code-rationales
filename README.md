@@ -2,9 +2,6 @@
 
 In recent years, Language Models for Code (LMC) have significantly changed the landscape of software engineering (SE) on downstream tasks, such as code generation, by making software development more efficient. Therefore, a growing interest has emerged in further evaluating these Language Models to homogenize the quality assessment of generated code. As the current evaluation process can significantly overreact on accuracy-based metrics, practitioners often seek methods to _intepret_ LMC outputs beyond canonical benchmarks. While the majority of research reports on code generation effectiveness in terms of expected ground truth, scant attention has been paid to LLMs' explanations. In essence, the decision-making process to generate code is hard to interpret. To bridge this evaluation gap, we introduce _code rationales_ (**CodeQ**), a technique with rigorous mathematical underpinning, to identify subsets of tokens that can explain individual code predictions. We conducted a thorough _Exploratory Analysis_ to demonstrate the method's _applicability_ and a _User Study_ to understand the _usability_ of code-based explanations. Our evaluation demonstrates that **CodeQ** is a powerful interpretability method to explain how (less) meaningful input concepts (i.e. natural language particle `at') highly impact output generation (i.e code conditionals). Moreover, participants of this study highlighted **CodeQ's** ability to show a causal relationship between the input and output of the model with readable and informative explanations on _code completion_ and _test generation_ tasks. Additionally, **CodeQ** also helps to uncover model rationale, facilitating comparison with a human rationale to promote a fair level of trust and distrust in the model.
 
-![formalcodeq2 (1)](https://github.com/user-attachments/assets/580bf7ef-12c8-4ef7-9503-c20df4dc3dba)
-
-
 This repository serves as an online companion to the ICSE '25 paper titled "Why is Accuracy Not Enough for Interpretability? On Rationalizing Language Models For Code." It includes expanded material from the evaluation, as well as links to the data and code. 
 
 Below we provide links to the **CodeQ** artifacts such as experimental notebooks, scripts, survey raw data and analysis, as well as the code repository for our implementation of the Comet both as an extensible Python library. We also explain code rationales approach design and an example of our surver that proves the usability of our approach.
@@ -28,11 +25,11 @@ Below we provide links to the **CodeQ** artifacts such as experimental notebooks
 ### Documented Notebooks
 This folder contains the dataset analysis  with the exploratory analysis for both Natural Language (NL) and Source code (NC)
 
-1. [Exploratory Data Analysis - Concepts Frequency Across Datasets](https://github.com/WM-SEMERU/code-rationales/blob/master/experimental_notebooks/%5B1.1.1%5D_%5B1.1.2%5D.ipynb)
-2. [Exploratory Data Analysis - Distribution of Semantic and Non Semantic top rationales](https://github.com/WM-SEMERU/code-rationales/blob/master/experimental_notebooks/%5B1.2.1%5D_%5B1.2.2%5D.ipynb)
-3. [Exploratory Data Analysis - Distribution of Rationales](https://github.com/WM-SEMERU/code-rationales/blob/master/experimental_notebooks/%5B1.4.0.1%5D_%5B1.4.0.3%5D.ipynb)
-4. [Exploratory Data Analysis - Proportionality of NL and SC](https://github.com/WM-SEMERU/code-rationales/blob/master/experimental_notebooks/%5B1.4.0.1%5D_%5B1.4.0.3%5D.ipynb)
-5. [Exploratory Data Analysis - Dependencies between rationales and targets](https://github.com/WM-SEMERU/code-rationales/blob/master/experimental_notebooks/%5B1.4.1%5D_%5B1.4.2%5D_%5B1.4.3%5D.ipynb)
+1. [Exploratory Data Analysis - Frequency of NL and SC](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/code_completion/1_proportionality_nl_sc.ipynb)
+2. [Exploratory Data Analysis - Distribution of Meaningful and Meaningless Concepts](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/code_completion/2_distribution_meaningful_meaningless_rationales.ipynb)
+3. [Exploratory Data Analysis - Distribution of Rationales Probabilities Across Different Datasets](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/code_completion/3_distribution_rationales.ipynb)
+4. [Exploratory Data Analysis - Proportionality of NL and SC](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/code_completion/4_proportionality_nl_sc.ipynb)
+5. [Exploratory Data Analysis - Dependencies between rationales and targets](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/code_completion/5_dependencies_between_rationales_targets.ipynb)
 
 After running the experiments across datasets with the exploratory data analysis we captured different analyses for each datasets. For instance, **capture** folder inside _experimental_notebooks_ contains the result for the comulative rationales probabilities per dataset:
 
@@ -44,6 +41,7 @@ As a global analysis for rationales we generated several heatmaps that related t
 
 
 ### User Study Analysis
+
 
 
 
