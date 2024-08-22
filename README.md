@@ -19,7 +19,7 @@ Below we provide links to the **CodeQ** artifacts such as experimental notebooks
 |------------------------|---------------------------|-----------------------------------------------------------------------------------------------------------------|
 | _Documented Notebooks_ | experimental_notebooks    | Statistical analysis for _global explanation_ it include extended figures with rationales of different datasets |
 | _Source code_          | nbs                       | [Nbdev](https://nbdev.fast.ai/) format notebooks with the code rationales experimentation                       |
-| _Source code_          | code_rationales           | generated code by nbdev as a python library                                                                     |
+| _Source code_          | code_rationales           | Generated code by nbdev as a python library                                                                     |
 | _Source code_          | scripts                   | External libraries and utilities for running global experiments                                                 |
 | _User study analysis_  | survey-artifacts          | Spreadsheets with participant answers and statistical summarization                                             |
 | _Models_               | **_Upon accepted paper_** |                                                                                                                 |
@@ -33,6 +33,15 @@ This folder contains the dataset analysis  with the exploratory analysis for bot
 3. [Exploratory Data Analysis - Distribution of Rationales](https://github.com/WM-SEMERU/code-rationales/blob/master/experimental_notebooks/%5B1.4.0.1%5D_%5B1.4.0.3%5D.ipynb)
 4. [Exploratory Data Analysis - Proportionality of NL and SC](https://github.com/WM-SEMERU/code-rationales/blob/master/experimental_notebooks/%5B1.4.0.1%5D_%5B1.4.0.3%5D.ipynb)
 5. [Exploratory Data Analysis - Dependencies between rationales and targets](https://github.com/WM-SEMERU/code-rationales/blob/master/experimental_notebooks/%5B1.4.1%5D_%5B1.4.2%5D_%5B1.4.3%5D.ipynb)
+
+After running the experiments across datasets with the exploratory data analysis we captured different analyses for each datasets. For instance, **capture** folder inside _experimental_notebooks_ contains the result for the comulative rationales probabilities per dataset:
+
+![Distribution](https://github.com/WM-SEMERU/code-rationales/blob/master/experimental_notebooks/captures/distributions/sc/level_1_rationales_distributions.jpg)
+
+As a global analysis for rationales we generated several heatmaps that related the input rationales and generated code combining concepts at the AST level 1 and 2
+
+![heatmap](https://github.com/WM-SEMERU/code-rationales/blob/master/experimental_notebooks/captures/heatmaps/nl_sc/level_2_1.jpg)
+
 
 ---------
 
