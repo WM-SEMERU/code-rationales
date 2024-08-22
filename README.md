@@ -14,7 +14,7 @@ Below we provide links to the **CodeQ** artifacts such as experimental notebooks
 
 | **Artifact**           | **Repository Folder**     | **Description**                                                                                                 |
 |------------------------|---------------------------|-----------------------------------------------------------------------------------------------------------------|
-| _Documented Notebooks_ | experimental_notebooks    | Statistical analysis for _global explanation_ it include extended figures with rationales of different datasets |
+| _Documented Notebooks_ | result_analysis    | Statistical analysis for _global explanation_ it include extended figures with rationales of different datasets |
 | _Source code_          | nbs                       | [Nbdev](https://nbdev.fast.ai/) format notebooks with the code rationales experimentation                       |
 | _Source code_          | code_rationales           | Generated code by nbdev as a python library                                                                     |
 | _Source code_          | scripts                   | External libraries and utilities for running global experiments                                                 |
@@ -23,26 +23,32 @@ Below we provide links to the **CodeQ** artifacts such as experimental notebooks
 | _Experimental data_    | **_Upon accepted paper_** |                                                                                                                 |
 
 ### Documented Notebooks
-This folder contains the dataset analysis  with the exploratory analysis for both Natural Language (NL) and Source code (NC)
+This folder contains the dataset analysis  with the exploratory analysis for both Natural Language (NL) and Source code (NC) for code and test generation.
 
 1. [Exploratory Data Analysis - Frequency of NL and SC](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/code_completion/1_frequency_nl_sc.ipynb)
 2. [Exploratory Data Analysis - Distribution of Meaningful and Meaningless Concepts](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/code_completion/2_distribution_meaningful_meaningless_rationales.ipynb)
 3. [Exploratory Data Analysis - Distribution of Rationales Probabilities Across Different Datasets](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/code_completion/3_distribution_rationales.ipynb)
 4. [Exploratory Data Analysis - Proportionality of NL and SC](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/code_completion/4_proportionality_nl_sc.ipynb)
 5. [Exploratory Data Analysis - Dependencies between rationales and targets](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/code_completion/5_dependencies_between_rationales_targets.ipynb)
+6. [Test generation - Local Analysis](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/test_generation/4_local_rationales.ipynb)
+7. [Test generation - Global Analyisis](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/test_generation/3_global_statistics_ratio_ewash.ipynb)
 
-After running the experiments across datasets with the exploratory data analysis we captured different analyses for each datasets. For instance, **capture** folder inside _experimental_notebooks_ contains the result for the comulative rationales probabilities per dataset:
+After running the experiments across datasets with the exploratory data analysis we captured different analyses for each datasets. For instance, **capture** folder on earch SE tasks for _rq1_exploratory_analysis_ we find the global analysis for code completion and test generation:
 
-![Distribution](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/captures/distributions/sc/level_0_rationales_distributions.jpg)
+
 
 As a global analysis for rationales we generated several heatmaps that related the input rationales and generated code combining concepts at the AST level 1 and 2
 
-![heatmap](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/captures/heatmaps/nl_sc/level_2_1.jpg)
+![heatmap](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/code_completion/captures/heatmaps/nl_sc/level_2_1.jpg)
 
+
+Global Analysis for test generation using eWASH. 
+
+![test-generation-heatmap](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/test_generation/captures/6_source_target_heatmap.png)
 
 ### User Study Analysis
 
-
+@Dipin
 
 
 ---------
@@ -89,7 +95,13 @@ The following figure ilustrates on the left (1) case(a) code generation example 
 
 
 ---------
+## Dataset analysis
 
+
+![Distribution](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/code_completion/captures/distributions/sc/level_0_rationales_distributions.jpg)
+
+![test-generation-method-size](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/test_generation/captures/1_focal_method_size.png)
+---------
 
 
 ## Survey example
