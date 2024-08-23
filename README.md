@@ -48,7 +48,11 @@ Global Analysis for test generation using eWASH.
 
 ### User Study Analysis
 
-@Dipin
+This folder contains raw data from our user study and CSVs where we aggregated the results and performed statistical analysis based on our research questions.
+1. [Raw data of user responses in CSV format](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq2_user_study/CodeRationalSurveyResponses.csv)
+2. [Collection of all the user responses and statistical analysis from Qualtrics](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq2_user_study/ResponseForEachQuestion.pdf)
+3. [Taxonomy of error cases analysis](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq2_user_study/Errors%20Taxonomy%20-%20Samplings.xlsx)
+4. [Survey Evaluation based on our metrics including demographic information](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq2_user_study/Survey_evaluation.xlsx)
 
 
 ---------
