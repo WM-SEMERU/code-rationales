@@ -93,7 +93,7 @@ Additionally, the interpretability tensor can be explored further to generate po
 
 We propose two taxonomies $\mathcal{C}$: one for code generation and one for test generation. The first taxonomy is based on Abstract Syntax Trees (ASTs), allowing tokens to be associated with Object-Oriented Programming (OOP) concepts. We also incorporated natural language (NL) concepts using [NLTK](https://www.nltk.org) to map and explain AST nodes like comments and identifiers. The second taxonomy is based on context windows from [eWASH](https://github.com/microsoft/methods2test). 
 
-The following figure ilustrates on the left (1) case(a) code generation example and the erroneous generated code, case (b) a test generation example. On the right (2) interpretability concepts for code generation.
+The following figure illustrates on the left (1) case(a) code generation example and the erroneously generated code, case (b) a test generation example. On the right (2) interpretability concepts for code generation.
 
 ![sec_5_fig_case_study](images/taxonomy%20and%20case%20studies.png)
 
@@ -101,15 +101,17 @@ The following figure ilustrates on the left (1) case(a) code generation example 
 ---------
 ## Dataset analysis
 
-The accumulative probability on concepts per dataset. We observe that datasets with Docstring (DC) grows faster that the one with only source code (Signature (SG) and Body (BD)). 
+The accumulative probability on concepts per dataset. We observe that datasets with Docstring (DC) grow faster that the ones with only source code (Signature (SG) and Body (BD)). 
 ![Distribution](results_analysis/rq1_exploratory_analysis/code_completion/captures/distributions/sc/level_0_rationales_distributions.jpg)
 
-The size of focal methods used to our analysis in blue distribution labeled method 0 and the linked focal test method in orange distribution labeled method 1
+The size of focal methods used in our analysis in blue distribution labeled method 0 and the linked focal test method in the orange distribution labeled method 1
 
 ![test-generation-method-size](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/test_generation/captures/1_focal_method_size.png)
 ---------
 
 
 ## Survey example
+
+In this image, we show one of the samples presented in the survey. The sample was selected based on our analysis of error cases. The image demonstrates our technique of showing rationales behind predictions and also captures whether the users agree with the generated rationales. By exposing users to our technique, we also assess the informativeness and readability of our diagrams. The rest of the samples in the survey follow the same pattern.
 
 ![fig4_survey_ss](images/survey-example.png)
