@@ -101,8 +101,10 @@ The following figure ilustrates on the left (1) case(a) code generation example 
 ---------
 ## Dataset analysis
 
-
+The accumulative probability on concepts per dataset. We observe that datasets with Docstring (DC) grows faster that the one with only source code (Signature (SG) and Body (BD)). 
 ![Distribution](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/code_completion/captures/distributions/sc/level_0_rationales_distributions.jpg)
+
+The size of focal methods used to our analysis
 
 ![test-generation-method-size](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/test_generation/captures/1_focal_method_size.png)
 ---------
