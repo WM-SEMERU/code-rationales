@@ -39,12 +39,12 @@ After running the experiments across datasets with the exploratory data analysis
 
 As a global analysis for rationales we generated several heatmaps that related the input rationales and generated code combining concepts at the AST level 1 and 2
 
-![heatmap](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/code_completion/captures/heatmaps/nl_sc/level_2_1.jpg)
+![heatmap](results_analysis/rq1_exploratory_analysis/code_completion/captures/heatmaps/nl_sc/level_2_1.jpg)
 
 
 Global Analysis for test generation using eWASH. 
 
-![test-generation-heatmap](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/test_generation/captures/6_source_target_heatmap.png)
+![test-generation-heatmap](results_analysis/rq1_exploratory_analysis/test_generation/captures/6_source_target_heatmap.png)
 
 ### User Study Analysis
 
@@ -70,7 +70,7 @@ This folder contains raw data from our user study and CSVs where we aggregated t
 3. **Building Interpretability Tensors**: The third step involves applying the **CodeQ** method, which is designed to interpret predictions made by language models. **CodeQ** is compatible with both encoder-decoder and decoder-only models and introduces three mathematical components to transform tokens from a snippet into an "interpretability tensor".
 
 
-![approach-rationales TOSEM drawio](https://github.com/user-attachments/assets/c6ec631b-8f4e-4232-af51-76e906302f06)
+![approach-rationales TOSEM drawio](images/pipeline.png)
 
 4. The interpretability approach uses the tensor $\Phi$ to generate local post-hoc explanations, such as dependency maps. These maps reveal three levels of human-interpretable concepts: 
 - $L_1$: fine-grain level rationales, 
@@ -95,14 +95,14 @@ We propose two taxonomies $\mathcal{C}$: one for code generation and one for tes
 
 The following figure ilustrates on the left (1) case(a) code generation example and the erroneous generated code, case (b) a test generation example. On the right (2) interpretability concepts for code generation.
 
-![sec_5_fig_case_study](https://github.com/user-attachments/assets/7ef7c5c0-ecf2-4991-9088-93a39f0a68b3)
+![sec_5_fig_case_study](images/taxonomy%20and%20case%20studies.png)
 
 
 ---------
 ## Dataset analysis
 
 The accumulative probability on concepts per dataset. We observe that datasets with Docstring (DC) grows faster that the one with only source code (Signature (SG) and Body (BD)). 
-![Distribution](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/code_completion/captures/distributions/sc/level_0_rationales_distributions.jpg)
+![Distribution](results_analysis/rq1_exploratory_analysis/code_completion/captures/distributions/sc/level_0_rationales_distributions.jpg)
 
 The size of focal methods used to our analysis
 
@@ -112,4 +112,4 @@ The size of focal methods used to our analysis
 
 ## Survey example
 
-![fig4_survey_ss](https://github.com/user-attachments/assets/223b19b3-d37f-4897-abe3-fd69e21493e6)
+![fig4_survey_ss](images/survey-example.png)
