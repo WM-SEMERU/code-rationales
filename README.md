@@ -49,17 +49,17 @@ Global Analysis for test generation using eWASH.
 ### User Study Analysis
 
 This folder contains raw data from our user study and CSVs where we aggregated the results and performed statistical analysis based on our research questions.
-1. [Raw data of user responses in CSV format](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq2_user_study/CodeRationalSurveyResponses.csv)
-2. [Collection of all the user responses and statistical analysis from Qualtrics](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq2_user_study/ResponseForEachQuestion.pdf)
-3. [Taxonomy of error cases analysis](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq2_user_study/Errors%20Taxonomy%20-%20Samplings.xlsx)
-4. [Survey Evaluation based on our metrics including demographic information](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq2_user_study/Survey_evaluation.xlsx)
+1. [Raw data of user responses in CSV format](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq2_user_study/CodeRationalSurveyResponses.csv) This file contains raw data of every user responses in CSV format. Each column in the CSV records raw answers to every question we asked in the survey. The private information of the user is omitted for privacy reasons.
+2. [Collection of all the user responses and statistical analysis from Qualtrics](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq2_user_study/ResponseForEachQuestion.pdf) This file contains all the information of the users grouped by standard statistical analysis performed using Qualtrics features. 
+3. [Taxonomy of error cases analysis](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq2_user_study/Errors%20Taxonomy%20-%20Samplings.xlsx) In this file, we present our error case analysis of model prediction. We categorize different kinds of error in the model prediction using existing literature. We show some samples for each type of error in this sheet.
+4. [Survey Evaluation based on our metrics including demographic information](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq2_user_study/Survey_evaluation.xlsx) This file contains various sheets with evaluation of the survey based on our metric. The sheets correspond to demographics, usefulness, reliability, readability, and alignment. We also show an aggregation of all the data in a table in the final sheet in this file.   
 
 
 ---------
 
 ## Code rationales approach
 
-**CodeQ** compresses four steps to transform a interpretability tensor from the matrix representation of the input and input set of tokens and their relationship. 
+**CodeQ** compresses four steps to transform an interpretability tensor from the matrix representation of the input and input set of tokens and their relationship. 
 
 
 
