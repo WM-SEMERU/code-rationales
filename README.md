@@ -111,7 +111,7 @@ The following figure illustrates on the left (1) case(a) code generation example
 The accumulative probability on concepts per dataset. We observe that datasets with Docstring (DC) grow faster that the ones with only source code (Signature (SG) and Body (BD)). 
 ![Distribution](results_analysis/rq1_exploratory_analysis/code_completion/captures/distributions/sc/level_0_rationales_distributions.jpg)
 
-The size of focal methods used in our analysis in blue distribution labeled method 0 and the linked focal test method in the orange distribution labeled method 1
+The following figure shows thhe size of focal methods (in blue)  and focal test methods (in orange) used in our analysis. The average size of a focal method in terms of tokens is between $10^2$ and $10^3$ on avergage. Meanwhile a focal test method has on average $10^2$ tokens. This is expected since a method use to be larger that the linked test. The testbed has 1-1 relation on the number of tests and methods therefore the distributions have similar shape.
 
 ![test-generation-method-size](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/test_generation/captures/1_focal_method_size.png)
 ---------
