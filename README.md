@@ -42,8 +42,9 @@ As a global analysis for rationales we generated several heatmaps that related t
 ![heatmap](results_analysis/rq1_exploratory_analysis/code_completion/captures/heatmaps/nl_sc/level_2_1.jpg)
 
 
-Global Analysis for test generation using eWASH. 
+### Global Analysis for test generation SE task using eWASH. 
 
+This heatmap show the impact of the input rationale ($X$ axis) and generated test ($Y$ axis) grouped by concepts located at the focal method. Notice that `data_types' impact tests. This heatmap is generated using a encoder-decoder transformer. Decoder processes the focal method as a secuence and the encode generates the linked focal _test_ method.
 ![test-generation-heatmap](results_analysis/rq1_exploratory_analysis/test_generation/captures/6_source_target_heatmap.png)
 
 ### User Study Analysis
