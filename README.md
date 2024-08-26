@@ -45,9 +45,11 @@ As a global analysis for rationales we generated several heatmaps that related t
 ### Global Analysis for test generation SE task using eWASH. 
 
 This heatmap show the impact of the input rationale ($X$ axis) and generated test ($Y$ axis) grouped by concepts located at the focal method. Notice that `data_types' impact tests. This heatmap is generated using a encoder-decoder transformer. Decoder processes the focal method as a secuence and the encode generates the linked focal _test_ method.
+More examples and information at the [eWASH encoder-decoder notebook](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/test_generation/2_global_statistics_ratio_ccp.ipynb)
+
 ![test-generation-heatmap](results_analysis/rq1_exploratory_analysis/test_generation/captures/6_source_target_heatmap_avg.png)
 
-The following heatmap demosntrates the impact of a input-output of the decoder transformer for test case generation. For intepreting this test geenration, we applied **Code-Q** to the decoder part of BART. Here we can notice the relevance of a focal method as a rational against the other context like class, fileds or constructors. For instance, we observe that `fields' just impact declarations, test declrations and blocks.
+The following heatmap demosntrates the impact of a input-output of the decoder transformer for test case generation. For intepreting this test geenration, we applied **Code-Q** to the decoder part of BART. Here we can notice the relevance of a focal method as a rational against the other context like class, fileds or constructors. For instance, we observe that `fields' just impact declarations, test declrations and blocks. More examples at the [Bart decoder notebook analysis](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/test_generation/3_global_statistics_ratio_ewash.ipynb)
 
 ![test-generation-heatmap](results_analysis/rq1_exploratory_analysis/test_generation/captures/7_decoder-decorder-level1-level2-avg.png)
 
