@@ -14,13 +14,13 @@ Below **CodeQ** artifacts links are published such as experimental notebooks, sc
 
 | **Artifact**           | **Repository Folder**     | **Description**                                                                                                 |
 |------------------------|---------------------------|-----------------------------------------------------------------------------------------------------------------|
-| _Documented Notebooks_ | result_analysis    | Statistical analysis for _global explanation_ it include extended figures with rationales of different datasets |
+| _Documented Notebooks_ | results_analysis/rq1_exploratory_analysis    | Statistical analysis for _global explanation_ it include extended figures with rationales of different datasets |
+| _User study analysis_  | results_analysis/rq2_user_study          | Spreadsheets with participant answers and statistical summarization                                             |
 | _Source code_          | nbs                       | [Nbdev](https://nbdev.fast.ai/) format notebooks with the code rationales experimentation                       |
 | _Source code_          | code_rationales           | Generated code by nbdev as a python library                                                                     |
 | _Source code_          | scripts                   | External libraries and utilities for running global experiments                                                 |
-| _User study analysis_  | survey-artifacts          | Spreadsheets with participant answers and statistical summarization                                             |
-| _Models_               | **_Upon accepted paper_** |                                                                                                                 |
-| _Experimental data_    | **_Upon accepted paper_** |                                                                                                                 |
+| _Models_               | **_Upon paper acceptance_** |                                                                                                                 |
+| _Experimental data_    | **_Upon paper acceptance_** |                                                                                                                 |
 
 ### Documented Notebooks
 This folder contains the dataset analysis  with the exploratory analysis for both Natural Language (NL) and Source code (NC) for code and test generation.
