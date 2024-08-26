@@ -10,7 +10,7 @@ Below **CodeQ** artifacts links are published such as experimental notebooks, sc
 
 
 
-## Code rationales artifacts
+## Code Rationales Artifacts
 
 | **Artifact**           | **Repository Folder**     | **Description**                                                                                                 |
 |------------------------|---------------------------|-----------------------------------------------------------------------------------------------------------------|
@@ -33,23 +33,20 @@ This folder contains the dataset analysis  with the exploratory analysis for bot
 6. [Test generation - Local Analysis](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/test_generation/4_local_rationales.ipynb)
 7. [Test generation - Global Analyisis](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/test_generation/3_global_statistics_ratio_ewash.ipynb)
 
-After running the experiments across datasets with the exploratory data analysis we captured different analyses for each datasets. For instance, **capture** folder on earch SE tasks for _rq1_exploratory_analysis_ we find the global analysis for code completion and test generation:
+After running the experiments across datasets with the exploratory data analysis we captured different analyses for each dataset. For instance, **capture** folder on each SE task for _rq1_exploratory_analysis_ we find the global analysis for code completion and test generation:
 
-
-
-As a global analysis for rationales we generated several heatmaps that related the input rationales and generated code combining concepts at the AST level 1 and 2
+As a global analysis for rationales, we generated several heatmaps that related the input rationales and generated code combining concepts at the AST levels 1 and 2
 
 ![heatmap](results_analysis/rq1_exploratory_analysis/code_completion/captures/heatmaps/nl_sc/level_2_1.jpg)
 
+### Global Analysis for Test Generation (using eWASH). 
 
-### Global Analysis for test generation SE task using eWASH. 
-
-This heatmap show the impact of the input rationale ($X$ axis) and generated test ($Y$ axis) grouped by concepts located at the focal method. Notice that `data_types' impact tests. This heatmap is generated using a encoder-decoder transformer. Decoder processes the focal method as a secuence and the encode generates the linked focal _test_ method.
+This heatmap shows the impact of the input rationale ($X$ axis) and generated test ($Y$ axis) grouped by concepts located at the focal method. Notice that `data_types' impact tests. This heatmap is generated using an encoder-decoder transformer. The decoder processes the focal method as a sequence and the encode generates the linked focal _test_ method.
 More examples and information at the [eWASH encoder-decoder notebook](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/test_generation/2_global_statistics_ratio_ccp.ipynb)
 
 ![test-generation-heatmap](results_analysis/rq1_exploratory_analysis/test_generation/captures/6_source_target_heatmap_avg.png)
 
-The following heatmap demosntrates the impact of a input-output of the decoder transformer for test case generation. For intepreting this test geenration, we applied **Code-Q** to the decoder part of BART. Here we can notice the relevance of a focal method as a rational against the other context like class, fileds or constructors. For instance, we observe that `fields' just impact declarations, test declrations and blocks. More examples at the [Bart decoder notebook analysis](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/test_generation/3_global_statistics_ratio_ewash.ipynb)
+The following heatmap demonstrates the impact of an input-output of the decoder transformer for test case generation. For interpreting this test generation, we applied **Code-Q** to the decoder part of BART. Here we can notice the relevance of a focal method as a rationale against other contexts like class, fields, or constructors. For instance, we observe that `fields' just impact declarations, test declarations, and blocks. More examples at the [Bart decoder notebook analysis](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/test_generation/3_global_statistics_ratio_ewash.ipynb)
 
 ![test-generation-heatmap](results_analysis/rq1_exploratory_analysis/test_generation/captures/7_decoder-decorder-level1-level2-avg.png)
 
@@ -59,16 +56,14 @@ This folder contains raw data from our user study and CSVs where we aggregated t
 1. [Raw data of user responses in CSV format](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq2_user_study/CodeRationalSurveyResponses.csv) This file contains raw data of every user responses in CSV format. Each column in the CSV records raw answers to every question we asked in the survey. The private information of the user is omitted for privacy reasons.
 2. [Collection of all the user responses and statistical analysis from Qualtrics](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq2_user_study/ResponseForEachQuestion.pdf) This file contains all the information of the users grouped by standard statistical analysis performed using Qualtrics features. 
 3. [Taxonomy of error cases analysis](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq2_user_study/Errors%20Taxonomy%20-%20Samplings.xlsx) In this file, we present our error case analysis of model prediction. We categorize different kinds of error in the model prediction using existing literature. We show some samples for each type of error in this sheet.
-4. [Survey Evaluation based on our metrics including demographic information](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq2_user_study/Survey_evaluation.xlsx) This file contains various sheets with evaluation of the survey based on our metric. The sheets correspond to demographics, usefulness, reliability, readability, and alignment. We also show an aggregation of all the data in a table in the final sheet in this file.   
+4. [Survey Evaluation based on our metrics including demographic information](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq2_user_study/Survey_evaluation.xlsx) This file contains various sheets with the evaluation of the survey based on our metric. The sheets correspond to demographics, usefulness, reliability, readability, and alignment. We also show an aggregation of all the data in a table in the final sheet in this file.   
 
 
 ---------
 
-## Code rationales approach
+## Code Rationales Approach Description
 
 **CodeQ** compresses four steps to transform an interpretability tensor from the matrix representation of the input and input set of tokens and their relationship. 
-
-
 
 1. **Stating Preconditions**: The first step involves preparing the necessary conditions for using the  method to interpret an LMC. This includes making the model compatible using a specific algorithm and structuring "interpretable concepts," which are meant to introduce understandable ideas related to the model's input-output. These concepts are tailored to the specific software engineering (SE) tasks. Two types of interpretability concepts are proposed: one based on Abstract Syntax Tree (AST) for code generation, and the other on focal methods for test case generation.
 
@@ -79,14 +74,14 @@ This folder contains raw data from our user study and CSVs where we aggregated t
 
 ![approach-rationales TOSEM drawio](images/pipeline.png)
 
-4. The interpretability approach uses the tensor $\Phi$ to generate local post-hoc explanations, such as dependency maps. These maps reveal three levels of human-interpretable concepts: 
+4. The interpretability approach uses the tensor $\Phi$ to generate local post hoc explanations, such as dependency maps. These maps reveal three levels of human-interpretable concepts: 
 - $L_1$: fine-grain level rationales, 
 - $L_2$: concept rationales, 
 - $L_3$: modality.
 
 Additionally, the interpretability tensor can be explored further to generate post-hoc global explanations, with specific statistical analyses.
 
-### Research questions
+### Research Questions
 
 * **RQ1 [Applicability]:** *How applicable is **CodeQ** to globally interpret code generation?* This RQ explores the use of **CodeQ** in creating understandable explanations for the behavior of language models in code generation tasks. The hypothesis is that greedy rationalization can identify key rationales leading to predictions, providing insights into the model's prediction dependencies.
 
@@ -96,7 +91,7 @@ Additionally, the interpretability tensor can be explored further to generate po
 ---------
 
 
-## Intepretability Concepts $\mathcal{C}$ for code generation
+## Intepretability Concepts $\mathcal{C}$ for Code Generation
 
 We propose two taxonomies $\mathcal{C}$: one for code generation and one for test generation. The first taxonomy is based on Abstract Syntax Trees (ASTs), allowing tokens to be associated with Object-Oriented Programming (OOP) concepts. We also incorporated natural language (NL) concepts using [NLTK](https://www.nltk.org) to map and explain AST nodes like comments and identifiers. The second taxonomy is based on context windows from [eWASH](https://github.com/microsoft/methods2test). 
 
@@ -106,18 +101,18 @@ The following figure illustrates on the left (1) case(a) code generation example
 
 
 ---------
-## Dataset analysis
+## Dataset Analyses
 
-The accumulative probability on concepts per dataset. We observe that datasets with Docstring (DC) grow faster that the ones with only source code (Signature (SG) and Body (BD)). 
+The accumulative probability on concepts per dataset. We observe that datasets with Docstring (DC) grow faster than the ones with only source code (Signature (SG) and Body (BD)). 
 ![Distribution](results_analysis/rq1_exploratory_analysis/code_completion/captures/distributions/sc/level_0_rationales_distributions.jpg)
 
-The following figure shows thhe size of focal methods (in blue)  and focal test methods (in orange) used in our analysis. The average size of a focal method in terms of tokens is between $10^2$ and $10^3$ on avergage. Meanwhile a focal test method has on average $10^2$ tokens. This is expected since a method use to be larger that the linked test. The testbed has 1-1 relation on the number of tests and methods therefore the distributions have similar shape.
+The following figure shows the size of focal methods (in blue)  and focal test methods (in orange) used in our analysis. The average size of a focal method in terms of tokens is between $10^2$ and $10^3$ on average. Meanwhile, a focal test method has on average $10^2$ tokens. This is expected since a method used to be larger than the linked test. The testbed has a 1-1 relation on the number of tests and methods therefore the distributions have similar shapes.
 
 ![test-generation-method-size](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/test_generation/captures/1_focal_method_size.png)
 ---------
 
 
-## Survey example
+## Survey Generic Example
 
 In this image, we show one of the samples presented in the survey. The sample was selected based on our analysis of error cases. The image demonstrates our technique of showing rationales behind predictions and also captures whether the users agree with the generated rationales. By exposing users to our technique, we also assess the informativeness and readability of our diagrams. The rest of the samples in the survey follow the same pattern.
 
