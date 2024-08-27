@@ -16,14 +16,14 @@ Below **CodeQ** artifacts links are published such as experimental notebooks, sc
 |------------------------|---------------------------|-----------------------------------------------------------------------------------------------------------------|
 | _Documented Notebooks_ | results_analysis/rq1_exploratory_analysis    | Statistical analysis for _global explanation_ it include extended figures with rationales of different datasets |
 | _User study analysis_  | results_analysis/rq2_user_study          | Spreadsheets with participant answers and statistical summarization                                             |
-| _Source code_          | nbs                       | [Nbdev](https://nbdev.fast.ai/) format notebooks with the code rationales experimentation                       |
-| _Source code_          | code_rationales           | Generated code by nbdev as a python library                                                                     |
-| _Source code_          | scripts                   | External libraries and utilities for running global experiments                                                 |
+| _Source Code_          | nbs                       | [nbdev](https://nbdev.fast.ai/) format notebooks with the code rationales experimentation                       |
+| _Source Code_          | code_rationales           | Generated code by nbdev as a python library                                                                     |
+| _Source Code_          | scripts                   | External libraries and utilities for running rationales experiments                                                 |
 | _Models_               | **_Upon paper acceptance_** |                                                                                                                 |
-| _Experimental data_    | **_Upon paper acceptance_** |                                                                                                                 |
+| _Testbeds_    | **_Upon paper acceptance_** |                                                                                                                 |
 
 ### Documented Notebooks
-This folder contains the dataset analysis  with the exploratory analysis for both Natural Language (NL) and Source code (NC) for code and test generation.
+The folder `results_analysis/rq1_exploratory_analysis` contains several books for exploratory analysis on code and test generation.
 
 1. [Exploratory Data Analysis - Frequency of NL and SC](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/code_completion/1_frequency_nl_sc.ipynb)
 2. [Exploratory Data Analysis - Distribution of Meaningful and Meaningless Concepts](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/code_completion/2_distribution_meaningful_meaningless_rationales.ipynb)
@@ -33,9 +33,7 @@ This folder contains the dataset analysis  with the exploratory analysis for bot
 6. [Test generation - Local Analysis](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/test_generation/4_local_rationales.ipynb)
 7. [Test generation - Global Analyisis](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/test_generation/3_global_statistics_ratio_ewash.ipynb)
 
-After running the experiments across datasets with the exploratory data analysis we captured different analyses for each dataset. For instance, **capture** folder on each SE task for _rq1_exploratory_analysis_ we find the global analysis for code completion and test generation:
-
-As a global analysis for rationales, we generated several heatmaps that related the input rationales and generated code combining concepts at the AST levels 1 and 2
+After running the experiments across suggested datasets or testbeds, we registered and stored different analyses for each set. The **captures** folders under `rq1_exploratory_analysis/code_completion` and `rq1_exploratory_analysis/test_generation` contain snapshots of statistical analysis (e.g., distributions, heatmaps, histograms). For example, the image below depicts a global analysis of rationales using a heatmap, which connects the input rationales and generated code. Code tokens were clustered by concepts at the AST levels 1 and 2.
 
 ![heatmap](results_analysis/rq1_exploratory_analysis/code_completion/captures/heatmaps/nl_sc/level_2_1.jpg)
 
