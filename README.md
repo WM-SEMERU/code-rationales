@@ -101,7 +101,7 @@ The cumulative probability of concepts per dataset. We observe that datasets wit
 
 The following figure shows the size of focal methods (in blue) and focal test methods (in orange) used in our analysis. The average size of a focal method in terms of tokens is between $10^2$ and $10^3$ on average. Meanwhile, a focal test method has on average $10^2$ tokens. This is expected since methods are usually larger than their corresponding unit test. The testbed has a 1-1 relation on the number of tests and methods; therefore, the distributions have similar Gaussian shapes.
 
-![test-generation-method-size](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/test_generation/captures/1_focal_method_size.png)
+![test-generation-method-size](results_analysis/rq1_exploratory_analysis/test_generation/captures/1_focal_method_size.png)
 ---------
 
 
