@@ -41,11 +41,11 @@ After running the experiments across suggested datasets or testbeds, we register
 
 This heatmap shows the impact of the input rationale ($X$ axis) and generated test ($Y$ axis) grouped by concepts located at the focal method. Notice that `data_types' impact tests. This heatmap is generated using an encoder-decoder transformer (i.e., BART). The decoder processes the focal method as a sequence and the encoder generates the linked focal _test_ method. More examples and information can be found at [eWASH encoder-decoder notebook](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/test_generation/2_global_statistics_ratio_ccp.ipynb)
 
-![test-generation-heatmap](results_analysis/rq1_exploratory_analysis/test_generation/captures/6_source_target_heatmap_avg.png)
+<div align="center"><img src="results_analysis/rq1_exploratory_analysis/test_generation/captures/6_source_target_heatmap_avg.png" alt="heatmap1" width="50%"/></div>
 
 The following heatmap demonstrates the impact of an input-output of the decoder transformer (of BART) for test case generation. We applied **Code-Q** on the decoder part of BART to interpret a generated test. Note the relevance of a focal method as a rationale concept against other contexts such as class, fields, or constructors. For instance, we observe that `fields' only impact declarations, test declarations, and blocks. More examples can be found at [Bart decoder notebook analysis](https://github.com/WM-SEMERU/code-rationales/blob/master/results_analysis/rq1_exploratory_analysis/test_generation/3_global_statistics_ratio_ewash.ipynb)
 
-![test-generation-heatmap](results_analysis/rq1_exploratory_analysis/test_generation/captures/7_decoder-decorder-level1-level2-avg.png)
+<div align="center"><img src="results_analysis/rq1_exploratory_analysis/test_generation/captures/7_decoder-decorder-level1-level2-avg.png" alt="heatmap2" width="50%"/></div>
 
 ### User Study Artifacts
 
@@ -68,8 +68,7 @@ This folder contains raw data from our user study and CSVs where we aggregated t
 
 3. **Building Interpretability Tensors**: The third step involves applying the **CodeQ** method, which is designed to interpret predictions made by language models. **CodeQ** is compatible with both encoder-decoder and decoder-only models and introduces three mathematical components to transform tokens from a snippet into an "interpretability tensor".
 
-
-![approach-rationales TOSEM drawio](images/pipeline.png)
+<div align="center"><img src="images/pipeline.png" alt="pipeline" width="70%"/></div>
 
 4. The interpretability approach uses the tensor $\Phi$ to generate local post hoc explanations, such as dependency maps. These maps reveal three levels of human-interpretable concepts: 
 - $L_1$: fine-grain level rationales (i.e., tokens), 
@@ -86,7 +85,6 @@ Additionally, the interpretability tensor can be explored further to generate po
 
 
 ---------
-
 
 ## Intepretability Concepts $\mathcal{C}$ for Code Generation
 
@@ -111,4 +109,4 @@ The following figure shows the size of focal methods (in blue) and focal test me
 
 In this image, we show one of the samples presented in the survey. The sample was selected based on our analysis of error cases. The image depicts our technique of presenting rationales behind predictions and also captures whether the users agree with the generated rationales. By exposing users to **CodeQ**, we assessed the informativeness and readability of our diagrams. The remaining samples in the survey follow the same structure.
 
-![fig4_survey_ss](images/survey-example.png)
+<div align="center"><img src="images/survey-example.png" alt="survey" width="50%"/></div>
