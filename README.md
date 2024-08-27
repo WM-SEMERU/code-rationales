@@ -19,8 +19,8 @@ Below **CodeQ** artifacts links are published such as experimental notebooks, sc
 | _Source Code_          | nbs                       | [nbdev](https://nbdev.fast.ai/) format notebooks with the code rationales experimentation                       |
 | _Source Code_          | code_rationales           | Generated code by nbdev as a python library                                                                     |
 | _Source Code_          | scripts                   | External libraries and utilities for running rationales experiments                                                 |
-| _Models_               | **_Upon paper acceptance_** |                                                                                                                 |
-| _Testbeds_    | **_Upon paper acceptance_** |                                                                                                                 |
+| _Models_               | **_Upon paper acceptance_** |Compatibilized Pre-Trained Models (e.g., BART and CodeParrot)                                                                                                                 |
+| _Testbeds_    | **_Upon paper acceptance_** |Test sets and generated code                                                                                                            |
 
 ### Documented Notebooks
 The folder `results_analysis/rq1_exploratory_analysis` contains several books for exploratory analysis on code and test generation.
