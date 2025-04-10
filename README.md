@@ -110,3 +110,16 @@ The following figure shows the size of focal methods (in blue) and focal test me
 In this image, we show one of the samples presented in the survey. The sample was selected based on our analysis of error cases. The image depicts our technique of presenting rationales behind predictions and also captures whether the users agree with the generated rationales. By exposing users to **CodeQ**, we assessed the informativeness and readability of our diagrams. The remaining samples in the survey follow the same structure.
 
 <div align="center"><img src="images/survey-example.png" alt="survey" width="50%"/></div>
+
+## Cite This Repo
+```latex
+@misc{CodeQ2025,
+      title={CodeQ: On Explaining (Large) Language Models For Code Using Global Code-Based Explanations}, 
+      author={David N. Palacio and Dipin Khati and Daniel Rodriguez-Cardenas and Alejandro Velasco and Denys Poshyvanyk},
+      year={2025},
+      eprint={2503.16771},
+      archivePrefix={arXiv},
+      primaryClass={cs.SE},
+      url={https://arxiv.org/abs/2503.16771}, 
+}
+```
