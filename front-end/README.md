@@ -1,5 +1,5 @@
 # rationales README
-# Project 1: Rationales Visualization (Fall 2024)
+# Rationales Visualization
 
 An interactive data visualization tool that showcases code generation rationales from Large Language Models. The tool highlights the influences of a selected token in the Rationale Panel and a diagram of how those influences shape the selected token in the Visualization Panel.
 
