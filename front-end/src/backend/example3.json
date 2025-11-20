@@ -1,0 +1,284 @@
+{
+	"_phrase": "Make a function that will show if the weather is sunny or rainy. \\ndef show(weather): \\n if weather == \"hot\": \\n print(\"Sunny\") \\n else: \\n print(\"Rainy\") [FAKE]",
+	"0": {
+		"token": "Make",
+		"rationales": [],
+		"rationales_indexes":[],
+		"probabilities": [],
+		"concept_view": ["Natural Language", "Semantic", "Verb"]
+	},
+	"1": {
+		"token": "a",
+		"rationales": [],
+		"rationales_indexes":[],
+		"probabilities": [],
+		"concept_view": ["Natural Language", "Non-Semantic", "Determiner"]
+	},
+	"2": {
+		"token": "function",
+		"rationales": [],
+		"rationales_indexes":[],
+		"probabilities": [],
+		"concept_view": ["Natural Language", "Semantic", "Noun"]
+	},
+	"3": {
+		"token": "that",
+		"rationales": [],
+		"rationales_indexes":[],
+		"probabilities": [],
+		"concept_view": ["Natural Language", "Non-Semantic", "Conjunction"]
+	},
+	"4": {
+		"token": "will",
+		"rationales": [],
+		"rationales_indexes":[],
+		"probabilities": [],
+		"concept_view": ["Natural Language", "Non-Semantic", "Modal"]
+	},
+	"5": {
+		"token": "show",
+		"rationales": [],
+		"rationales_indexes":[],
+		"probabilities": [],
+		"concept_view": ["Natural Language", "Semantic", "Verb"]
+	},
+	"6": {
+		"token": "if",
+		"rationales": [],
+		"rationales_indexes":[],
+		"probabilities": [],
+		"concept_view": ["Natural Language", "Non-Semantic", "Conjunction"]
+	},
+	"7": {
+		"token": "the",
+		"rationales": [],
+		"rationales_indexes":[],
+		"probabilities": [],
+		"concept_view": ["Natural Language", "Non-Semantic", "Determiner"]
+	},
+	"8": {
+		"token": "weather",
+		"rationales": [],
+		"rationales_indexes":[],
+		"probabilities": [],
+		"concept_view": ["Natural Language", "Semantic", "Noun"]
+	},
+	"9": {
+		"token": "is",
+		"rationales": [],
+		"rationales_indexes":[],
+		"probabilities": [],
+		"concept_view": ["Natural Language", "Semantic", "Verb"]
+	},
+	"10": {
+		"token": "sunny",
+		"rationales": [],
+		"rationales_indexes":[],
+		"probabilities": [],
+		"concept_view": ["Natural Language", "Non-Semantic", "Adjective"]
+	},
+	"11": {
+		"token": "or",
+		"rationales": [],
+		"rationales_indexes":[],
+		"probabilities": [],
+		"concept_view": ["Natural Language", "Non-Semantic", "Conjunction"]
+	},
+	"12": {
+		"token": "rainy.",
+		"rationales": [],
+		"rationales_indexes":[],
+		"probabilities": [],
+		"concept_view": ["Natural Language", "Non-Semantic", "Adjective"]
+	},
+	"13": {
+		"token": "\\n",
+		"rationales": [],
+		"rationales_indexes":[],
+		"probabilities": [],
+		"concept_view": ["Programming Language", "Non-Semantic", "Indentation"]
+	},
+	"14": {
+		"token": "def",
+		"rationales": ["Make", "function", "show"],
+		"rationales_indexes":[0,2,5],
+		"probabilities": [0.6, 0.8, 0.4],
+		"concept_view": ["Programming Language", "Semantic", "OOP"]
+	},
+	"15": {
+		"token": "show",
+		"rationales": ["function", "show", "weather", "sunny"],
+		"rationales_indexes":[2,5,8, 10],
+		"probabilities": [0.4, 0.9, 0.6, 0.1],
+		"concept_view": ["Programming Language", "Natural Language in Code", "Identifier"]
+	},
+	"16": {
+		"token": "(",
+		"rationales": ["function", "or", "def"],
+		"rationales_indexes":[2,11,14],
+		"probabilities": [0.6, 0.7,0.9],
+		"concept_view": ["Programming Language", "Non-Semantic", "Punctuation"]
+	},
+	"17": {
+		"token": "weather",
+		"rationales": ["function", "show", "weather","def", "show"],
+		"rationales_indexes":[2, 5, 8, 14, 15],
+		"probabilities": [0.2, 0.4,0.9, 0.7, 0.4],
+		"concept_view": ["Programming Language", "Natural Language in Code", "Identifier"]
+	},
+	"18": {
+		"token": ")",
+		"rationales": ["def", "show", "("],
+		"rationales_indexes":[14, 15, 16],
+		"probabilities": [0.4, 0.2, 0.9],
+		"concept_view": ["Programming Language", "Non-Semantic", "Punctuation"]
+	},
+	"19": {
+		"token": ":",
+		"rationales": ["def", ")"],
+		"rationales_indexes":[14, 18],
+		"probabilities": [0.3, 0.9],
+		"concept_view": ["Programming Language", "Non-Semantic", "Punctuation"]
+	},
+	"20": {
+		"token": "\\n",
+		"rationales": ["\\n", "def", ")"],
+		"rationales_indexes":[13, 14, 18],
+		"probabilities": [0.5, 0.3, 0.9],
+		"concept_view": ["Programming Language", "Non-Semantic", "Indentation"]
+	},
+	"21": {
+		"token": "if",
+		"rationales": ["if", "or", "def", "weather"],
+		"rationales_indexes":[6, 11, 14, 17],
+		"probabilities": [0.9, 0.7, 0.3, 0.5],
+		"concept_view": ["Programming Language", "Semantic", "Conditional"]
+	},
+	"22": {
+		"token": "weather",
+		"rationales": ["weather", "def", "weather", "if"],
+		"rationales_indexes":[8, 14, 17, 21],
+		"probabilities": [0.8, 0.3, 0.9, 0.4],
+		"concept_view": ["Programming Language", "Natural Language in Code", "Identifier"]
+	},
+	"23": {
+		"token": "==",
+		"rationales": ["is","show", "weather", "if"],
+		"rationales_indexes":[9, 15, 17, 21],
+		"probabilities": [0.8, 0.3, 0.5, 0.5],
+		"concept_view": ["Programming Language", "Non-Semantic", "Expression"]
+	},
+	"24": {
+		"token": "\"hot\"",
+		"rationales": ["is", "sunny", "weather", "=="],
+		"rationales_indexes":[9, 10, 22, 23],
+		"probabilities": [0.5, 0.8, 0.4, 0.5],
+		"concept_view": ["Programming Language", "Natural Language in Code", "String"]
+	},
+	"25": {
+		"token": ":",
+		"rationales": ["if", "==", "\"hot\""],
+		"rationales_indexes":[21, 23, 24],
+		"probabilities": [0.9, 0.6, 0.5],
+		"concept_view": ["Programming Language", "Non-Semantic", "Punctuation"]
+	},
+	"26": {
+		"token": "\\n",
+		"rationales": ["if", ":"],
+		"rationales_indexes":[21, 25],
+		"probabilities": [0.5, 0.8],
+		"concept_view": ["Programming Language", "Non-Semantic", "Indentation"]
+	},
+	"27": {
+		"token": "print",
+		"rationales": ["is", "show", "if", ":"],
+		"rationales_indexes":[9, 15, 21, 25],
+		"probabilities": [0.5, 0.3, 0.5, 0.3],
+		"concept_view": ["Programming Language", "Semantic", "Statements"]
+	},
+	"28": {
+		"token": "(",
+		"rationales": ["print"],
+		"rationales_indexes":[27],
+		"probabilities": [0.5],
+		"concept_view": ["Programming Language", "Non-Semantic", "Punctuation"]
+	},
+	"29": {
+		"token": "\"Sunny\"",
+		"rationales": ["is", "sunny", "print"],
+		"rationales_indexes":[9, 10, 27],
+		"probabilities": [0.5, 0.95, 0.4],
+		"concept_view": ["Programming Language", "Natural Language in Code", "String"]
+	},
+	"30": {
+		"token": ")",
+		"rationales": ["print", "("],
+		"rationales_indexes":[27, 28],
+		"probabilities": [0.4, 0.9],
+		"concept_view": ["Programming Language", "Non-Semantic", "Punctuation"]
+	},
+	"31": {
+		"token": "\\n",
+		"rationales": ["print", ")"],
+		"rationales_indexes":[27, 30],
+		"probabilities": [0.7, 0.9],
+		"concept_view": ["Programming Language", "Non-Semantic", "Indentation"]
+	},
+	"32": {
+		"token": "else",
+		"rationales": ["or", "if", "print"],
+		"rationales_indexes":[11, 21, 27],
+		"probabilities": [0.7, 0.8, 0.1],
+		"concept_view": ["Programming Language", "Semantic", "Conditional"]
+	},
+	"33": {
+		"token": ":",
+		"rationales": ["if", "else"],
+		"rationales_indexes":[21, 32],
+		"probabilities": [0.5, 0.5],
+		"concept_view": ["Programming Language", "Non-Semantic", "Punctuation"]
+	},
+	"34": {
+		"token": "\\n",
+		"rationales": [":"],
+		"rationales_indexes":[33],
+		"probabilities": [0.7],
+		"concept_view": ["Programming Language", "Non-Semantic", "Indentation"]
+	},
+	"35": {
+		"token": "print",
+		"rationales": ["is", "show", "if", ":", "print", ":"],
+		"rationales_indexes":[9, 15, 21, 25, 27, 33],
+		"probabilities": [0.4, 0.3, 0.7,0.6, 0.9,0.4],
+		"concept_view": ["Programming Language", "Semantic", "Statements"]
+	},
+	"36": {
+		"token": "(",
+		"rationales": ["print"],
+		"rationales_indexes":[35],
+		"probabilities": [0.6],
+		"concept_view": ["Programming Language", "Non-Semantic", "Punctuation"]
+	},
+	"37": {
+		"token": "\"Rainy\"",
+		"rationales": ["is", "or", "rainy", "print", "("],
+		"rationales_indexes":[9, 11, 22, 35, 36],
+		"probabilities": [0.1, 0.2, 0.9,0.5, 0.5],
+		"concept_view": ["Programming Language", "Natural Language in Code", "String"]
+	},
+	"38": {
+		"token": ")",
+		"rationales": ["print", "(", "\"Rainy\""],
+		"rationales_indexes":[35, 36, 37],
+		"probabilities": [0.4, 0.7, 0.6],
+		"concept_view": ["Programming Language", "Non-Semantic", "Punctuation"]
+	},
+	"39" : {
+		"token": "[FAKE]",
+		"rationales": ["Make", "a", "function", "that", "will", "show", "if", "the", "weather", "is", "sunny", "or", "rainy", "\\n", "def", "show", "(", "weather", ")", ":", "\\n", "if", "weather", "==", "\"hot\"", ":", "\\n", "print", "(", "\"Sunny\"", ")", "\\n", "else", ":", "\\n", "print", "(", "\"Rainy\"", ")"],
+		"rationales_indexes": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38],
+		"probabilities": [0.1, 0.3, 0.2, 0.4, 0.6, 0.6, 0.7, 0.3, 0.5, 0.3, 0.9, 0.4, 0.7, 0.1, 0.2, 0.4, 0.6, 0.5, 0.9, 0.2, 0.8, 0.4, 0.2, 0.5, 0.1, 0.6, 0.3, 0.8, 0.5, 0.9, 0.1, 0.1, 0.4, 0.5, 0.7, 0.2, 0.8, 0.3],
+		"concept_view": ["Natural Language", "Non-Semantic", "Adjective"]
+	}
+
+}

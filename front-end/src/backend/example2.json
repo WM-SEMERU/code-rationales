@@ -1,0 +1,206 @@
+{
+	"_phrase": "def list_all_numbers(lst): \\n all = 10 \\n for i in range(all): \\n print(i) \\t // test for tabs",
+	"0":{
+		"token": "def",
+		"rationales": [],
+		"rationales_indexes":[],
+		"probabilities": [],
+		"concept_view": ["Programming Language", "Non-Semantic", "OOP"]
+	},
+	"1":{
+		"token": "list_all_numbers",
+		"rationales": ["def"],
+		"rationales_indexes":[0],
+		"probabilities": [0.9],
+		"concept_view": ["Programming Language", "Natural Language in Code", "Identifier"]
+	},
+	"2":{
+		"token": "(",
+		"rationales": ["def","list_all_numbers"],
+		"rationales_indexes":[0,1],
+		"probabilities": [0.7, 0.3],
+		"concept_view": ["Programming Language", "Non-Semantic", "Punctuation"]
+	},
+	"3":{
+		"token": "lst",
+		"rationales": ["def","list_all_numbers", "("],
+		"rationales_indexes":[0,1,2],
+		"probabilities": [0.7, 0.7, 0.4],
+		"concept_view": ["Programming Language", "Natural Language in Code", "Identifier"]
+	},
+	"4":{
+		"token": ")",
+		"rationales": ["def","(", "lst"],
+		"rationales_indexes":[0, 2,3],
+		"probabilities": [0.7, 0.9, 0.2],
+		"concept_view": ["Programming Language", "Non-Semantic", "Punctuation"]
+	},
+	"5":{
+		"token": ":",
+		"rationales": ["def", ")"],
+		"rationales_indexes":[0,4],
+		"probabilities": [0.7, 0.7],
+		"concept_view": ["Programming Language", "Non-Semantic", "Punctuation"]
+	},
+	"6":{
+		"token": "\\n",
+		"rationales": ["def", ")", ":"],
+		"rationales_indexes":[0, 4, 5],
+		"probabilities": [0.3, 0.25, 0.65],
+		"concept_view": ["Programming Language", "Non-Semantic", "Indentation"]
+	},
+	"7":{
+		"token": "all",
+		"rationales": ["def","list_all_numbers", "(", ":"],
+		"rationales_indexes":[0, 1, 2, 5],
+		"probabilities": [0.3, 0.8, 0.65, 0.5],
+		"concept_view": ["Programming Language", "Natural Language in Code", "Identifier"]
+	},
+	"8":{
+		"token": "=",
+		"rationales": ["def","list_all_numbers", "(", ":", "all"],
+		"rationales_indexes":[0,1,2,5,7],
+		"probabilities": [0.3, 0.75, 0.55, 0.4, 0.8],
+		"concept_view": ["Programming Language", "Semantic", "Statements"]
+	},
+	"9":{
+		"token": "10",
+		"rationales": ["def","list_all_numbers", ":", "all", "="],
+		"rationales_indexes":[0,1,5,7,8],
+		"probabilities": [0.1, 0.53, 0.5, 0.45, 0.72],
+		"concept_view": ["Programming Language", "Natural Language in Code", "Identifier"]
+	},
+	"10":{
+		"token": "\\n",
+		"rationales": ["def", ")", ":", "="],
+		"rationales_indexes":[0,4,5,8],
+		"probabilities": [0.3, 0.25, 0.65, 0.4],
+		"concept_view": ["Programming Language", "Non-Semantic", "Indentation"]
+	},
+	"11":{
+		"token": "for",
+		"rationales": ["def", "list_all_numbers", ":", "all", "=", "10"],
+		"rationales_indexes":[0,1,5,7,8,9],
+		"probabilities": [0.3, 0.5, 0.3, 0.4, 0.45, 0.2],
+		"concept_view": ["Programming Language", "Semantic", "Loops"]
+	},
+	"12":{
+		"token": "i",
+		"rationales": ["lst","all", "for"],
+		"rationales_indexes":[3,7,11],
+		"probabilities": [0.5, 0.3, 0.85],
+		"concept_view": ["Programming Language", "Natural Language in Code", "Identifier"]
+	},
+	"13":{
+		"token": "in",
+		"rationales": ["lst","all", "for", "i"],
+		"rationales_indexes":[3,7,11,12],
+		"probabilities": [0.3, 0.35, 0.8, 0.5],
+		"concept_view": ["Programming Language", "Semantic", "Operator"]
+	},
+	"14":{
+		"token": "range",
+		"rationales": ["lst","all", "for", "i", "in"],
+		"rationales_indexes":[3,7,11,12,13],
+		"probabilities": [0.45, 0.2, 0.9, 0.5, 0.8],
+		"concept_view": ["Programming Language", "Semantic", "Statements"]
+	},
+	"15":{
+		"token": "(",
+		"rationales": ["def","list_all_numbers", ")", "range"],
+		"rationales_indexes":[0,1,4,14],
+		"probabilities": [0.55, 0.3, 0.65, 0.8],
+		"concept_view": ["Programming Language", "Non-Semantic", "Punctuation"]
+	},
+	"16":{
+		"token": "all",
+		"rationales": ["def","list_all_numbers", ":", "range", "("],
+		"rationales_indexes":[0,1,5,14,15],
+		"probabilities": [0.3, 0.8, 0.65, 0.5, 0.9],
+		"concept_view": ["Programming Language", "Natural Language in Code", "Identifier"]
+	},
+	"17":{
+		"token": ")",
+		"rationales": ["def","list_all_numbers", "range", "("],
+		"rationales_indexes":[0,1,14,15],
+		"probabilities": [0.55, 0.3, 0.65, 0.9],
+		"concept_view": ["Programming Language", "Non-Semantic", "Punctuation"]
+	},
+	"18":{
+		"token": ":",
+		"rationales": ["def","range", ")"],
+		"rationales_indexes":[0,14,17],
+		"probabilities": [0.4, 0.65, 0.9],
+		"concept_view": ["Programming Language", "Non-Semantic", "Punctuation"]
+	},
+	"19":{
+		"token": "\\n",
+		"rationales": ["def", ")", ":", "=", ":"],
+		"rationales_indexes":[0,4,5,8,18],
+		"probabilities": [0.3, 0.25, 0.65, 0.2, 0.66],
+		"concept_view": ["Programming Language", "Non-Semantic", "Indentation"]
+	},
+	"20": {
+		"token": "print",
+		"rationales": ["list_all_numbers", "all", "range", "\n"],
+		"rationales_indexes":[1,7,14,19],
+		"probabilities": [0.6, 0.45, 0.4, 0.5],
+		"concept_view": ["Programming Language", "Semantic", "Statements"]
+	},
+	"21":{
+		"token": "(",
+		"rationales": ["def", "all", "print"],
+		"rationales_indexes":[0,16,20],
+		"probabilities": [0.1, 0.3, 0.8],
+		"concept_view": ["Programming Language", "Non-Semantic", "Punctuation"]
+	},
+	"22":{
+		"token": "i",
+		"rationales": ["for","i", "print", "("],
+		"rationales_indexes":[11,12,20,21],
+		"probabilities": [0.4, 0.6, 0.2, 0.3],
+		"concept_view": ["Programming Language", "Natural Language in Code", "Identifier"]
+	},
+	"23":{
+		"token": ")",
+		"rationales": ["all", "print", "(", "i"],
+		"rationales_indexes":[16,20,21,22],
+		"probabilities": [0.2, 0.45, 0.8, 0.55],
+		"concept_view": ["Programming Language", "Non-Semantic", "Punctuation"]
+	},
+	"24":{
+		"token": "\\t",
+		"rationales": [],
+		"rationales_indexes":[],
+		"probabilities": [],
+		"concept_view": ["Programming Language", "Non-Semantic", "Indentation"]
+	},
+	"25":{
+		"token": "//",
+		"rationales": [],
+		"rationales_indexes":[],
+		"probabilities": [],
+		"concept_view": ["Programming Language", "Natural Language in Code", "Comment"]
+	},
+	"26":{
+		"token": "test",
+		"rationales": [],
+		"rationales_indexes":[],
+		"probabilities": [],
+		"concept_view": ["Programming Language", "Natural Language in Code", "Comment"]
+	},
+	"27":{
+		"token": "for",
+		"rationales": [],
+		"rationales_indexes":[],
+		"probabilities": [],
+		"concept_view": ["Programming Language", "Natural Language in Code", "Comment"]
+	},
+	"28":{
+		"token": "tabs",
+		"rationales": [],
+		"rationales_indexes":[],
+		"probabilities": [],
+		"concept_view": ["Programming Language", "Natural Language in Code", "Comment"]
+	}
+}

@@ -1,0 +1,256 @@
+{
+  "_phrase": "make a function that prints hello world in the console.\n\nThe first thing we need to do is to create a function",
+  "0": {
+    "token": "make",
+    "rationales": [],
+    "rationales_indexes": [],
+    "probabilities": [],
+    "concept_view": ["Natural Language", "Semantic", "Noun"]
+  },
+  "1": {
+    "token": " a",
+    "rationales": ["make"],
+    "rationales_indexes": [0],
+    "probabilities": [0.06522931903600693],
+    "concept_view": ["Programming Language", "Syntax", "Errors"]
+  },
+  "2": {
+    "token": " function",
+    "rationales": ["make", " a"],
+    "rationales_indexes": [0, 1],
+    "probabilities": [0.00010190656030317768, 9.07610512967949e-7],
+    "concept_view": ["Natural Language", "Semantic", "Noun"]
+  },
+  "3": {
+    "token": " that",
+    "rationales": ["make", " a", " function"],
+    "rationales_indexes": [0, 1, 2],
+    "probabilities": [
+      0.03483301401138306, 0.24494671821594238, 0.0018403161084279418
+    ],
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Comment"
+    ]
+  },
+  "4": {
+    "token": " prints",
+    "rationales": ["make", " a", " function", " that"],
+    "rationales_indexes": [0, 1, 2, 3],
+    "probabilities": [
+      3.348339532749378e-6, 0.008393054828047752, 0.006962803658097982,
+      4.83006147078413e-7
+    ],
+    "concept_view": ["Programming Language", "Non-Semantic", "Operators"]
+  },
+  "5": {
+    "token": " hello",
+    "rationales": ["make", " a", " function", " that", " prints"],
+    "rationales_indexes": [0, 1, 2, 3, 4],
+    "probabilities": [
+      0.000648553017526865, 0.0005862310063093901, 0.0008666798239573836,
+      0.00015075919509399682, 1.548693376207666e-6
+    ],
+    "concept_view": ["Natural Language", "Semantic", "pronouns"]
+  },
+  "6": {
+    "token": " world",
+    "rationales": ["make", " a", " hello"],
+    "rationales_indexes": [0, 1, 5],
+    "probabilities": [
+      0.034414470195770264, 0.8568549156188965, 0.01155939046293497
+    ],
+    "concept_view": ["Natural Language", "Semantic", "pronouns"]
+  },
+  "7": {
+    "token": " in",
+    "rationales": [
+      "make",
+      " a",
+      " function",
+      " that",
+      " prints",
+      " hello",
+      " world"
+    ],
+    "rationales_indexes": [0, 1, 2, 3, 4, 5, 6],
+    "probabilities": [
+      0.13140124082565308, 0.022363387048244476, 0.029545923694968224,
+      0.04393995553255081, 0.021398985758423805, 0.03376756235957146,
+      0.007656292989850044
+    ],
+    "concept_view": ["Programming Language", "Context Window", "Field"]
+  },
+  "8": {
+    "token": " the",
+    "rationales": ["make", " prints", " in"],
+    "rationales_indexes": [0, 4, 7],
+    "probabilities": [
+      0.040415193885564804, 0.2571774125099182, 0.005494197364896536
+    ],
+    "concept_view": ["Natural Language", "Non-semantic", "Particle"]
+  },
+  "9": {
+    "token": " console",
+    "rationales": ["make", " function", " prints", " in", " the"],
+    "rationales_indexes": [0, 2, 4, 7, 8],
+    "probabilities": [
+      7.939177885418758e-5, 0.2704395651817322, 0.0009879260323941708,
+      0.010610475204885006, 8.857961475428056e-9
+    ],
+    "concept_view": ["Natural Language", "Non-semantic", "Particle"]
+  },
+  "10": {
+    "token": ".",
+    "rationales": ["make", " console"],
+    "rationales_indexes": [0, 9],
+    "probabilities": [0.17393775284290314, 0.0003439279680605978],
+    "concept_view": ["Programming Language", "Non-Semantic", "Operators"]
+  },
+  "11": {
+    "token": "\n",
+    "rationales": ["make", "."],
+    "rationales_indexes": [0, 10],
+    "probabilities": [0.09693868458271027, 0.0022385723423212767],
+    "concept_view": ["Natural Language", "Semantic", "Verb"]
+  },
+  "12": {
+    "token": "\n",
+    "rationales": ["\n"],
+    "rationales_indexes": [11],
+    "probabilities": [0.1109895184636116],
+    "concept_view": ["Natural Language", "Non-semantic", "Cardinal"]
+  },
+  "13": {
+    "token": "The",
+    "rationales": ["make", "\n"],
+    "rationales_indexes": [0, 12],
+    "probabilities": [0.025604920461773872, 0.00014976256352383643],
+    "concept_view": ["Natural Language", "Non-semantic", "Preposition"]
+  },
+  "14": {
+    "token": " first",
+    "rationales": ["make", " a", " hello", " console", "The"],
+    "rationales_indexes": [0, 1, 5, 9, 13],
+    "probabilities": [
+      0.00010409243986941874, 0.01579420268535614, 0.04327308386564255,
+      0.08534929156303406, 4.261030426278012e-7
+    ],
+    "concept_view": ["Natural Language", "Semantic", "pronouns"]
+  },
+  "15": {
+    "token": " thing",
+    "rationales": ["make", " a", " that", "The", " first"],
+    "rationales_indexes": [0, 1, 3, 13, 14],
+    "probabilities": [
+      0.001252858666703105, 0.04753976687788963, 0.008931723423302174,
+      0.11794455349445343, 0.00011800983338616788
+    ],
+    "concept_view": ["Programming Language", "Semantic", "Exceptions"]
+  },
+  "16": {
+    "token": " we",
+    "rationales": ["make", " function", " hello", "The", " first", " thing"],
+    "rationales_indexes": [0, 2, 5, 13, 14, 15],
+    "probabilities": [
+      0.0022801512386649847, 0.0016678276006132364, 0.33021390438079834,
+      0.1377890408039093, 0.024832019582390785, 0.0005336387548595667
+    ],
+    "concept_view": ["Programming Language", "Non-Semantic", "Indentation"]
+  },
+  "17": {
+    "token": " need",
+    "rationales": ["make", " function", " prints", "The", " first", " we"],
+    "rationales_indexes": [0, 2, 4, 13, 14, 16],
+    "probabilities": [
+      0.0005922872805967927, 0.013378186151385307, 0.10316535830497742,
+      0.04619014635682106, 0.3090600073337555, 5.756110476795584e-5
+    ],
+    "concept_view": ["Natural Language", "Non-semantic", "Adjective"]
+  },
+  "18": {
+    "token": " to",
+    "rationales": [" hello", " need"],
+    "rationales_indexes": [5, 17],
+    "probabilities": [0.4858960807323456, 0.03199467062950134],
+    "concept_view": ["Natural Language", "Semantic", "Verb"]
+  },
+  "19": {
+    "token": " do",
+    "rationales": ["make", " a", " function", " thing", " to"],
+    "rationales_indexes": [0, 1, 2, 15, 18],
+    "probabilities": [
+      0.019835971295833588, 0.01429546345025301, 0.11153695732355118,
+      0.046651363372802734, 0.0004725434700958431
+    ],
+    "concept_view": ["Programming Language", "Semantic", "Bool"]
+  },
+  "20": {
+    "token": " is",
+    "rationales": [
+      " prints",
+      " in",
+      " the",
+      "\n",
+      "The",
+      " thing",
+      " we",
+      " need",
+      " do"
+    ],
+    "rationales_indexes": [4, 7, 8, 12, 13, 15, 16, 17, 19],
+    "probabilities": [
+      0.006024942267686129, 0.029363172128796577, 0.012026198208332062,
+      0.04758843034505844, 0.19150082767009735, 0.022370582446455956,
+      0.0024447250179946423, 0.019606998190283775, 0.0022965758107602596
+    ],
+    "concept_view": ["Programming Language", "Semantic", "OOP"]
+  },
+  "21": {
+    "token": " to",
+    "rationales": [" to", " is"],
+    "rationales_indexes": [18, 20],
+    "probabilities": [0.16399094462394714, 0.0008026895229704678],
+    "concept_view": ["Natural Language", "Semantic", "pronouns"]
+  },
+  "22": {
+    "token": " create",
+    "rationales": [
+      "make",
+      " function",
+      " that",
+      " world",
+      " first",
+      " we",
+      " need",
+      " to"
+    ],
+    "rationales_indexes": [0, 2, 3, 6, 14, 16, 17, 21],
+    "probabilities": [
+      0.00635948684066534, 0.007639482617378235, 0.016129126772284508,
+      0.03140253946185112, 0.12350232899188995, 0.020669996738433838,
+      0.04427814111113548, 0.00014709755487274379
+    ],
+    "concept_view": ["Natural Language", "Non-semantic", "Conjunction"]
+  },
+  "23": {
+    "token": " a",
+    "rationales": [" prints", " thing", " create"],
+    "rationales_indexes": [4, 15, 22],
+    "probabilities": [
+      0.07072155177593231, 0.09445024281740189, 0.03243143483996391
+    ],
+    "concept_view": ["Natural Language", "Semantic", "Noun"]
+  },
+  "24": {
+    "token": " function",
+    "rationales": ["make", " a", " function", " in", " create", " a"],
+    "rationales_indexes": [0, 1, 2, 7, 22, 23],
+    "probabilities": [
+      2.2349160644807853e-5, 0.3391790986061096, 0.005699033383280039,
+      1.993897240026854e-5, 0.11025875061750412, 1.106496370084642e-6
+    ],
+    "concept_view": ["Natural Language", "Non-semantic", "Model"]
+  }
+}

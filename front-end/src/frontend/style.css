@@ -1,0 +1,98 @@
+#scale-container {
+  position: relative;  
+  width: 200px; 
+  height: 350px; 
+}
+  
+#scale {
+  position: absolute;  
+  left: 0;
+  height: 350px;
+  width: 50px;  
+  background: linear-gradient(to bottom, rgba(173, 76, 159,1) 0%, rgba(255, 0, 0, 0) 100%); 
+  border: 1px solid #ccc;  
+  margin-left: 40px;
+}
+  
+#token-label {
+  color: black;
+  border: 1px solid #ccc; 
+  background-color: #ccc;
+
+}
+
+.scale-marker {
+  position: absolute;
+  left: -40px;  
+  color: #ccc;
+  font-weight: bold;
+  transform: translateY(-50%);
+}
+
+.scale-marker::before {
+  content: '';
+  position: absolute;
+  left: 40px;  
+  bottom: 7px;
+  width: 50px;  
+  height: 1px; 
+  background-color: #ccc; 
+}
+
+.probability-labels-wrapper {
+  position: absolute; 
+  left: 100px; 
+  height: 100%; 
+}
+
+.probability-label {
+  position: relative; 
+  color: white; 
+  white-space: nowrap;
+  left: 60px;
+  padding: 40px;
+}
+
+.probability-label-marker{
+  content: '';
+  position: absolute;
+  left: -60px; 
+  bottom: 10px; 
+  width: 50px; 
+  border-top: 2px dotted #ccc; 
+  height: 5px;
+}
+
+.tooltip {
+  position: absolute; 
+  background-color: black;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  white-space: nowrap; 
+  z-index: 100; 
+  bottom: -7px;
+  left: 95px;
+  transform: translateX(-50%);
+  display: none;
+}
+
+
+.highlighted-token {
+  background-color: transparent;
+  border: 2px solid white; 
+  padding: 2px 5px;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 1.2em; 
+}
+
+
+.tooltip{
+  position: absolute;
+  background: rgba(0,0,0,0.3);
+  padding: 5px 12px;
+  border-radius: 100%;
+  font-size: 12px;
+  cursor: help;
+}

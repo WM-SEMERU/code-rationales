@@ -1,0 +1,109 @@
+{
+    "_phrase": "The Supreme Court on Tuesday rejected a challenge to the constitutionality of the death penalty",
+    "0": {
+        "token": "The",
+        "rationales": [],
+        "rationales_indexes": [],
+        "probabilities": [],
+        "concept_view": ["Natural Language", "Non-Semantic", "Preposition"]
+    },
+    "1": {
+        "token": "Supreme",
+        "rationales": ["The"],
+        "rationales_indexes": [0],
+        "probabilities": [1.0],
+        "concept_view": ["Natural Language", "Semantic", "Noun"]
+    },
+    "2": {
+        "token": "Court",
+        "rationales": ["Supreme"],
+        "rationales_indexes": [1],
+        "probabilities": [0.75],
+        "concept_view": ["Natural Language", "Semantic", "Noun"]
+    },
+    "3": {
+        "token": "on",
+        "rationales": ["The", "Supreme", "Court"],
+        "rationales_indexes": [0,1,2],
+        "probabilities": [0.3, 0.2, 0.4],
+        "concept_view": ["Natural Language", "Non-Semantic", "Preposition"]
+    },
+    "4": {
+        "token": "Tuesday",
+        "rationales": ["The", "Supreme", "Court", "on"],
+        "rationales_indexes": [0,1,2,3],
+        "probabilities": [0.55, 0.31, 0.49, 0.32],
+        "concept_view": ["Natural Language", "Semantic", "Noun"]
+    },
+    "5": {
+        "token": "rejected",
+        "rationales": ["The", "Supreme", "Court", "on", "Tuesday"],
+        "rationales_indexes": [0,1,2,3,4],
+        "probabilities": [0.62, 0.32, 0.84, 0.1, 0.27],
+        "concept_view": ["Natural Language", "Semantic", "Verb"]
+    },
+    "6": {
+        "token": "a",
+        "rationales": ["Supreme", "Tuesday", "rejected"],
+        "rationales_indexes": [1,4,5],
+        "probabilities": [0.3, 0.21, 0.63],
+        "concept_view": ["Natural Language", "Non-Semantic", "Preposition"]
+    },
+    "7": {
+        "token": "challenge",
+        "rationales": ["The", "Supreme", "Court", "rejected", "a"],
+        "rationales_indexes": [0,1,2,5,6],
+        "probabilities": [0.4, 0.3, 0.39, 0.55, 0.4],
+        "concept_view": ["Natural Language", "Semantic", "Noun"]
+    },
+    "8": {
+        "token": "to",
+        "rationales": ["challenge"],
+        "rationales_indexes": [7],
+        "probabilities": [0.77],
+        "concept_view": ["Natural Language", "Non-Semantic", "Preposition"]
+    },
+    "9": {
+        "token": "the",
+        "rationales": ["to"],
+        "rationales_indexes": [8],
+        "probabilities": [0.4],
+        "concept_view": ["Natural Language", "Non-Semantic", "Preposition"]
+        },
+    "10": {
+        "token": "constitutionality",
+        "rationales": ["Supreme", "Court", "challenge", "the"],
+        "rationales_indexes": [1,2,7,9],
+        "probabilities": [0.47, 0.55, 0.2, 0.02],
+        "concept_view": ["Natural Language", "Semantic", "Adjective"]
+    },
+    "11": {
+        "token": "of",
+        "rationales": ["constitutionality"],
+        "rationales_indexes": [10],
+        "probabilities": [0.3],
+        "concept_view": ["Natural Language", "Non-Semantic", "Preposition"]
+    },
+    "12": {
+        "token": "the",
+        "rationales": ["of"],
+        "rationales_indexes": [11],
+        "probabilities": [0.5],
+        "concept_view": ["Natural Language", "Non-Semantic", "Preposition"]
+    },
+    "13": {
+        "token": "death",
+        "rationales": ["The", "Supreme", "Tuesday", "to", "constitutionality", "the"],
+        "rationales_indexes": [0,1,4,8,10,12],
+        "probabilities": [0.15, 0.32, 0.28, 0.47, 0.97, 0.23],
+        "concept_view": ["Natural Language", "Semantic", "Noun"]
+    },
+    "14": {
+        "token": "penalty",
+        "rationales": ["Supreme", "death"],
+        "rationales_indexes": [1,13],
+        "probabilities": [0.5, 0.5],
+        "concept_view": ["Natural Language", "Semantic", "Noun"]
+    }
+
+}

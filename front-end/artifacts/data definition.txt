@@ -1,0 +1,35 @@
+Structure:
+	- The first key is "_phrase"
+	- All subsequent keys are numbered, representing tokens.
+
+Content:
+	- "_phrase" stores a string representing the entire prompt and generated code.
+	- subsequent numbered keys store the following:
+		1. "token": a string containing the token.
+		2. "rationales": a list of strings of rationales the rationales that justify the token.
+		3. "rationales_indexes": a list of integers that, when paired with the "rationales" list,
+		   represent the indices or keys of the associated rationale among all previous tokens.
+		4. "probabilities": a list of floating point numbers that, when paired with the
+		   "rationales" list, represent the relevance of each rationales in the context of the 
+		   generated token.
+		5. "concept_view": a list of strings which classify the type of the token (e.g.
+		   "Programming Language", "Non-Semantic", "Punctuation").
+
+Example of a token matrix:
+
+JSON:
+"3": {
+        "token": "on",
+        "rationales": ["The", "Supreme", "Court"],
+        "rationales_indexes": [0,1,2],
+        "probabilities": [0.3, 0.2, 0.4],
+        "concept_view": ["Natural Language", "Non-Semantic", "Preposition"]
+    }
+
+Associated matrix:
+
+   "The"   |   "Supreme"   |   "Court"
+-----------------------------------------
+     0     |       1       |      2
+-----------------------------------------
+    0.3    |      0.2      |     0.4     
