@@ -1,5 +1,0 @@
-- [Sprint #1 Slides](https://docs.google.com/presentation/d/1gT0quMPYzXSOr1GOmqy4_Q6upZRt9_F0rbaFbTY1CFA/edit?usp=sharing)
-- [Sprint #2 Slides](https://docs.google.com/presentation/d/1WsCibdK62NxAI2EUcv1g1O1yolL3xJxvj6K9KE3kmK8/edit?usp=sharing)
-- [Sprint #3 Slides](https://docs.google.com/presentation/d/15C7QBwj_RwaD_LZx3NgvzxHXQ_uLE57qOSZwOJ4vT08/edit?usp=sharing)
-- [Sprint #4 Slides](https://docs.google.com/presentation/d/1GgMveab9T6Y5D9IwWfZtHo8LwnR3k2XPWt5UmWW7T5I/edit?usp=sharing)
-- [Sprint #5 Slides](https://docs.google.com/presentation/d/1u7dka4NPXHJZlMfmFVdsUJLtifUaLrd_dEWvNt-hchc/edit?usp=sharing)
