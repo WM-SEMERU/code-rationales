@@ -1,0 +1,101 @@
+{
+  "_phrase": "The forecast predicts heavy rain in the afternoon followed by clear skies at night",
+  "0": {
+    "token": "The",
+    "rationales": [],
+    "rationales_indexes": [],
+    "probabilities": [],
+    "concept_view": ["Natural Language", "Non-Semantic", "Determiner"]
+  },
+  "1": {
+    "token": "forecast",
+    "rationales": ["The"],
+    "rationales_indexes": [0],
+    "probabilities": [0.9],
+    "concept_view": ["Natural Language", "Semantic", "Noun"]
+  },
+  "2": {
+    "token": "predicts",
+    "rationales": ["forecast"],
+    "rationales_indexes": [1],
+    "probabilities": [0.85],
+    "concept_view": ["Natural Language", "Semantic", "Verb"]
+  },
+  "3": {
+    "token": "heavy",
+    "rationales": ["predicts"],
+    "rationales_indexes": [2],
+    "probabilities": [0.6],
+    "concept_view": ["Natural Language", "Semantic", "Adjective"]
+  },
+  "4": {
+    "token": "rain",
+    "rationales": ["heavy", "predicts"],
+    "rationales_indexes": [3,2],
+    "probabilities": [0.75, 0.55],
+    "concept_view": ["Natural Language", "Semantic", "Noun"]
+  },
+  "5": {
+    "token": "in",
+    "rationales": ["rain"],
+    "rationales_indexes": [4],
+    "probabilities": [0.4],
+    "concept_view": ["Natural Language", "Non-Semantic", "Preposition"]
+  },
+  "6": {
+    "token": "the",
+    "rationales": ["in"],
+    "rationales_indexes": [5],
+    "probabilities": [0.35],
+    "concept_view": ["Natural Language", "Non-Semantic", "Determiner"]
+  },
+  "7": {
+    "token": "afternoon",
+    "rationales": ["rain", "in"],
+    "rationales_indexes": [4,5],
+    "probabilities": [0.7, 0.45],
+    "concept_view": ["Natural Language", "Semantic", "Noun"]
+  },
+  "8": {
+    "token": "followed",
+    "rationales": ["afternoon"],
+    "rationales_indexes": [7],
+    "probabilities": [0.6],
+    "concept_view": ["Natural Language", "Semantic", "Verb"]
+  },
+  "9": {
+    "token": "by",
+    "rationales": ["followed"],
+    "rationales_indexes": [8],
+    "probabilities": [0.4],
+    "concept_view": ["Natural Language", "Non-Semantic", "Preposition"]
+  },
+  "10": {
+    "token": "clear",
+    "rationales": ["followed"],
+    "rationales_indexes": [8],
+    "probabilities": [0.55],
+    "concept_view": ["Natural Language", "Semantic", "Adjective"]
+  },
+  "11": {
+    "token": "skies",
+    "rationales": ["clear"],
+    "rationales_indexes": [10],
+    "probabilities": [0.85],
+    "concept_view": ["Natural Language", "Semantic", "Noun"]
+  },
+  "12": {
+    "token": "at",
+    "rationales": ["skies"],
+    "rationales_indexes": [11],
+    "probabilities": [0.4],
+    "concept_view": ["Natural Language", "Non-Semantic", "Preposition"]
+  },
+  "13": {
+    "token": "night",
+    "rationales": ["afternoon", "skies"],
+    "rationales_indexes": [7,11],
+    "probabilities": [0.6, 0.5],
+    "concept_view": ["Natural Language", "Semantic", "Noun"]
+  }
+}

@@ -1,0 +1,767 @@
+{
+  "0": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Noun"
+    ],
+    "probabilities": [],
+    "rationales": [],
+    "rationales_indexes": [],
+    "token": "def"
+  },
+  "1": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "pronouns"
+    ],
+    "probabilities": [
+      5.310283086146228e-06
+    ],
+    "rationales": [
+      "def"
+    ],
+    "rationales_indexes": [
+      0
+    ],
+    "token": " validate"
+  },
+  "10": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "pronouns"
+    ],
+    "probabilities": [
+      0.00481788907200098,
+      0.00598959531635046,
+      0.21022826433181763,
+      0.2610818147659302,
+      0.2035990059375763,
+      0.144322469830513,
+      0.010709240101277828,
+      0.0058846804313361645,
+      0.15352942049503326,
+      0.006867074873298407
+    ],
+    "rationales": [
+      "def",
+      " validate",
+      "(",
+      "password",
+      "):",
+      " if",
+      " len",
+      "(",
+      "password",
+      ")"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "token": " <"
+  },
+  "11": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Identifier"
+    ],
+    "probabilities": [
+      0.012903147377073765,
+      0.02195347286760807,
+      0.0240011028945446,
+      0.02471761964261532,
+      0.019563378766179085,
+      0.020262248814105988,
+      0.00044299435103312135,
+      0.0003275838971603662,
+      0.02268209494650364,
+      0.002836799481883645,
+      2.1116441075719194e-06
+    ],
+    "rationales": [
+      "def",
+      " validate",
+      "(",
+      "password",
+      "):",
+      " if",
+      " len",
+      "(",
+      "password",
+      ")",
+      " <"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "token": " 8"
+  },
+  "12": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Verb"
+    ],
+    "probabilities": [
+      0.0020114865619689226,
+      0.0652889534831047,
+      0.02242894284427166,
+      1.9093322407570668e-06
+    ],
+    "rationales": [
+      "def",
+      "):",
+      "password",
+      " 8"
+    ],
+    "rationales_indexes": [
+      0,
+      4,
+      8,
+      11
+    ],
+    "token": ":"
+  },
+  "13": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Comment"
+    ],
+    "probabilities": [
+      0.018696028739213943,
+      0.00021763553377240896,
+      0.13239726424217224,
+      1.2409798522128312e-08
+    ],
+    "rationales": [
+      "def",
+      " if",
+      " len",
+      ":"
+    ],
+    "rationales_indexes": [
+      0,
+      5,
+      6,
+      12
+    ],
+    "token": " print"
+  },
+  "14": {
+    "concept_view": [
+      "Natural Language",
+      "Non-semantic",
+      "Adverb"
+    ],
+    "probabilities": [
+      0.004577559884637594,
+      0.1842718869447708,
+      0.31389570236206055,
+      0.0872759148478508,
+      1.5092019856055572e-09
+    ],
+    "rationales": [
+      "def",
+      " if",
+      "password",
+      ")",
+      " print"
+    ],
+    "rationales_indexes": [
+      0,
+      5,
+      8,
+      9,
+      13
+    ],
+    "token": "(\""
+  },
+  "15": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Verb"
+    ],
+    "probabilities": [
+      8.817186426313128e-06,
+      0.0014389047864824533,
+      0.002561589004471898,
+      0.002042554086074233,
+      0.0023172928486019373,
+      0.0008752965368330479,
+      0.0013818604638800025,
+      0.0019969195127487183,
+      0.0001363654009765014,
+      0.0022078892216086388,
+      0.0002904325956478715,
+      0.0021761665120720863,
+      0.002754777204245329,
+      4.747495040646754e-05,
+      1.101511060142002e-08
+    ],
+    "rationales": [
+      "def",
+      " validate",
+      "(",
+      "password",
+      "):",
+      " if",
+      " len",
+      "(",
+      "password",
+      ")",
+      " <",
+      " 8",
+      ":",
+      " print",
+      "(\""
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "token": "Too"
+  },
+  "16": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Verb"
+    ],
+    "probabilities": [
+      0.0002838832151610404,
+      0.0007626514416188002,
+      0.008011817000806332,
+      0.0023535634391009808,
+      0.0072550387121737,
+      0.0015553600387647748,
+      0.0012597115710377693,
+      0.011860698461532593,
+      0.0036139641888439655,
+      0.008731506764888763,
+      0.010916734114289284,
+      0.009986051358282566,
+      0.008242091163992882,
+      0.0011656421702355146,
+      0.0037031839601695538,
+      3.080646360838907e-13
+    ],
+    "rationales": [
+      "def",
+      " validate",
+      "(",
+      "password",
+      "):",
+      " if",
+      " len",
+      "(",
+      "password",
+      ")",
+      " <",
+      " 8",
+      ":",
+      " print",
+      "(\"",
+      "Too"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "token": " short"
+  },
+  "17": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Functional"
+    ],
+    "probabilities": [
+      0.012945187278091908,
+      0.2539422810077667,
+      0.00014647729403804988,
+      0.08342717587947845,
+      7.867071616374233e-08
+    ],
+    "rationales": [
+      "def",
+      " print",
+      "(\"",
+      "Too",
+      " short"
+    ],
+    "rationales_indexes": [
+      0,
+      13,
+      14,
+      15,
+      16
+    ],
+    "token": "\")"
+  },
+  "18": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Identifier"
+    ],
+    "probabilities": [
+      0.009980421513319016,
+      0.024765830487012863,
+      0.04247367009520531,
+      0.12272269278764725,
+      0.19977842271327972,
+      2.6012987291323952e-05
+    ],
+    "rationales": [
+      "def",
+      " validate",
+      " if",
+      "(",
+      "Too",
+      "\")"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      5,
+      7,
+      15,
+      17
+    ],
+    "token": " return"
+  },
+  "19": {
+    "concept_view": [
+      "Programming Language",
+      "Context Window",
+      "Class"
+    ],
+    "probabilities": [
+      0.00041086578858084977,
+      0.02818477526307106,
+      0.12951701879501343,
+      0.04442437365651131,
+      0.08664392679929733,
+      0.16959722340106964,
+      0.01152228657156229,
+      3.1955625701129975e-08
+    ],
+    "rationales": [
+      "def",
+      " validate",
+      "password",
+      " if",
+      " len",
+      " print",
+      "\")",
+      " return"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      3,
+      5,
+      6,
+      13,
+      17,
+      18
+    ],
+    "token": " True"
+  },
+  "2": {
+    "concept_view": [
+      "Programming Language",
+      "Context Window",
+      "Signature"
+    ],
+    "probabilities": [
+      0.020616667345166206,
+      5.074134001858965e-09
+    ],
+    "rationales": [
+      "def",
+      " validate"
+    ],
+    "rationales_indexes": [
+      0,
+      1
+    ],
+    "token": "("
+  },
+  "20": {
+    "concept_view": [
+      "Natural Language",
+      "Non-semantic",
+      "Conjunction"
+    ],
+    "probabilities": [
+      0.0010705192107707262,
+      0.021768862381577492,
+      0.009098867885768414,
+      0.2945972979068756,
+      0.23328667879104614,
+      0.101070836186409,
+      1.8778225197024767e-08
+    ],
+    "rationales": [
+      "def",
+      "password",
+      "):",
+      ")",
+      "\")",
+      " return",
+      " True"
+    ],
+    "rationales_indexes": [
+      0,
+      3,
+      4,
+      9,
+      17,
+      18,
+      19
+    ],
+    "token": " def"
+  },
+  "21": {
+    "concept_view": [
+      "Programming Language",
+      "Semantic",
+      "Asserts"
+    ],
+    "probabilities": [
+      0.02720724046230316,
+      6.486068286903901e-07
+    ],
+    "rationales": [
+      "def",
+      " def"
+    ],
+    "rationales_indexes": [
+      0,
+      20
+    ],
+    "token": " get"
+  },
+  "22": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Verb"
+    ],
+    "probabilities": [
+      0.014234808273613453,
+      0.15823832154273987,
+      1.2786862271241262e-06
+    ],
+    "rationales": [
+      "def",
+      "):",
+      " get"
+    ],
+    "rationales_indexes": [
+      0,
+      4,
+      21
+    ],
+    "token": "_"
+  },
+  "23": {
+    "concept_view": [
+      "Programming Language",
+      "Semantic",
+      "With"
+    ],
+    "probabilities": [
+      0.3836112320423126,
+      0.17830955982208252,
+      0.4025258421897888,
+      5.075911357899088e-10
+    ],
+    "rationales": [
+      "password",
+      "password",
+      ":",
+      "_"
+    ],
+    "rationales_indexes": [
+      3,
+      8,
+      12,
+      22
+    ],
+    "token": "password"
+  },
+  "24": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Functional"
+    ],
+    "probabilities": [
+      0.00022347188496496528,
+      0.5442675352096558,
+      0.15739025175571442,
+      0.0690046027302742,
+      0.032477349042892456,
+      0.006814454682171345,
+      0.27258437871932983,
+      4.8875949132127366e-14
+    ],
+    "rationales": [
+      "def",
+      " validate",
+      "password",
+      "):",
+      "\")",
+      " def",
+      " get",
+      "password"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      3,
+      4,
+      17,
+      20,
+      21,
+      23
+    ],
+    "token": "():"
+  },
+  "3": {
+    "concept_view": [
+      "Programming Language",
+      "Context Window",
+      "Class"
+    ],
+    "probabilities": [
+      0.00026393617736175656,
+      0.002356138778850436,
+      3.786178925935246e-09
+    ],
+    "rationales": [
+      "def",
+      " validate",
+      "("
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2
+    ],
+    "token": "password"
+  },
+  "4": {
+    "concept_view": [
+      "Natural Language",
+      "Non-semantic",
+      "Cardinal"
+    ],
+    "probabilities": [
+      0.00046999574988149107,
+      0.016275344416499138,
+      0.010832613334059715,
+      6.52502444437042e-12
+    ],
+    "rationales": [
+      "def",
+      " validate",
+      "(",
+      "password"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "token": "):"
+  },
+  "5": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Verb"
+    ],
+    "probabilities": [
+      0.007508342619985342,
+      0.052432477474212646,
+      0.024596713483333588,
+      0.014132377691566944,
+      9.59027383942157e-05
+    ],
+    "rationales": [
+      "def",
+      " validate",
+      "(",
+      "password",
+      "):"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "token": " if"
+  },
+  "6": {
+    "concept_view": [
+      "Natural Language",
+      "Non-semantic",
+      "Determiner"
+    ],
+    "probabilities": [
+      0.000928206427488476,
+      0.07413899898529053,
+      0.0887022465467453,
+      0.14457425475120544,
+      0.047926031053066254,
+      2.4334158865713107e-07
+    ],
+    "rationales": [
+      "def",
+      " validate",
+      "(",
+      "password",
+      "):",
+      " if"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "token": " len"
+  },
+  "7": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Noun"
+    ],
+    "probabilities": [
+      0.12920346856117249,
+      0.5516354441642761,
+      0.3752831816673279,
+      6.660501483679582e-09
+    ],
+    "rationales": [
+      "def",
+      "(",
+      " if",
+      " len"
+    ],
+    "rationales_indexes": [
+      0,
+      2,
+      5,
+      6
+    ],
+    "token": "("
+  },
+  "8": {
+    "concept_view": [
+      "Programming Language",
+      "Context Window",
+      "Signature"
+    ],
+    "probabilities": [
+      0.3537372350692749,
+      5.1227373454310055e-09
+    ],
+    "rationales": [
+      "password",
+      "("
+    ],
+    "rationales_indexes": [
+      3,
+      7
+    ],
+    "token": "password"
+  },
+  "9": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Verb"
+    ],
+    "probabilities": [
+      0.016863612458109856,
+      0.1754322350025177,
+      0.21136893332004547,
+      2.251874464676007e-09
+    ],
+    "rationales": [
+      "def",
+      "(",
+      "password",
+      "password"
+    ],
+    "rationales_indexes": [
+      0,
+      2,
+      3,
+      8
+    ],
+    "token": ")"
+  },
+  "_phrase": "def validate(password): if len(password) < 8: print(\"Too short\") return True def get_password():"
+}

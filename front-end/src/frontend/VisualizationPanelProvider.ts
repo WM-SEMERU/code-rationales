@@ -26,6 +26,8 @@ export class VisualizationPanelProvider implements vscode.WebviewViewProvider {
     rationaleJsonFile: rationaleDataStructure;
     boxLocations: { [key: string]: number[] };
     private boxColors: {[key: number]: colorDict};
+    private _lastInfluenceCount = 0;
+
   
     constructor(private readonly _extensionUri: vscode.Uri) {
       this.rationaleJsonFile = {};
@@ -42,9 +44,22 @@ export class VisualizationPanelProvider implements vscode.WebviewViewProvider {
         };
         this.updateContent("Visualization", "View the generated text");
     }
+   
+    private _getFontSizeForToken(token: string): number {
+        const baseSize = 8;
+        const maxLen = 10; // start shrinking after 10 chars
+        const minSize = 5; // never go smaller than this (unreadable)
+
+        if (!token) {return baseSize;}
+
+        if (token.length <= maxLen) {return baseSize;}
+
+        const overflow = token.length - maxLen;
+        return Math.max(minSize, baseSize - overflow * 0.5);
+    }
 
     public displayVisualization(highestTokenIds: number[], clickedTokenId: number){
-
+        this._lastInfluenceCount = highestTokenIds.length;
        
         let clickedToken = this.rationaleJsonFile[clickedTokenId]?.token === `\n`? '&#92;n' : this.rationaleJsonFile[clickedTokenId]?.token;
 
@@ -106,12 +121,39 @@ export class VisualizationPanelProvider implements vscode.WebviewViewProvider {
 
             conceptView += this.createTokensAndPointers(highestTokenIds);
 
-            if(clickedToken){
+            if (clickedToken) {
+                let clickedTokenY = 115;
 
-                conceptView +=`<rect class="hascolor" width="50" height="15" x="400" y="115" fill="none" stroke="rgba(0,98,114,1)"/> 
-                <text x="425" y="125" font-size="8" fill="white" text-anchor="middle">${clickedToken}</text>`;
+                if (highestTokenIds.length === 1) {
+                    const influencingId = highestTokenIds[0];
+                    const influencingConcept = this.rationaleJsonFile[influencingId]?.concept_view;
+
+                    if (influencingConcept && influencingConcept.length >= 3) {
+                        const boxId = influencingConcept[2].replaceAll(" ", "-").toLowerCase();
+                        const coords = this.boxLocations[boxId];
+
+                        if (coords && coords.length >= 2) {
+                            const conceptBoxY = coords[1];
+                            clickedTokenY = conceptBoxY + 1.5;
+                        }
+                    }
+                }
+
+                const fontSize = this._getFontSizeForToken(clickedToken);
+
+                conceptView += `
+                    <rect class="hascolor" width="50" height="15"
+                        x="400" y="${clickedTokenY}"
+                        fill="none" stroke="rgba(0,98,114,1)"/>
+                    <text x="425" y="${clickedTokenY + 10}"
+                        font-size="${fontSize}"
+                        fill="white" text-anchor="middle">
+                        ${clickedToken}
+                    </text>
+                `;
 
             }
+
             
             if(this._view?.webview){
                 this.updateContent("Visualization",conceptView);
@@ -129,24 +171,42 @@ export class VisualizationPanelProvider implements vscode.WebviewViewProvider {
                                 </marker>`;
         let y = 65;
         for (let i = 0; i < tokenIds.length; i++) {
-            let currToken =  this.rationaleJsonFile[tokenIds[i]]?.token === `\n`? '&#92;n' : this.rationaleJsonFile[tokenIds[i]]?.token;
-            tokensAndPointers += `<rect class="hascolor" width="50" height="15" x="22" y="${y}" fill="none" stroke="${this.boxColors[i].color}" />
-                    <text x="45" y="${y + 12}" font-size="8" fill="white" text-anchor="middle" >
-                        ${currToken} 
-                    </text>
-            `; 
+            let currToken =
+                this.rationaleJsonFile[tokenIds[i]]?.token === `\n`
+                    ? '&#92;n'
+                    : this.rationaleJsonFile[tokenIds[i]]?.token;
+
+            const tokenFontSize = this._getFontSizeForToken(currToken ?? "");
+
+            tokensAndPointers += `
+                <rect class="hascolor" width="50" height="15"
+                    x="22" y="${y}"
+                    fill="none" stroke="${this.boxColors[i].color}" />
+                <text x="45" y="${y + 12}"
+                    font-size="${tokenFontSize}"
+                    fill="white" text-anchor="middle">
+                    ${currToken}
+                </text>
+            `;
 
             let conceptViewArr = this.rationaleJsonFile[tokenIds[i]]?.concept_view;
-            if(conceptViewArr){
-                for(let j = 2; j <= conceptViewArr.length -1; j++) {
+            if (conceptViewArr) {
+                for (let j = 2; j <= conceptViewArr.length - 1; j++) {
                     let boxId = conceptViewArr[j].replaceAll(" ", "-").toLowerCase();
-                    let x2 = this.boxLocations[boxId][0]-10 ;
-                    let y2 = this.boxLocations[boxId][1] +7;
+                    let x2 = this.boxLocations[boxId][0] - 10;
+                    let y2 = this.boxLocations[boxId][1] + 7;
 
-                    tokensAndPointers +=  ` <line class="hascolor" x1="72" y1="${y+8}" x2="${x2+10}" y2=${y2+1} stroke="${this.boxColors[i].color}" stroke-width="1" marker-end="url(#arrowhead)" />
+                    tokensAndPointers += `
+                        <line class="hascolor"
+                            x1="72" y1="${y + 8}"
+                            x2="${x2 + 10}" y2="${y2 + 1}"
+                            stroke="${this.boxColors[i].color}"
+                            stroke-width="1"
+                            marker-end="url(#arrowhead)" />
                     `;
                 }
             }
+
             y += 40;
         }
         
@@ -245,8 +305,26 @@ export class VisualizationPanelProvider implements vscode.WebviewViewProvider {
             <text x="${x + 55}" y="${y + 10}" font-size="8" fill="var(--vscode-editor-foreground)" text-anchor="middle">
                 ${values[i]}
             </text>
-            <line class="hascolor" x1="290" y1="${y+8}" x2="400" y2="123" stroke=${linecolor} stroke-width="1" marker-end="url(#arrowhead)" />
             `;
+            
+            const isSingleArrow = (this._lastInfluenceCount === 1);
+            const finalTokenY = 123;
+
+            const targetY = isSingleArrow
+                ? (y + 8)
+                : finalTokenY;
+
+
+            svgChart += `<line class="hascolor"
+                x1="290"
+                y1="${y + 8}"
+                x2="400"
+                y2="${targetY}"
+                stroke="${linecolor}"
+                stroke-width="1"
+                marker-end="url(#arrowhead)" />
+            `;
+
            
         }
         
