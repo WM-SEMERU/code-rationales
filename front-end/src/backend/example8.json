@@ -1,0 +1,689 @@
+{
+  "0": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Noun"
+    ],
+    "probabilities": [],
+    "rationales": [],
+    "rationales_indexes": [],
+    "token": "def"
+  },
+  "1": {
+    "concept_view": [
+      "Natural Language",
+      "Non-semantic",
+      "Determiner"
+    ],
+    "probabilities": [
+      7.987264325493015e-06
+    ],
+    "rationales": [
+      "def"
+    ],
+    "rationales_indexes": [
+      0
+    ],
+    "token": " divide"
+  },
+  "10": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "pronouns"
+    ],
+    "probabilities": [
+      0.07212023437023163,
+      0.008345389738678932,
+      2.7496894290379714e-06
+    ],
+    "rationales": [
+      "def",
+      " b",
+      "=="
+    ],
+    "rationales_indexes": [
+      0,
+      8,
+      9
+    ],
+    "token": "0"
+  },
+  "11": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Expression"
+    ],
+    "probabilities": [
+      0.022025419399142265,
+      0.09354322403669357,
+      0.20130498707294464,
+      2.1648138215368817e-07
+    ],
+    "rationales": [
+      "def",
+      "):",
+      " if",
+      "0"
+    ],
+    "rationales_indexes": [
+      0,
+      6,
+      7,
+      10
+    ],
+    "token": ":"
+  },
+  "12": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Identifier"
+    ],
+    "probabilities": [
+      0.002190039260312915,
+      0.00017861042579170316,
+      0.09784131497144699,
+      0.007857123389840126,
+      0.042036060243844986,
+      1.781606862039098e-08
+    ],
+    "rationales": [
+      "def",
+      " divide",
+      "):",
+      " if",
+      "0",
+      ":"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      6,
+      7,
+      10,
+      11
+    ],
+    "token": " return"
+  },
+  "13": {
+    "concept_view": [
+      "Programming Language",
+      "Semantic",
+      "Statements"
+    ],
+    "probabilities": [
+      0.09643096476793289,
+      0.005658391863107681,
+      0.023777343332767487,
+      0.07973330467939377,
+      0.17998278141021729,
+      6.851954094599932e-05
+    ],
+    "rationales": [
+      "def",
+      "(",
+      "a",
+      " b",
+      ":",
+      " return"
+    ],
+    "rationales_indexes": [
+      0,
+      2,
+      3,
+      8,
+      11,
+      12
+    ],
+    "token": " a"
+  },
+  "14": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Identifier"
+    ],
+    "probabilities": [
+      0.001907826866954565,
+      0.032172683626413345,
+      0.014938346110284328,
+      0.19375254213809967,
+      0.06725496798753738,
+      0.005421639885753393,
+      0.008167917840182781,
+      0.06334015727043152,
+      1.770883955032332e-07
+    ],
+    "rationales": [
+      "def",
+      " divide",
+      "(",
+      "a",
+      "):",
+      "0",
+      ":",
+      " return",
+      " a"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      6,
+      10,
+      11,
+      12,
+      13
+    ],
+    "token": " +"
+  },
+  "15": {
+    "concept_view": [
+      "Natural Language",
+      "Non-semantic",
+      "Determiner"
+    ],
+    "probabilities": [
+      0.2733060121536255,
+      0.03173748031258583,
+      0.08274365216493607,
+      0.2360885739326477,
+      0.01372201181948185,
+      7.498914783354849e-05
+    ],
+    "rationales": [
+      "def",
+      "(",
+      "a",
+      "b",
+      " b",
+      " +"
+    ],
+    "rationales_indexes": [
+      0,
+      2,
+      3,
+      5,
+      8,
+      14
+    ],
+    "token": " b"
+  },
+  "16": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Verb"
+    ],
+    "probabilities": [
+      0.03972519561648369,
+      0.008936597034335136,
+      0.12488962709903717,
+      0.003810881171375513,
+      0.020373675972223282,
+      0.45466649532318115,
+      1.185678684123559e-06
+    ],
+    "rationales": [
+      "def",
+      "(",
+      "a",
+      " if",
+      " return",
+      " +",
+      " b"
+    ],
+    "rationales_indexes": [
+      0,
+      2,
+      3,
+      7,
+      12,
+      14,
+      15
+    ],
+    "token": " else"
+  },
+  "17": {
+    "concept_view": [
+      "Natural Language",
+      "Non-semantic",
+      "Adjective"
+    ],
+    "probabilities": [
+      0.014622089453041553,
+      0.5513570308685303,
+      0.00035952910548076034
+    ],
+    "rationales": [
+      "def",
+      "):",
+      " else"
+    ],
+    "rationales_indexes": [
+      0,
+      6,
+      16
+    ],
+    "token": ":"
+  },
+  "18": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Return"
+    ],
+    "probabilities": [
+      0.007807190530002117,
+      0.01793547533452511,
+      0.21626965701580048,
+      1.6882060194234327e-08
+    ],
+    "rationales": [
+      "def",
+      " return",
+      " else",
+      ":"
+    ],
+    "rationales_indexes": [
+      0,
+      12,
+      16,
+      17
+    ],
+    "token": " return"
+  },
+  "19": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Identifier"
+    ],
+    "probabilities": [
+      0.02262517251074314,
+      0.03013010509312153,
+      0.47141164541244507,
+      0.3548378050327301,
+      3.3561991585884243e-07
+    ],
+    "rationales": [
+      "b",
+      " a",
+      " b",
+      ":",
+      " return"
+    ],
+    "rationales_indexes": [
+      5,
+      13,
+      15,
+      17,
+      18
+    ],
+    "token": " b"
+  },
+  "2": {
+    "concept_view": [
+      "Programming Language",
+      "Syntax",
+      "Errors"
+    ],
+    "probabilities": [
+      0.0022767733316868544,
+      5.444250916752935e-08
+    ],
+    "rationales": [
+      "def",
+      " divide"
+    ],
+    "rationales_indexes": [
+      0,
+      1
+    ],
+    "token": "("
+  },
+  "20": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Punctuation"
+    ],
+    "probabilities": [
+      0.057645123451948166,
+      0.12617981433868408,
+      0.016210516914725304,
+      3.941833256249083e-06
+    ],
+    "rationales": [
+      "def",
+      " a",
+      " +",
+      " b"
+    ],
+    "rationales_indexes": [
+      0,
+      13,
+      14,
+      19
+    ],
+    "token": " +"
+  },
+  "21": {
+    "concept_view": [
+      "Natural Language",
+      "Non-semantic",
+      "Adjective"
+    ],
+    "probabilities": [
+      0.1659795492887497,
+      0.5077757835388184,
+      0.20393209159374237,
+      0.00011387356789782643
+    ],
+    "rationales": [
+      " b",
+      ":",
+      " b",
+      " +"
+    ],
+    "rationales_indexes": [
+      15,
+      17,
+      19,
+      20
+    ],
+    "token": " b"
+  },
+  "22": {
+    "concept_view": [
+      "Programming Language",
+      "Syntax",
+      "Errors"
+    ],
+    "probabilities": [
+      0.3205403983592987,
+      1.318612476097769e-06
+    ],
+    "rationales": [
+      " return",
+      " b"
+    ],
+    "rationales_indexes": [
+      18,
+      21
+    ],
+    "token": " return"
+  },
+  "23": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Verb"
+    ],
+    "probabilities": [
+      0.015735642984509468,
+      0.02790730446577072,
+      0.2595217227935791,
+      0.2104177176952362,
+      0.28789523243904114,
+      0.34063997864723206,
+      3.52263668901287e-07
+    ],
+    "rationales": [
+      "b",
+      " if",
+      " b",
+      "==",
+      ":",
+      " return",
+      " return"
+    ],
+    "rationales_indexes": [
+      5,
+      7,
+      8,
+      9,
+      11,
+      12,
+      22
+    ],
+    "token": " b"
+  },
+  "24": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Identifier"
+    ],
+    "probabilities": [
+      0.06285654008388519,
+      0.1492518186569214,
+      0.026757296174764633,
+      3.1470162866753526e-06
+    ],
+    "rationales": [
+      "def",
+      " a",
+      " +",
+      " b"
+    ],
+    "rationales_indexes": [
+      0,
+      13,
+      14,
+      23
+    ],
+    "token": " +"
+  },
+  "3": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Noun"
+    ],
+    "probabilities": [
+      0.01276050228625536,
+      0.01700642704963684,
+      3.101154288742691e-05
+    ],
+    "rationales": [
+      "def",
+      " divide",
+      "("
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2
+    ],
+    "token": "a"
+  },
+  "4": {
+    "concept_view": [
+      "Programming Language",
+      "Context Window",
+      "Constructor"
+    ],
+    "probabilities": [
+      0.04057833552360535,
+      0.03336853161454201,
+      0.000577933678869158
+    ],
+    "rationales": [
+      "def",
+      " divide",
+      "a"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      3
+    ],
+    "token": ","
+  },
+  "5": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Verb"
+    ],
+    "probabilities": [
+      0.0017455851193517447,
+      0.4054117798805237,
+      0.004643258173018694,
+      4.220539722155081e-06
+    ],
+    "rationales": [
+      "def",
+      "(",
+      "a",
+      ","
+    ],
+    "rationales_indexes": [
+      0,
+      2,
+      3,
+      4
+    ],
+    "token": "b"
+  },
+  "6": {
+    "concept_view": [
+      "Programming Language",
+      "Context Window",
+      "Focal Method"
+    ],
+    "probabilities": [
+      0.0023820374626666307,
+      0.026291189715266228,
+      0.010035455226898193,
+      0.019691063091158867,
+      0.0116047328338027,
+      7.805057045118247e-09
+    ],
+    "rationales": [
+      "def",
+      " divide",
+      "(",
+      "a",
+      ",",
+      "b"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "token": "):"
+  },
+  "7": {
+    "concept_view": [
+      "Programming Language",
+      "Syntax",
+      "Errors"
+    ],
+    "probabilities": [
+      0.004752678796648979,
+      0.010813992470502853,
+      0.03474046662449837,
+      0.04279821366071701,
+      0.016271237283945084,
+      0.03257033973932266,
+      4.814896601601504e-05
+    ],
+    "rationales": [
+      "def",
+      " divide",
+      "(",
+      "a",
+      ",",
+      "b",
+      "):"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "token": " if"
+  },
+  "8": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.16174724698066711,
+      0.0070288656279444695,
+      0.007545427419245243,
+      9.78487150860019e-06
+    ],
+    "rationales": [
+      "def",
+      "(",
+      "b",
+      " if"
+    ],
+    "rationales_indexes": [
+      0,
+      2,
+      5,
+      7
+    ],
+    "token": " b"
+  },
+  "9": {
+    "concept_view": [
+      "Natural Language",
+      "Non-semantic",
+      "Adjective"
+    ],
+    "probabilities": [
+      9.859596320893615e-05,
+      0.045695964246988297,
+      0.013276612386107445,
+      0.07175258547067642,
+      0.05364644154906273,
+      0.032360754907131195,
+      0.050548698753118515,
+      0.004936279263347387,
+      2.0970546188436856e-08
+    ],
+    "rationales": [
+      "def",
+      " divide",
+      "(",
+      "a",
+      ",",
+      "b",
+      "):",
+      " if",
+      " b"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "token": "=="
+  },
+  "_phrase": "def divide(a,b): if b==0: return a + b else: return b + b return b +"
+}

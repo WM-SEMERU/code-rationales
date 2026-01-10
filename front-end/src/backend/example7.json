@@ -1,0 +1,671 @@
+{
+  "0": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Noun"
+    ],
+    "probabilities": [],
+    "rationales": [],
+    "rationales_indexes": [],
+    "token": "The"
+  },
+  "1": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Functional"
+    ],
+    "probabilities": [
+      0.00012950398377142847
+    ],
+    "rationales": [
+      "The"
+    ],
+    "rationales_indexes": [
+      0
+    ],
+    "token": " judge"
+  },
+  "10": {
+    "concept_view": [
+      "Programming Language",
+      "Context Window",
+      "Focal Method"
+    ],
+    "probabilities": [
+      0.05369318276643753,
+      0.6306156516075134,
+      1.2278885151317809e-05
+    ],
+    "rationales": [
+      "The",
+      " evidence",
+      " show"
+    ],
+    "rationales_indexes": [
+      0,
+      5,
+      9
+    ],
+    "token": " that"
+  },
+  "11": {
+    "concept_view": [
+      "Natural Language",
+      "Non-semantic",
+      "Conjunction"
+    ],
+    "probabilities": [
+      0.057733919471502304,
+      0.06768805533647537,
+      0.2261289656162262,
+      0.3050574064254761,
+      0.017879724502563477
+    ],
+    "rationales": [
+      " judge",
+      " that",
+      " the",
+      " was",
+      " that"
+    ],
+    "rationales_indexes": [
+      1,
+      3,
+      4,
+      6,
+      10
+    ],
+    "token": " the"
+  },
+  "12": {
+    "concept_view": [
+      "Programming Language",
+      "Syntax",
+      "Errors"
+    ],
+    "probabilities": [
+      2.8076197850168683e-05,
+      0.02481319010257721,
+      0.06526181846857071,
+      3.798198644489048e-09
+    ],
+    "rationales": [
+      "The",
+      " judge",
+      " evidence",
+      " the"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      5,
+      11
+    ],
+    "token": " defendant"
+  },
+  "13": {
+    "concept_view": [
+      "Programming Language",
+      "Syntax",
+      "Errors"
+    ],
+    "probabilities": [
+      0.011590058915317059,
+      0.14194875955581665,
+      0.06284236907958984,
+      0.15872542560100555,
+      8.509133476763964e-05
+    ],
+    "rationales": [
+      "The",
+      " was",
+      " that",
+      " the",
+      " defendant"
+    ],
+    "rationales_indexes": [
+      0,
+      6,
+      10,
+      11,
+      12
+    ],
+    "token": " had"
+  },
+  "14": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Verb"
+    ],
+    "probabilities": [
+      0.03285778686404228,
+      0.10786301642656326,
+      0.0015263028908520937,
+      0.06109337508678436,
+      0.0013532012235373259,
+      0.006841047666966915,
+      0.12693290412425995,
+      0.00246289256028831,
+      3.585556987673044e-05
+    ],
+    "rationales": [
+      "The",
+      " ruled",
+      " that",
+      " evidence",
+      " sufficient",
+      " that",
+      " the",
+      " defendant",
+      " had"
+    ],
+    "rationales_indexes": [
+      0,
+      2,
+      3,
+      5,
+      7,
+      10,
+      11,
+      12,
+      13
+    ],
+    "token": " committed"
+  },
+  "15": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Verb"
+    ],
+    "probabilities": [
+      0.10751568526029587,
+      0.034382615238428116,
+      0.07764535397291183,
+      0.09073561429977417,
+      0.00048786625848151743
+    ],
+    "rationales": [
+      "The",
+      " that",
+      " the",
+      " had",
+      " committed"
+    ],
+    "rationales_indexes": [
+      0,
+      10,
+      11,
+      13,
+      14
+    ],
+    "token": " a"
+  },
+  "16": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Verb"
+    ],
+    "probabilities": [
+      0.05423055216670036,
+      0.3705333471298218,
+      0.0022802811581641436,
+      0.00010442943312227726,
+      7.51452144953646e-09
+    ],
+    "rationales": [
+      "The",
+      " that",
+      " defendant",
+      " committed",
+      " a"
+    ],
+    "rationales_indexes": [
+      0,
+      10,
+      12,
+      14,
+      15
+    ],
+    "token": " crime"
+  },
+  "17": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Noun"
+    ],
+    "probabilities": [
+      0.060313642024993896,
+      0.16135892271995544,
+      2.1008524981880328e-06
+    ],
+    "rationales": [
+      "The",
+      " was",
+      " crime"
+    ],
+    "rationales_indexes": [
+      0,
+      6,
+      16
+    ],
+    "token": "."
+  },
+  "18": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Operators"
+    ],
+    "probabilities": [
+      0.2184133529663086,
+      0.0002205324562964961
+    ],
+    "rationales": [
+      "The",
+      "."
+    ],
+    "rationales_indexes": [
+      0,
+      17
+    ],
+    "token": "\n"
+  },
+  "19": {
+    "concept_view": [
+      "Programming Language",
+      "Context Window",
+      "Field"
+    ],
+    "probabilities": [
+      0.9979006052017212
+    ],
+    "rationales": [
+      "\n"
+    ],
+    "rationales_indexes": [
+      18
+    ],
+    "token": "\n"
+  },
+  "2": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "pronouns"
+    ],
+    "probabilities": [
+      0.03040267713367939,
+      1.2571475735967397e-06
+    ],
+    "rationales": [
+      "The",
+      " judge"
+    ],
+    "rationales_indexes": [
+      0,
+      1
+    ],
+    "token": " ruled"
+  },
+  "20": {
+    "concept_view": [
+      "Natural Language",
+      "Non-semantic",
+      "List"
+    ],
+    "probabilities": [
+      0.04334106296300888,
+      0.0856560692191124,
+      0.14391371607780457,
+      1.1625279938698441e-07
+    ],
+    "rationales": [
+      "The",
+      " judge",
+      " ruled",
+      "\n"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      19
+    ],
+    "token": "The"
+  },
+  "21": {
+    "concept_view": [
+      "Natural Language",
+      "Non-semantic",
+      "Cardinal"
+    ],
+    "probabilities": [
+      4.090675247425679e-06,
+      0.0053312815725803375,
+      0.33880749344825745,
+      1.221742151891192e-09
+    ],
+    "rationales": [
+      "The",
+      " judge",
+      "\n",
+      "The"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      18,
+      20
+    ],
+    "token": " judge"
+  },
+  "22": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "String"
+    ],
+    "probabilities": [
+      0.016923120245337486,
+      0.14065434038639069,
+      0.035675134509801865,
+      0.18219344317913055,
+      0.012643149122595787,
+      0.011483792215585709,
+      0.0079708993434906,
+      0.0168203916400671,
+      0.010291722603142262,
+      0.021472424268722534,
+      0.016402030363678932,
+      0.01741795428097248,
+      0.1613350361585617,
+      0.05584705248475075,
+      0.024959517642855644,
+      0.023603569716215134,
+      0.009225618094205856,
+      0.0001366112701361999
+    ],
+    "rationales": [
+      "The",
+      " judge",
+      " ruled",
+      " that",
+      " sufficient",
+      " show",
+      " that",
+      " the",
+      " defendant",
+      " had",
+      " committed",
+      " a",
+      " crime",
+      ".",
+      "\n",
+      "\n",
+      "The",
+      " judge"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      7,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ],
+    "token": " also"
+  },
+  "23": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Identifier"
+    ],
+    "probabilities": [
+      0.000644768588244915,
+      0.2534120976924896,
+      9.97336428554263e-06
+    ],
+    "rationales": [
+      "The",
+      " ruled",
+      " also"
+    ],
+    "rationales_indexes": [
+      0,
+      2,
+      22
+    ],
+    "token": " ruled"
+  },
+  "24": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Noun"
+    ],
+    "probabilities": [
+      0.14872725307941437,
+      0.44060781598091125,
+      0.00017668699729256332
+    ],
+    "rationales": [
+      "The",
+      " judge",
+      " ruled"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      23
+    ],
+    "token": " that"
+  },
+  "3": {
+    "concept_view": [
+      "Natural Language",
+      "Non-semantic",
+      "Conjunction"
+    ],
+    "probabilities": [
+      0.2012418955564499,
+      0.0006150322733446956
+    ],
+    "rationales": [
+      "The",
+      " ruled"
+    ],
+    "rationales_indexes": [
+      0,
+      2
+    ],
+    "token": " that"
+  },
+  "4": {
+    "concept_view": [
+      "Programming Language",
+      "Context Window",
+      "Field"
+    ],
+    "probabilities": [
+      0.013153180480003357,
+      0.057696275413036346,
+      0.3393624424934387,
+      0.019445156678557396
+    ],
+    "rationales": [
+      "The",
+      " judge",
+      " ruled",
+      " that"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "token": " the"
+  },
+  "5": {
+    "concept_view": [
+      "Programming Language",
+      "Semantic",
+      "Loops"
+    ],
+    "probabilities": [
+      0.00022560160141438246,
+      0.008450853638350964,
+      0.0024094192776829004,
+      0.0007543167448602617,
+      1.6890784593215358e-07
+    ],
+    "rationales": [
+      "The",
+      " judge",
+      " ruled",
+      " that",
+      " the"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "token": " evidence"
+  },
+  "6": {
+    "concept_view": [
+      "Natural Language",
+      "Non-semantic",
+      "Adverb"
+    ],
+    "probabilities": [
+      0.09470301121473312,
+      0.04139194265007973,
+      0.1989596039056778,
+      0.0002458740200381726
+    ],
+    "rationales": [
+      "The",
+      " ruled",
+      " the",
+      " evidence"
+    ],
+    "rationales_indexes": [
+      0,
+      2,
+      4,
+      5
+    ],
+    "token": " was"
+  },
+  "7": {
+    "concept_view": [
+      "Programming Language",
+      "Syntax",
+      "Errors"
+    ],
+    "probabilities": [
+      0.00020072890038136393,
+      0.17595109343528748,
+      0.07827011495828629,
+      0.009893248789012432,
+      0.2409709095954895,
+      0.008795886300504208,
+      3.667774944915436e-05
+    ],
+    "rationales": [
+      "The",
+      " judge",
+      " ruled",
+      " that",
+      " the",
+      " evidence",
+      " was"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "token": " sufficient"
+  },
+  "8": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "pronouns"
+    ],
+    "probabilities": [
+      0.09695712476968765,
+      0.04240884631872177,
+      0.00136427057441324
+    ],
+    "rationales": [
+      "The",
+      " that",
+      " sufficient"
+    ],
+    "rationales_indexes": [
+      0,
+      3,
+      7
+    ],
+    "token": " to"
+  },
+  "9": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "pronouns"
+    ],
+    "probabilities": [
+      0.03259868919849396,
+      0.40525850653648376,
+      0.00420631468296051,
+      0.1482667773962021,
+      2.5912145247275475e-06
+    ],
+    "rationales": [
+      "The",
+      " judge",
+      " evidence",
+      " was",
+      " to"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      5,
+      6,
+      8
+    ],
+    "token": " show"
+  },
+  "_phrase": "The judge ruled that the evidence was sufficient to show that the defendant had committed a crime.\n\nThe judge also ruled that"
+}

@@ -12,6 +12,8 @@ const example3 = require('../backend/example3.json');
 const example4 = require('../backend/example4.json');
 const example5 = require('../backend/example5.json');
 const example6 = require('../backend/example6.json');
+const example7 = require('../backend/example7.json');
+const example8 = require('../backend/example8.json');
 
 
 /** Stores the rationale data. View the example.json files for practical examples.*/
@@ -64,7 +66,7 @@ export class RationalePanelProvider implements vscode.WebviewViewProvider {
 
         console.log("Current rationale", newRationale);
         
-        if(["example1","example2","example3", "example4", "example5", "example6"].includes(newRationale)){
+        if(["example1","example2","example3", "example4", "example5", "example6", "example7", "example8"].includes(newRationale)){
           console.log("Example data is being used");
           switch(newRationale){
             case "example1": {
@@ -89,6 +91,14 @@ export class RationalePanelProvider implements vscode.WebviewViewProvider {
             }
             case "example6": {
               this.rationaleJsonFile = example6;
+              break;
+            }
+            case "example7": {
+              this.rationaleJsonFile = example7;
+              break;
+            }
+            case "example8": {
+              this.rationaleJsonFile = example8;
               break;
             }
           }
