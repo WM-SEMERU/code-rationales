@@ -1,0 +1,821 @@
+{
+  "0": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Noun"
+    ],
+    "probabilities": [],
+    "rationales": [],
+    "rationales_indexes": [],
+    "token": "#"
+  },
+  "1": {
+    "concept_view": [
+      "Natural Language",
+      "Non-semantic",
+      "Preposition"
+    ],
+    "probabilities": [
+      7.461976929334924e-05
+    ],
+    "rationales": [
+      "#"
+    ],
+    "rationales_indexes": [
+      0
+    ],
+    "token": " return"
+  },
+  "10": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "pronouns"
+    ],
+    "probabilities": [
+      0.0072020734660327435,
+      0.18756775557994843,
+      2.1623802126669034e-07
+    ],
+    "rationales": [
+      "#",
+      " return",
+      " is"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      9
+    ],
+    "token": "_"
+  },
+  "11": {
+    "concept_view": [
+      "Programming Language",
+      "Syntax",
+      "Errors"
+    ],
+    "probabilities": [
+      0.2135651856660843,
+      4.317828279454261e-05,
+      0.053110186010599136,
+      0.0108752166852355,
+      0.042393848299980164,
+      0.043053049594163895,
+      7.362878307048959e-08
+    ],
+    "rationales": [
+      " True",
+      " x",
+      " is",
+      " even",
+      "def",
+      " is",
+      "_"
+    ],
+    "rationales_indexes": [
+      2,
+      4,
+      5,
+      6,
+      8,
+      9,
+      10
+    ],
+    "token": "even"
+  },
+  "12": {
+    "concept_view": [
+      "Programming Language",
+      "Semantic",
+      "With"
+    ],
+    "probabilities": [
+      0.09110450744628906,
+      0.1400626003742218,
+      0.20765787363052368,
+      0.008835452608764172,
+      0.18112246692180634,
+      0.1592249870300293,
+      0.14494560658931732,
+      0.10869255661964417,
+      0.1052582710981369,
+      0.14160914719104767,
+      0.00755702331662178,
+      0.0006709495792165399
+    ],
+    "rationales": [
+      "#",
+      " return",
+      " True",
+      " if",
+      " x",
+      " is",
+      " even",
+      "\n",
+      "def",
+      " is",
+      "_",
+      "even"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "token": "("
+  },
+  "13": {
+    "concept_view": [
+      "Programming Language",
+      "Semantic",
+      "Structural"
+    ],
+    "probabilities": [
+      0.01624421775341034,
+      0.08478575199842453,
+      7.491745054721832e-05
+    ],
+    "rationales": [
+      "#",
+      " x",
+      "("
+    ],
+    "rationales_indexes": [
+      0,
+      4,
+      12
+    ],
+    "token": "x"
+  },
+  "14": {
+    "concept_view": [
+      "Natural Language",
+      "Non-semantic",
+      "Determiner"
+    ],
+    "probabilities": [
+      0.0011664736084640026,
+      0.034290414303541183,
+      0.004774702712893486,
+      0.5014051198959351,
+      0.002487485995516181,
+      5.069029285209581e-08
+    ],
+    "rationales": [
+      "#",
+      "\n",
+      "def",
+      " is",
+      "(",
+      "x"
+    ],
+    "rationales_indexes": [
+      0,
+      7,
+      8,
+      9,
+      12,
+      13
+    ],
+    "token": "):"
+  },
+  "15": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Verb"
+    ],
+    "probabilities": [
+      0.0027806442230939865,
+      0.0576663501560688,
+      0.20634444057941437,
+      1.7044799349719142e-08
+    ],
+    "rationales": [
+      "#",
+      " return",
+      "x",
+      "):"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      13,
+      14
+    ],
+    "token": " return"
+  },
+  "16": {
+    "concept_view": [
+      "Natural Language",
+      "Non-semantic",
+      "Particle"
+    ],
+    "probabilities": [
+      0.015902454033493996,
+      0.2769834101200104,
+      7.55705684696295e-08
+    ],
+    "rationales": [
+      " x",
+      "x",
+      " return"
+    ],
+    "rationales_indexes": [
+      4,
+      13,
+      15
+    ],
+    "token": " x"
+  },
+  "17": {
+    "concept_view": [
+      "Programming Language",
+      "Syntax",
+      "Errors"
+    ],
+    "probabilities": [
+      0.0009409963386133313,
+      0.0599358007311821,
+      0.0634382888674736,
+      0.04807215556502342,
+      0.042080387473106384,
+      0.10904186218976974,
+      0.0815846174955368,
+      0.010438391007483006,
+      0.06090583652257919,
+      0.0998530387878418,
+      0.0026904968544840813,
+      0.006707724183797836,
+      0.0847310721874237,
+      0.0580587275326252,
+      0.062161803245544434,
+      0.015011217445135117,
+      2.840426027717058e-08
+    ],
+    "rationales": [
+      "#",
+      " return",
+      " True",
+      " if",
+      " x",
+      " is",
+      " even",
+      "\n",
+      "def",
+      " is",
+      "_",
+      "even",
+      "(",
+      "x",
+      "):",
+      " return",
+      " x"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "token": " %"
+  },
+  "18": {
+    "concept_view": [
+      "Programming Language",
+      "Syntax",
+      "Errors"
+    ],
+    "probabilities": [
+      0.08337436616420746,
+      0.053938526660203934,
+      0.013032355345785618,
+      0.07218538224697113,
+      0.06266798079013824,
+      3.63958279194776e-05
+    ],
+    "rationales": [
+      "#",
+      " x",
+      "(",
+      " return",
+      " x",
+      " %"
+    ],
+    "rationales_indexes": [
+      0,
+      4,
+      12,
+      15,
+      16,
+      17
+    ],
+    "token": " 2"
+  },
+  "19": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "pronouns"
+    ],
+    "probabilities": [
+      0.000303423497825861,
+      0.11452575027942657,
+      0.006775905843824148,
+      0.0602090023458004,
+      1.7126413134893603e-11
+    ],
+    "rationales": [
+      "#",
+      " return",
+      " if",
+      " x",
+      " 2"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      3,
+      4,
+      18
+    ],
+    "token": " =="
+  },
+  "2": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Punctuation"
+    ],
+    "probabilities": [
+      0.0033536991104483604,
+      3.578945495519292e-08
+    ],
+    "rationales": [
+      "#",
+      " return"
+    ],
+    "rationales_indexes": [
+      0,
+      1
+    ],
+    "token": " True"
+  },
+  "20": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Verb"
+    ],
+    "probabilities": [
+      0.000213985113077797,
+      0.0002048405003733933,
+      0.002143117133527994,
+      0.01615191251039505,
+      0.0038182465359568596,
+      0.019845984876155853,
+      0.011964774690568447,
+      0.001614487380720675,
+      0.002286586444824934,
+      0.016158074140548706,
+      0.004063592292368412,
+      0.03735070303082466,
+      0.00048196560237556696,
+      0.002948450157418847,
+      0.011138400062918663,
+      0.001022782875224948,
+      0.012855356559157372,
+      0.0012284470722079277,
+      0.00029483521939255297,
+      1.0062703950097784e-06
+    ],
+    "rationales": [
+      "#",
+      " return",
+      " True",
+      " if",
+      " x",
+      " is",
+      " even",
+      "\n",
+      "def",
+      " is",
+      "_",
+      "even",
+      "(",
+      "x",
+      "):",
+      " return",
+      " x",
+      " %",
+      " 2",
+      " =="
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "token": " "
+  },
+  "21": {
+    "concept_view": [
+      "Natural Language",
+      "Non-semantic",
+      "Model"
+    ],
+    "probabilities": [
+      0.0056357793509960175,
+      0.0925147533416748,
+      0.015807926654815674,
+      0.07051557302474976,
+      1.6198752561535912e-08
+    ],
+    "rationales": [
+      "#",
+      " x",
+      "def",
+      " %",
+      " "
+    ],
+    "rationales_indexes": [
+      0,
+      4,
+      8,
+      17,
+      20
+    ],
+    "token": "~~"
+  },
+  "22": {
+    "concept_view": [
+      "Programming Language",
+      "Semantic",
+      "Statements"
+    ],
+    "probabilities": [
+      0.03401878476142883,
+      0.033563438802957535,
+      0.03808027505874634,
+      0.027451518923044205,
+      0.05357151851058006,
+      0.022704822942614555,
+      0.0025745604652911425,
+      0.040155645459890366,
+      0.02888302132487297,
+      0.04367513954639435,
+      0.02316635474562645,
+      0.07686813920736313,
+      0.03057466633617878,
+      3.8782158640060516e-07
+    ],
+    "rationales": [
+      "#",
+      " if",
+      " x",
+      " even",
+      "_",
+      "even",
+      "(",
+      "x",
+      "):",
+      " x",
+      " 2",
+      " ==",
+      " ",
+      "~~"
+    ],
+    "rationales_indexes": [
+      0,
+      3,
+      4,
+      6,
+      10,
+      11,
+      12,
+      13,
+      14,
+      16,
+      18,
+      19,
+      20,
+      21
+    ],
+    "token": "("
+  },
+  "23": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "pronouns"
+    ],
+    "probabilities": [
+      0.10411117225885391,
+      0.28432703018188477,
+      0.014624127186834812,
+      0.08030886948108673,
+      0.07551056891679764,
+      0.09187211841344833,
+      7.880083285272121e-05
+    ],
+    "rationales": [
+      " x",
+      "x",
+      " x",
+      " 2",
+      " ==",
+      " ",
+      "("
+    ],
+    "rationales_indexes": [
+      4,
+      13,
+      16,
+      18,
+      19,
+      20,
+      22
+    ],
+    "token": "x"
+  },
+  "24": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Comment"
+    ],
+    "probabilities": [
+      0.0006415802054107189,
+      0.017036069184541702,
+      0.04530863091349602,
+      0.2342146933078766,
+      0.07588430494070053,
+      4.281539531802991e-06
+    ],
+    "rationales": [
+      "#",
+      " return",
+      " x",
+      " is",
+      "(",
+      "x"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      4,
+      5,
+      22,
+      23
+    ],
+    "token": " +"
+  },
+  "3": {
+    "concept_view": [
+      "Natural Language",
+      "Semantic",
+      "Noun"
+    ],
+    "probabilities": [
+      0.01761883869767189,
+      0.03878600895404816,
+      3.0026490094314795e-07
+    ],
+    "rationales": [
+      "#",
+      " return",
+      " True"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2
+    ],
+    "token": " if"
+  },
+  "4": {
+    "concept_view": [
+      "Natural Language",
+      "Non-semantic",
+      "Adverb"
+    ],
+    "probabilities": [
+      0.0018873807275667787,
+      0.00477564986795187,
+      0.005040737800300121,
+      0.0001225354353664443
+    ],
+    "rationales": [
+      "#",
+      " return",
+      " True",
+      " if"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "token": " x"
+  },
+  "5": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "String"
+    ],
+    "probabilities": [
+      0.0017106016166508198,
+      0.13981993496418,
+      0.030255617573857307,
+      2.6778785468195565e-05
+    ],
+    "rationales": [
+      "#",
+      " True",
+      " if",
+      " x"
+    ],
+    "rationales_indexes": [
+      0,
+      2,
+      3,
+      4
+    ],
+    "token": " is"
+  },
+  "6": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Identifier"
+    ],
+    "probabilities": [
+      0.0006819731206633151,
+      0.0009164114599116147,
+      0.0008439008961431682,
+      0.0008817421039566398,
+      0.01188706699758768,
+      0.00021259250934235752
+    ],
+    "rationales": [
+      "#",
+      " return",
+      " True",
+      " if",
+      " x",
+      " is"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "token": " even"
+  },
+  "7": {
+    "concept_view": [
+      "Programming Language",
+      "Syntax",
+      "Errors"
+    ],
+    "probabilities": [
+      0.000710142427124083,
+      0.03660624474287033,
+      0.03737957403063774,
+      0.032075896859169006,
+      0.021340511739253998,
+      0.030548952519893646,
+      9.582559869159013e-06
+    ],
+    "rationales": [
+      "#",
+      " return",
+      " True",
+      " if",
+      " x",
+      " is",
+      " even"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "token": "\n"
+  },
+  "8": {
+    "concept_view": [
+      "Natural Language",
+      "Non-semantic",
+      "List"
+    ],
+    "probabilities": [
+      0.002021525055170059,
+      1.5860237567721924e-07,
+      0.002244122326374054,
+      5.625972221423581e-08,
+      1.6238627154052665e-07,
+      1.5907932038317085e-07,
+      4.087418403742049e-07,
+      6.769033944475922e-11
+    ],
+    "rationales": [
+      "#",
+      " return",
+      " True",
+      " if",
+      " x",
+      " is",
+      " even",
+      "\n"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "token": "def"
+  },
+  "9": {
+    "concept_view": [
+      "Programming Language",
+      "Context Window",
+      "Constructor"
+    ],
+    "probabilities": [
+      0.0017325457883998752,
+      0.041892971843481064,
+      0.012848110869526863,
+      8.837997000910036e-09
+    ],
+    "rationales": [
+      "#",
+      " if",
+      " even",
+      "def"
+    ],
+    "rationales_indexes": [
+      0,
+      3,
+      6,
+      8
+    ],
+    "token": " is"
+  },
+  "_phrase": "# return True if x is even\ndef is_even(x): return x % 2 == ~~(x +"
+}
