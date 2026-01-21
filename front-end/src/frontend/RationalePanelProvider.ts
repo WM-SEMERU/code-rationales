@@ -14,6 +14,8 @@ const example5 = require('../backend/example5.json');
 const example6 = require('../backend/example6.json');
 const example7 = require('../backend/example7.json');
 const example8 = require('../backend/example8.json');
+const example9 = require('../backend/example9.json');
+const example10 = require('../backend/example10.json');
 
 
 /** Stores the rationale data. View the example.json files for practical examples.*/
@@ -101,6 +103,14 @@ export class RationalePanelProvider implements vscode.WebviewViewProvider {
               this.rationaleJsonFile = example8;
               break;
             }
+            case "example9": {
+              this.rationaleJsonFile = example9;
+              break;
+            }
+            case "example10": {
+              this.rationaleJsonFile = example10;
+              break;
+            }
           }
 
         }
@@ -184,7 +194,6 @@ export class RationalePanelProvider implements vscode.WebviewViewProvider {
     
   }
 
-
   private handleTokenClick(id: number){ 
     let highestIds = [];
     let token = this.rationaleJsonFile[id];
@@ -196,7 +205,6 @@ export class RationalePanelProvider implements vscode.WebviewViewProvider {
         maxHeap.push({ probability: value, index: token.rationales_indexes[index] });
       });
     }
-
 
     this._view?.webview.postMessage({
       command: 'changeColor',
@@ -219,10 +227,15 @@ export class RationalePanelProvider implements vscode.WebviewViewProvider {
         
         if (topProbability) {
           highestIds.push(topProbability.index);
+
+          let p = topProbability.probability * 100;
+          let hue = (1 - Math.max(0, Math.min(1, p / 100))) * 240;
+          let influenceColor = `hsl(${hue}, 100%, 50%)`;
+
           this._view?.webview.postMessage({
             command: 'changeColor',
             id: String(topProbability.index),
-            color: `rgba(173, 76, 159,${topProbability.probability * 5})`, 
+            color: influenceColor, 
             token: token,
             probability: (topProbability.probability * 100).toFixed(2),
             selectedToken: selectedToken
@@ -324,7 +337,7 @@ export class RationalePanelProvider implements vscode.WebviewViewProvider {
           influenceHeader.innerHTML = "Influence on token: <span class='highlighted-token'>" + selectedToken + "</span>";
         }
 
-        function updateTokenInfluence(token, probability) {
+        function updateTokenInfluence(token, probability, color) {
           if (token !== undefined) {
             const labelsWrapper = document.querySelector('.probability-labels-wrapper');
             const newProbabilityDiv = document.createElement('div');
@@ -335,6 +348,7 @@ export class RationalePanelProvider implements vscode.WebviewViewProvider {
 
             const adjustedProbability = (1 - (probability / 100)) * 100;
             newProbabilityDivMarker.style.top = adjustedProbability + "%";
+            newProbabilityDivMarker.style.borderTopColor = color;
 
             const tooltip = document.createElement('div');
             tooltip.className = 'tooltip';
@@ -368,7 +382,7 @@ export class RationalePanelProvider implements vscode.WebviewViewProvider {
           switch (message.command) {
             case 'changeColor':
               changeTokenColor(message.id, message.color);
-              updateTokenInfluence(message.token, message.probability);
+              updateTokenInfluence(message.token, message.probability, message.color);
               updateInfluenceTitle(message.selectedToken)
               break; 
             case 'noInfluence': 
