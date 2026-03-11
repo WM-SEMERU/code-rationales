@@ -1,0 +1,2205 @@
+{
+  "0": {
+    "concept_view": [
+      "Programming Language",
+      "Semantic",
+      "OOP"
+    ],
+    "probabilities": [],
+    "rationales": [],
+    "rationales_indexes": [],
+    "token": "def"
+  },
+  "1": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Identifier"
+    ],
+    "probabilities": [
+      3.618669506977312e-05
+    ],
+    "rationales": [
+      "def"
+    ],
+    "rationales_indexes": [
+      0
+    ],
+    "token": " safe"
+  },
+  "10": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      1.6207357020903146e-06,
+      1.3727942132391036e-05,
+      1.070846883521881e-05,
+      0.0003321000258438289,
+      6.36122131254524e-05,
+      4.2187813960481435e-05,
+      6.147281965240836e-05,
+      2.2084052034188062e-05,
+      1.6775826225057244e-05,
+      1.4153983762810185e-08
+    ],
+    "rationales": [
+      "def",
+      " safe",
+      "_",
+      "int",
+      "(",
+      "s",
+      ":",
+      " str",
+      "):",
+      "\n"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "token": " "
+  },
+  "11": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.999504566192627
+    ],
+    "rationales": [
+      " "
+    ],
+    "rationales_indexes": [
+      10
+    ],
+    "token": " "
+  },
+  "12": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.9994699358940125
+    ],
+    "rationales": [
+      " "
+    ],
+    "rationales_indexes": [
+      11
+    ],
+    "token": " "
+  },
+  "13": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "String"
+    ],
+    "probabilities": [
+      0.00012596654414664954,
+      0.012609892524778843,
+      0.009264616295695305,
+      0.013671169988811016,
+      0.01552109606564045,
+      0.01299283280968666,
+      0.011899986304342747,
+      0.0020782118663191795,
+      0.000900868559256196,
+      0.000253557285759598,
+      0.0024059214629232883,
+      0.005857632029801607,
+      4.86723550352508e-10
+    ],
+    "rationales": [
+      "def",
+      " safe",
+      "_",
+      "int",
+      "(",
+      "s",
+      ":",
+      " str",
+      "):",
+      "\n",
+      " ",
+      " ",
+      " "
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "token": " \"\"\""
+  },
+  "14": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Identifier"
+    ],
+    "probabilities": [
+      0.001601056894287467,
+      0.005624757613986731,
+      0.008007206954061985,
+      0.006078697741031647,
+      0.008724866434931755,
+      0.008471924811601639,
+      0.008834535256028175,
+      0.0077514941804111,
+      0.003626730525866151,
+      0.003903924021869898,
+      0.0068904259242117405,
+      0.0026479943189769983,
+      0.008392291143536568,
+      6.841117672351515e-10
+    ],
+    "rationales": [
+      "def",
+      " safe",
+      "_",
+      "int",
+      "(",
+      "s",
+      ":",
+      " str",
+      "):",
+      "\n",
+      " ",
+      " ",
+      " ",
+      " \"\"\""
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "token": "Con"
+  },
+  "15": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Identifier"
+    ],
+    "probabilities": [
+      0.004468872677534819,
+      0.44339656829833984,
+      2.0483089429035317e-06
+    ],
+    "rationales": [
+      "def",
+      " \"\"\"",
+      "Con"
+    ],
+    "rationales_indexes": [
+      0,
+      13,
+      14
+    ],
+    "token": "vert"
+  },
+  "16": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Identifier"
+    ],
+    "probabilities": [
+      0.031857844442129135,
+      0.13576164841651917,
+      0.11317190527915955,
+      0.007967867888510227,
+      0.014908169396221638,
+      3.701135824485391e-07
+    ],
+    "rationales": [
+      "def",
+      "int",
+      " str",
+      " \"\"\"",
+      "Con",
+      "vert"
+    ],
+    "rationales_indexes": [
+      0,
+      3,
+      7,
+      13,
+      14,
+      15
+    ],
+    "token": " a"
+  },
+  "17": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "String"
+    ],
+    "probabilities": [
+      5.093075378681533e-05,
+      0.0012289952719584107,
+      0.004691331647336483,
+      0.027271337807178497,
+      0.3648069500923157,
+      4.016202037604444e-09
+    ],
+    "rationales": [
+      "def",
+      " str",
+      " \"\"\"",
+      "Con",
+      "vert",
+      " a"
+    ],
+    "rationales_indexes": [
+      0,
+      7,
+      13,
+      14,
+      15,
+      16
+    ],
+    "token": " string"
+  },
+  "18": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Identifier"
+    ],
+    "probabilities": [
+      0.02126297913491726,
+      0.05037522315979004,
+      0.09545698016881943,
+      5.8942487157764845e-06
+    ],
+    "rationales": [
+      "def",
+      " \"\"\"",
+      "vert",
+      " string"
+    ],
+    "rationales_indexes": [
+      0,
+      13,
+      15,
+      17
+    ],
+    "token": " to"
+  },
+  "19": {
+    "concept_view": [
+      "Programming Language",
+      "Semantic",
+      "Types"
+    ],
+    "probabilities": [
+      0.002120089950039983,
+      0.00010911538265645504,
+      0.009755570441484451,
+      0.00041178680839948356,
+      0.1685519516468048,
+      0.001096524647437036,
+      0.0567585788667202,
+      2.4582053725907826e-08
+    ],
+    "rationales": [
+      "def",
+      "_",
+      "int",
+      " str",
+      " \"\"\"",
+      "Con",
+      "vert",
+      " to"
+    ],
+    "rationales_indexes": [
+      0,
+      2,
+      3,
+      7,
+      13,
+      14,
+      15,
+      18
+    ],
+    "token": " int"
+  },
+  "2": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Identifier"
+    ],
+    "probabilities": [
+      0.11253375560045242,
+      6.829256715690235e-09
+    ],
+    "rationales": [
+      "def",
+      " safe"
+    ],
+    "rationales_indexes": [
+      0,
+      1
+    ],
+    "token": "_"
+  },
+  "20": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Punctuation"
+    ],
+    "probabilities": [
+      0.008882015943527222,
+      0.02599054016172886,
+      0.0701337605714798,
+      0.03722836822271347,
+      0.01692422665655613,
+      0.023233680054545403,
+      0.030176028609275818,
+      0.04106631502509117,
+      8.719593097339384e-06
+    ],
+    "rationales": [
+      "def",
+      " safe",
+      "_",
+      "int",
+      ":",
+      " str",
+      "Con",
+      " a",
+      " int"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      6,
+      7,
+      14,
+      16,
+      19
+    ],
+    "token": ";"
+  },
+  "21": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Return"
+    ],
+    "probabilities": [
+      0.00041950418381020427,
+      0.10580163449048996,
+      0.0632377490401268,
+      0.09872643649578094,
+      0.08923567831516266,
+      0.07720761001110077,
+      0.0940483808517456,
+      0.0060961805284023285,
+      0.04253610968589783,
+      0.08452757447957993,
+      0.26444777846336365,
+      0.07032395154237747,
+      0.08099402487277985,
+      0.0879584476351738,
+      1.0727545713962172e-06
+    ],
+    "rationales": [
+      "def",
+      " safe",
+      "_",
+      "int",
+      "(",
+      "s",
+      ":",
+      " str",
+      "):",
+      " ",
+      " \"\"\"",
+      "Con",
+      " a",
+      " string",
+      ";"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      12,
+      13,
+      14,
+      16,
+      17,
+      20
+    ],
+    "token": " return"
+  },
+  "22": {
+    "concept_view": [
+      "Programming Language",
+      "Semantic",
+      "Types"
+    ],
+    "probabilities": [
+      0.0015429910272359848,
+      0.007406584918498993,
+      0.0007183520356193185,
+      0.009015930816531181,
+      0.012143529951572418,
+      0.004501089453697205,
+      0.01984340324997902,
+      0.019080854952335358,
+      0.007631897926330566,
+      0.015162679366767406,
+      0.024762406945228577,
+      0.0230453759431839,
+      0.022056419402360916,
+      0.0033574828412383795,
+      0.010080917738378048,
+      0.006848370190709829,
+      0.02450612559914589,
+      0.02233462780714035,
+      0.01773233152925968,
+      0.015619929879903793,
+      0.0007828267989680171,
+      6.540152952538847e-08
+    ],
+    "rationales": [
+      "def",
+      " safe",
+      "_",
+      "int",
+      "(",
+      "s",
+      ":",
+      " str",
+      "):",
+      "\n",
+      " ",
+      " ",
+      " ",
+      " \"\"\"",
+      "Con",
+      "vert",
+      " a",
+      " string",
+      " to",
+      " int",
+      ";",
+      " return"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ],
+    "token": " None"
+  },
+  "23": {
+    "concept_view": [
+      "Programming Language",
+      "Semantic",
+      "Conditional"
+    ],
+    "probabilities": [
+      0.009903931990265846,
+      0.15561822056770325,
+      0.047978032380342484,
+      0.05857428163290024,
+      0.09449552744626999,
+      0.00017121162090916187
+    ],
+    "rationales": [
+      "(",
+      "s",
+      " str",
+      " \"\"\"",
+      " string",
+      " None"
+    ],
+    "rationales_indexes": [
+      4,
+      5,
+      7,
+      13,
+      17,
+      22
+    ],
+    "token": " if"
+  },
+  "24": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Identifier"
+    ],
+    "probabilities": [
+      1.2547601727419533e-05,
+      0.00200633960776031,
+      0.001345563679933548,
+      0.0014877093490213156,
+      0.0007314145914278924,
+      0.0017124776495620608,
+      0.001697661355137825,
+      0.0007511268486268818,
+      0.001445162808522582,
+      0.0012445516185835004,
+      0.0009602438076399267,
+      0.0010179034434258938,
+      0.001144756213761866,
+      0.0005454110796563327,
+      2.8149981517344713e-05,
+      0.0001790402311598882,
+      0.0005766969989053905,
+      0.0003588595427572727,
+      0.00036349977017380297,
+      0.0002725382219068706,
+      0.000675744260661304,
+      0.000349178648320958,
+      0.0017148649785667658,
+      2.3285480210688547e-09
+    ],
+    "rationales": [
+      "def",
+      " safe",
+      "_",
+      "int",
+      "(",
+      "s",
+      ":",
+      " str",
+      "):",
+      "\n",
+      " ",
+      " ",
+      " ",
+      " \"\"\"",
+      "Con",
+      "vert",
+      " a",
+      " string",
+      " to",
+      " int",
+      ";",
+      " return",
+      " None",
+      " if"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "token": " conversion"
+  },
+  "25": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Identifier"
+    ],
+    "probabilities": [
+      4.3360247218515724e-05,
+      0.0014414208708330989,
+      0.12791910767555237,
+      0.11652715504169464,
+      0.0761258602142334,
+      3.736527287401259e-05,
+      3.822155122179538e-05,
+      0.13488216698169708,
+      0.0368821918964386,
+      0.1008477583527565,
+      0.29467177391052246,
+      5.096846871310845e-05,
+      0.21542443335056305,
+      0.1505846232175827,
+      0.016473885625600815,
+      0.00032984939753077924,
+      5.600239716407884e-10
+    ],
+    "rationales": [
+      "def",
+      " safe",
+      "(",
+      ":",
+      "):",
+      "\n",
+      " ",
+      " ",
+      " \"\"\"",
+      "Con",
+      "vert",
+      " a",
+      " string",
+      " to",
+      " None",
+      " if",
+      " conversion"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      4,
+      6,
+      8,
+      9,
+      10,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      22,
+      23,
+      24
+    ],
+    "token": " fails"
+  },
+  "26": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Expression"
+    ],
+    "probabilities": [
+      0.014170629903674126,
+      0.047576870769262314,
+      2.2828763235338556e-07
+    ],
+    "rationales": [
+      ";",
+      " return",
+      " fails"
+    ],
+    "rationales_indexes": [
+      20,
+      21,
+      25
+    ],
+    "token": ".\""
+  },
+  "27": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "String"
+    ],
+    "probabilities": [
+      0.010156644508242607,
+      0.3175261616706848,
+      1.7831233662946033e-06
+    ],
+    "rationales": [
+      "def",
+      " \"\"\"",
+      ".\""
+    ],
+    "rationales_indexes": [
+      0,
+      13,
+      26
+    ],
+    "token": "\"\""
+  },
+  "28": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.3296827971935272,
+      0.449283242225647,
+      2.0630388917197706e-06
+    ],
+    "rationales": [
+      "):",
+      " a",
+      "\"\""
+    ],
+    "rationales_indexes": [
+      8,
+      16,
+      27
+    ],
+    "token": "\n"
+  },
+  "29": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.00012912528472952545,
+      0.319254606962204,
+      0.0003074422129429877,
+      2.8258369866307476e-07
+    ],
+    "rationales": [
+      " safe",
+      "s",
+      " ",
+      "\n"
+    ],
+    "rationales_indexes": [
+      1,
+      5,
+      10,
+      28
+    ],
+    "token": " "
+  },
+  "3": {
+    "concept_view": [
+      "Programming Language",
+      "Semantic",
+      "Types"
+    ],
+    "probabilities": [
+      0.0025702177081257105,
+      0.0015646099345758557,
+      5.1509694287688035e-08
+    ],
+    "rationales": [
+      "def",
+      " safe",
+      "_"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2
+    ],
+    "token": "int"
+  },
+  "30": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.9993077516555786
+    ],
+    "rationales": [
+      " "
+    ],
+    "rationales_indexes": [
+      29
+    ],
+    "token": " "
+  },
+  "31": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.9993191957473755
+    ],
+    "rationales": [
+      " "
+    ],
+    "rationales_indexes": [
+      30
+    ],
+    "token": " "
+  },
+  "32": {
+    "concept_view": [
+      "Programming Language",
+      "Semantic",
+      "Exceptions"
+    ],
+    "probabilities": [
+      4.559755325317383e-05,
+      0.006494440604001284,
+      0.00772527139633894,
+      0.003896471345797181,
+      0.002792313927784562,
+      0.0055224099196493626,
+      0.002226297277957201,
+      0.002337878569960594,
+      0.0011363489320501685,
+      0.0016568555729463696,
+      0.0028389592189341784,
+      0.004797619301825762,
+      0.00484091229736805,
+      0.0003737698425538838,
+      0.0003411871730349958,
+      0.004225321114063263,
+      0.008232749998569489,
+      0.005417784210294485,
+      0.0034227424766868353,
+      0.004045856185257435,
+      0.0011942542623728514,
+      0.0004797337460331619,
+      0.0064133224077522755,
+      0.00029303296469151974,
+      0.0006015064427629113,
+      0.0007362035103142262,
+      0.00030829233583062887,
+      0.0003555600706022233,
+      0.008363073691725731,
+      0.004194535315036774,
+      0.0008836045162752271,
+      2.6428528254740513e-09
+    ],
+    "rationales": [
+      "def",
+      " safe",
+      "_",
+      "int",
+      "(",
+      "s",
+      ":",
+      " str",
+      "):",
+      "\n",
+      " ",
+      " ",
+      " ",
+      " \"\"\"",
+      "Con",
+      "vert",
+      " a",
+      " string",
+      " to",
+      " int",
+      ";",
+      " return",
+      " None",
+      " if",
+      " conversion",
+      " fails",
+      ".\"",
+      "\"\"",
+      "\n",
+      " ",
+      " ",
+      " "
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ],
+    "token": " try"
+  },
+  "33": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Operators"
+    ],
+    "probabilities": [
+      0.01107922662049532,
+      0.1956643909215927,
+      5.72678072785493e-05
+    ],
+    "rationales": [
+      "def",
+      " return",
+      " try"
+    ],
+    "rationales_indexes": [
+      0,
+      21,
+      32
+    ],
+    "token": ":"
+  },
+  "34": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.20122912526130676,
+      4.131927653361345e-06
+    ],
+    "rationales": [
+      " fails",
+      ":"
+    ],
+    "rationales_indexes": [
+      25,
+      33
+    ],
+    "token": "\n"
+  },
+  "35": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.4435421824455261,
+      0.010242986492812634,
+      3.9820162101023016e-07
+    ],
+    "rationales": [
+      "\"\"",
+      " ",
+      "\n"
+    ],
+    "rationales_indexes": [
+      27,
+      31,
+      34
+    ],
+    "token": " "
+  },
+  "36": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.9992576241493225
+    ],
+    "rationales": [
+      " "
+    ],
+    "rationales_indexes": [
+      35
+    ],
+    "token": " "
+  },
+  "37": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.9992762207984924
+    ],
+    "rationales": [
+      " "
+    ],
+    "rationales_indexes": [
+      36
+    ],
+    "token": " "
+  },
+  "38": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.9992896318435669
+    ],
+    "rationales": [
+      " "
+    ],
+    "rationales_indexes": [
+      37
+    ],
+    "token": " "
+  },
+  "39": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.9994377493858337
+    ],
+    "rationales": [
+      " "
+    ],
+    "rationales_indexes": [
+      38
+    ],
+    "token": " "
+  },
+  "4": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Punctuation"
+    ],
+    "probabilities": [
+      0.11719443649053574,
+      1.3043581326144249e-08
+    ],
+    "rationales": [
+      "def",
+      "int"
+    ],
+    "rationales_indexes": [
+      0,
+      3
+    ],
+    "token": "("
+  },
+  "40": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.9992586970329285
+    ],
+    "rationales": [
+      " "
+    ],
+    "rationales_indexes": [
+      39
+    ],
+    "token": " "
+  },
+  "41": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.9993951320648193
+    ],
+    "rationales": [
+      " "
+    ],
+    "rationales_indexes": [
+      40
+    ],
+    "token": " "
+  },
+  "42": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Return"
+    ],
+    "probabilities": [
+      2.4557200958952308e-05,
+      0.07000331580638885,
+      0.002090800553560257,
+      0.01945691742002964,
+      0.09606413543224335,
+      0.04176999628543854,
+      0.006325117312371731,
+      5.722226581461598e-10
+    ],
+    "rationales": [
+      "def",
+      " str",
+      " return",
+      " if",
+      " conversion",
+      " fails",
+      " try",
+      " "
+    ],
+    "rationales_indexes": [
+      0,
+      7,
+      21,
+      23,
+      24,
+      25,
+      32,
+      41
+    ],
+    "token": " return"
+  },
+  "43": {
+    "concept_view": [
+      "Programming Language",
+      "Semantic",
+      "Types"
+    ],
+    "probabilities": [
+      0.0009114770218729973,
+      0.03832690790295601,
+      0.10244914144277573,
+      0.07193532586097717,
+      0.04757845029234886,
+      0.02347678318619728,
+      0.03379282355308533,
+      0.03614681959152222,
+      3.046474716938974e-07
+    ],
+    "rationales": [
+      "def",
+      " str",
+      "Con",
+      " a",
+      " to",
+      " int",
+      ";",
+      ":",
+      " return"
+    ],
+    "rationales_indexes": [
+      0,
+      7,
+      14,
+      16,
+      18,
+      19,
+      20,
+      33,
+      42
+    ],
+    "token": " int"
+  },
+  "44": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Punctuation"
+    ],
+    "probabilities": [
+      0.0028012108523398638,
+      0.069012351334095,
+      0.01825975812971592,
+      0.04509294778108597,
+      0.006854517851024866,
+      0.023918520659208298,
+      0.02925785817205906,
+      9.48323801708284e-08
+    ],
+    "rationales": [
+      "def",
+      "int",
+      "(",
+      "s",
+      "):",
+      ";",
+      " if",
+      " int"
+    ],
+    "rationales_indexes": [
+      0,
+      3,
+      4,
+      5,
+      8,
+      20,
+      23,
+      43
+    ],
+    "token": "("
+  },
+  "45": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Identifier"
+    ],
+    "probabilities": [
+      0.11367058753967285,
+      0.004484185948967934,
+      0.045378174632787704,
+      0.1672920435667038,
+      0.0026625588070601225,
+      0.0033486599568277597,
+      0.004180215299129486,
+      0.0026848935522139072,
+      7.988318975549191e-05
+    ],
+    "rationales": [
+      "def",
+      "(",
+      "s",
+      "):",
+      " None",
+      " if",
+      ".\"",
+      ":",
+      "("
+    ],
+    "rationales_indexes": [
+      0,
+      4,
+      5,
+      8,
+      22,
+      23,
+      26,
+      33,
+      44
+    ],
+    "token": "s"
+  },
+  "46": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Punctuation"
+    ],
+    "probabilities": [
+      0.01917048543691635,
+      0.15347085893154144,
+      4.176551374257542e-05
+    ],
+    "rationales": [
+      "def",
+      "(",
+      "s"
+    ],
+    "rationales_indexes": [
+      0,
+      44,
+      45
+    ],
+    "token": ")"
+  },
+  "47": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.7289333939552307,
+      0.03817324340343475
+    ],
+    "rationales": [
+      " fails",
+      ")"
+    ],
+    "rationales_indexes": [
+      25,
+      46
+    ],
+    "token": "\n"
+  },
+  "48": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.24546962976455688,
+      0.4975650906562805,
+      0.07257448881864548,
+      0.005438297986984253,
+      1.5365132810529758e-07
+    ],
+    "rationales": [
+      " ",
+      " ",
+      " ",
+      " ",
+      "\n"
+    ],
+    "rationales_indexes": [
+      36,
+      39,
+      40,
+      41,
+      47
+    ],
+    "token": " "
+  },
+  "49": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.9995001554489136
+    ],
+    "rationales": [
+      " "
+    ],
+    "rationales_indexes": [
+      48
+    ],
+    "token": " "
+  },
+  "5": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Identifier"
+    ],
+    "probabilities": [
+      0.003419723128899932,
+      0.009196115657687187,
+      0.010522016324102879,
+      0.008585070259869099,
+      8.780310599831864e-05
+    ],
+    "rationales": [
+      "def",
+      " safe",
+      "_",
+      "int",
+      "("
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "token": "s"
+  },
+  "50": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.9993146657943726
+    ],
+    "rationales": [
+      " "
+    ],
+    "rationales_indexes": [
+      49
+    ],
+    "token": " "
+  },
+  "51": {
+    "concept_view": [
+      "Programming Language",
+      "Semantic",
+      "Exceptions"
+    ],
+    "probabilities": [
+      0.0019631115719676018,
+      1.0895728337345645e-05,
+      0.0009153898572549224,
+      2.7544350814423524e-05,
+      3.7504728425119538e-06,
+      0.0001218512115883641,
+      0.00022343777527567,
+      3.984081922681071e-05,
+      0.0001814053684938699,
+      7.635213842149824e-05,
+      8.195452392101288e-05,
+      6.609583215322345e-05,
+      4.8086989409057423e-05,
+      0.278173565864563,
+      3.1071445846464485e-05,
+      2.3344644432654604e-05,
+      0.00019043008796870708,
+      1.579189847689122e-05,
+      0.000154254594235681,
+      0.0008213575347326696,
+      5.093525760457851e-05,
+      3.0788592994213104e-05,
+      0.0002540649729780853,
+      0.0010650322074070573,
+      0.08484837412834167,
+      0.0001182914202217944,
+      0.1548679620027542,
+      0.0011879027588292956,
+      0.00014472470502369106,
+      0.0005968571058474481,
+      0.00036488479236140847,
+      0.00019211837206967175,
+      0.0011512580094859004,
+      6.654607568634674e-05,
+      0.026487700641155243,
+      4.800405804417096e-05,
+      0.00014756334712728858,
+      8.818804781185463e-05,
+      4.013665966340341e-05,
+      8.235484710894525e-05,
+      0.00011097732203779742,
+      1.2084412637225483e-10
+    ],
+    "rationales": [
+      "def",
+      " safe",
+      "_",
+      "int",
+      "(",
+      "s",
+      ":",
+      " str",
+      "):",
+      "\n",
+      " ",
+      " ",
+      " ",
+      " \"\"\"",
+      "Con",
+      "vert",
+      " a",
+      " string",
+      " to",
+      " return",
+      " None",
+      " if",
+      " conversion",
+      " fails",
+      ".\"",
+      "\n",
+      " ",
+      " ",
+      " ",
+      " try",
+      ":",
+      "\n",
+      " ",
+      " ",
+      " return",
+      " int",
+      "s",
+      ")",
+      "\n",
+      " ",
+      " ",
+      " "
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      39,
+      42,
+      43,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50
+    ],
+    "token": " except"
+  },
+  "52": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Identifier"
+    ],
+    "probabilities": [
+      4.80306007375475e-05,
+      0.12239440530538559,
+      0.09627965837717056,
+      0.0210275836288929,
+      0.06042810529470444,
+      0.08515526354312897,
+      0.0417892225086689,
+      0.06683467328548431,
+      0.09115210920572281,
+      0.08659496158361435,
+      0.08683156967163086,
+      0.09105701744556427,
+      0.03474976867437363,
+      1.6909552869037725e-08
+    ],
+    "rationales": [
+      "def",
+      "(",
+      "):",
+      " \"\"\"",
+      "Con",
+      "vert",
+      " a",
+      " to",
+      " int",
+      " return",
+      " if",
+      " fails",
+      "s",
+      " except"
+    ],
+    "rationales_indexes": [
+      0,
+      4,
+      8,
+      13,
+      14,
+      15,
+      16,
+      18,
+      19,
+      21,
+      23,
+      25,
+      45,
+      51
+    ],
+    "token": " Value"
+  },
+  "53": {
+    "concept_view": [
+      "Programming Language",
+      "Syntax",
+      "Errors"
+    ],
+    "probabilities": [
+      1.0475755516381469e-05,
+      1.773316034814343e-05,
+      0.46614012122154236,
+      0.1284191757440567,
+      3.7370980862760916e-05,
+      0.0002778737689368427,
+      1.2317806977080181e-05,
+      1.0375088095315732e-05,
+      0.0023060496896505356,
+      3.021376551726185e-12
+    ],
+    "rationales": [
+      "def",
+      "int",
+      "):",
+      " \"\"\"",
+      " conversion",
+      " fails",
+      "\n",
+      " ",
+      " except",
+      " Value"
+    ],
+    "rationales_indexes": [
+      0,
+      3,
+      8,
+      13,
+      24,
+      25,
+      47,
+      50,
+      51,
+      52
+    ],
+    "token": "Error"
+  },
+  "54": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Operators"
+    ],
+    "probabilities": [
+      0.25007909536361694,
+      1.0926277354883496e-05
+    ],
+    "rationales": [
+      "def",
+      "Error"
+    ],
+    "rationales_indexes": [
+      0,
+      53
+    ],
+    "token": ":"
+  },
+  "55": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.7413246035575867,
+      0.11382313072681427,
+      2.6739905933936825e-06
+    ],
+    "rationales": [
+      "Con",
+      "\n",
+      ":"
+    ],
+    "rationales_indexes": [
+      14,
+      34,
+      54
+    ],
+    "token": "\n"
+  },
+  "56": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.6434661746025085,
+      0.07698819786310196,
+      0.2787192165851593,
+      0.008908882737159729,
+      5.689514281925767e-08
+    ],
+    "rationales": [
+      " ",
+      " ",
+      " ",
+      " ",
+      "\n"
+    ],
+    "rationales_indexes": [
+      36,
+      48,
+      49,
+      50,
+      55
+    ],
+    "token": " "
+  },
+  "57": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.9994470477104187
+    ],
+    "rationales": [
+      " "
+    ],
+    "rationales_indexes": [
+      56
+    ],
+    "token": " "
+  },
+  "58": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.9994180202484131
+    ],
+    "rationales": [
+      " "
+    ],
+    "rationales_indexes": [
+      57
+    ],
+    "token": " "
+  },
+  "59": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.9993622899055481
+    ],
+    "rationales": [
+      " "
+    ],
+    "rationales_indexes": [
+      58
+    ],
+    "token": " "
+  },
+  "6": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Operators"
+    ],
+    "probabilities": [
+      0.024180136620998383,
+      0.026986900717020035,
+      0.010259522125124931,
+      0.015370308421552181,
+      0.015330404974520206,
+      4.123085545870708e-06
+    ],
+    "rationales": [
+      "def",
+      " safe",
+      "_",
+      "int",
+      "(",
+      "s"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "token": ":"
+  },
+  "60": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.9994662404060364
+    ],
+    "rationales": [
+      " "
+    ],
+    "rationales_indexes": [
+      59
+    ],
+    "token": " "
+  },
+  "61": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.9994087219238281
+    ],
+    "rationales": [
+      " "
+    ],
+    "rationales_indexes": [
+      60
+    ],
+    "token": " "
+  },
+  "62": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.99940025806427
+    ],
+    "rationales": [
+      " "
+    ],
+    "rationales_indexes": [
+      61
+    ],
+    "token": " "
+  },
+  "63": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Return"
+    ],
+    "probabilities": [
+      4.271053694537841e-05,
+      0.09357501566410065,
+      0.036938611418008804,
+      0.05712991952896118,
+      0.006126750260591507,
+      1.7835577459379692e-10
+    ],
+    "rationales": [
+      "def",
+      " string",
+      " return",
+      " try",
+      " return",
+      " "
+    ],
+    "rationales_indexes": [
+      0,
+      17,
+      21,
+      32,
+      42,
+      62
+    ],
+    "token": " return"
+  },
+  "64": {
+    "concept_view": [
+      "Programming Language",
+      "Semantic",
+      "Types"
+    ],
+    "probabilities": [
+      0.0005312236025929451,
+      0.08166895061731339,
+      0.051500990986824036,
+      0.04557637497782707,
+      0.06467072665691376,
+      0.05608784407377243,
+      0.04950631409883499,
+      0.05757112056016922,
+      0.015612954273819923,
+      0.048579346388578415,
+      0.034317079931497574,
+      0.02887032739818096,
+      0.07194112241268158,
+      0.04273286834359169,
+      0.045600853860378265,
+      0.038504090160131454,
+      0.03167976438999176,
+      0.06428559124469757,
+      0.025306127965450287,
+      0.08205534517765045,
+      0.020784270018339157,
+      0.01590043492615223,
+      0.0414624959230423,
+      0.45244747400283813,
+      0.050607144832611084,
+      0.05982575565576553,
+      0.04803509637713432,
+      0.05815509334206581,
+      0.05301070958375931,
+      0.03364069387316704,
+      0.054718464612960815,
+      0.05748961120843887,
+      0.05063709616661072,
+      0.051226820796728134,
+      1.8394082701433945e-07
+    ],
+    "rationales": [
+      "\n",
+      " ",
+      " ",
+      " ",
+      "Con",
+      "vert",
+      " a",
+      ";",
+      " return",
+      " None",
+      ".\"",
+      "\"\"",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      "s",
+      "\n",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " return"
+    ],
+    "rationales_indexes": [
+      9,
+      10,
+      11,
+      12,
+      14,
+      15,
+      16,
+      20,
+      21,
+      22,
+      26,
+      27,
+      29,
+      30,
+      31,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      45,
+      47,
+      48,
+      49,
+      50,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "token": " None"
+  },
+  "65": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.6128826141357422,
+      0.0004939347272738814
+    ],
+    "rationales": [
+      "\n",
+      " None"
+    ],
+    "rationales_indexes": [
+      55,
+      64
+    ],
+    "token": "\n"
+  },
+  "7": {
+    "concept_view": [
+      "Programming Language",
+      "Natural Language in Code",
+      "Identifier"
+    ],
+    "probabilities": [
+      8.009934390429407e-05,
+      0.0007417797460220754,
+      0.000512654660269618,
+      0.0007889285916462541,
+      0.00319763645529747,
+      0.0008738524629734457,
+      1.3741273896528128e-08
+    ],
+    "rationales": [
+      "def",
+      " safe",
+      "_",
+      "int",
+      "(",
+      "s",
+      ":"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "token": " str"
+  },
+  "8": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Expression"
+    ],
+    "probabilities": [
+      0.00015020354476291686,
+      0.006403574254363775,
+      0.007642138749361038,
+      0.006652024574577808,
+      0.004030864220112562,
+      0.0033618994057178497,
+      0.0008796043694019318,
+      8.234071757762251e-11
+    ],
+    "rationales": [
+      "def",
+      " safe",
+      "_",
+      "int",
+      "(",
+      "s",
+      ":",
+      " str"
+    ],
+    "rationales_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "token": "):"
+  },
+  "9": {
+    "concept_view": [
+      "Programming Language",
+      "Non-Semantic",
+      "Indentation"
+    ],
+    "probabilities": [
+      0.6731911301612854,
+      0.05232931673526764
+    ],
+    "rationales": [
+      "s",
+      "):"
+    ],
+    "rationales_indexes": [
+      5,
+      8
+    ],
+    "token": "\n"
+  },
+  "_phrase": "def safe_int(s: str):\n    \"\"\"Convert a string to int; return None if conversion fails.\"\"\"\n    try:\n        return int(s)\n    except ValueError:\n        return None\n"
+}

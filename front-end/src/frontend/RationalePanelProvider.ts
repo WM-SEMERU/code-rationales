@@ -16,6 +16,33 @@ const example7 = require('../backend/example7.json');
 const example8 = require('../backend/example8.json');
 const example9 = require('../backend/example9.json');
 const example10 = require('../backend/example10.json');
+const example14 = require('../backend/example14.json');
+
+const correct_sample1 = require('../backend/rationale-samples/correct_sample1.json');
+const correct_sample2 = require('../backend/rationale-samples/correct_sample2.json');
+const correct_sample3 = require('../backend/rationale-samples/correct_sample3.json');
+const correct_sample4 = require('../backend/rationale-samples/correct_sample4.json');
+const correct_sample5 = require('../backend/rationale-samples/correct_sample5.json');
+const correct_sample6 = require('../backend/rationale-samples/correct_sample6.json');
+const correct_sample7 = require('../backend/rationale-samples/correct_sample7.json');
+const correct_sample8 = require('../backend/rationale-samples/correct_sample8.json');
+const correct_sample9 = require('../backend/rationale-samples/correct_sample9.json');
+const correct_sample10 = require('../backend/rationale-samples/correct_sample10.json');
+const correct_sample11 = require('../backend/rationale-samples/correct_sample11.json');
+const correct_sample12 = require('../backend/rationale-samples/correct_sample12.json');
+const correct_sample13 = require('../backend/rationale-samples/correct_sample13.json');
+const correct_sample14 = require('../backend/rationale-samples/correct_sample14.json');
+
+const incorrect_sample1 = require('../backend/rationale-samples/incorrect_sample1.json');
+const incorrect_sample2 = require('../backend/rationale-samples/incorrect_sample2.json');
+const incorrect_sample3 = require('../backend/rationale-samples/incorrect_sample3.json');
+const incorrect_sample4 = require('../backend/rationale-samples/incorrect_sample4.json');
+const incorrect_sample5 = require('../backend/rationale-samples/incorrect_sample5.json');
+const incorrect_sample6 = require('../backend/rationale-samples/incorrect_sample6.json');
+const incorrect_sample7 = require('../backend/rationale-samples/incorrect_sample7.json');
+const incorrect_sample8 = require('../backend/rationale-samples/incorrect_sample8.json');
+const incorrect_sample9 = require('../backend/rationale-samples/incorrect_sample9.json');
+const incorrect_sample10 = require('../backend/rationale-samples/incorrect_sample10.json');
 
 
 /** Stores the rationale data. View the example.json files for practical examples.*/
@@ -68,7 +95,13 @@ export class RationalePanelProvider implements vscode.WebviewViewProvider {
 
         console.log("Current rationale", newRationale);
         
-        if(["example1","example2","example3", "example4", "example5", "example6", "example7", "example8"].includes(newRationale)){
+        if([
+          "example1","example2","example3", "example4", "example5", "example6", "example7", "example8", "example9", "example10","example14",
+          "correct_sample1","correct_sample2","correct_sample3","correct_sample4","correct_sample5","correct_sample6","correct_sample7",
+          "correct_sample8","correct_sample9","correct_sample10","correct_sample11","correct_sample12","correct_sample13","correct_sample14",
+          "incorrect_sample1","incorrect_sample2","incorrect_sample3","incorrect_sample4","incorrect_sample5",
+          "incorrect_sample6","incorrect_sample7","incorrect_sample8","incorrect_sample9","incorrect_sample10"
+        ].includes(newRationale)){
           console.log("Example data is being used");
           switch(newRationale){
             case "example1": {
@@ -109,6 +142,106 @@ export class RationalePanelProvider implements vscode.WebviewViewProvider {
             }
             case "example10": {
               this.rationaleJsonFile = example10;
+              break;
+            }
+            case "example14": {
+              this.rationaleJsonFile = example14;
+              break;
+            }
+            case "correct_sample1": {
+              this.rationaleJsonFile = correct_sample1;
+              break;
+            }
+            case "correct_sample2": {
+              this.rationaleJsonFile = correct_sample2;
+              break;
+            }
+            case "correct_sample3": {
+              this.rationaleJsonFile = correct_sample3;
+              break;
+            }
+            case "correct_sample4": {
+              this.rationaleJsonFile = correct_sample4;
+              break;
+            }
+            case "correct_sample5": {
+              this.rationaleJsonFile = correct_sample5;
+              break;
+            }
+            case "correct_sample6": {
+              this.rationaleJsonFile = correct_sample6;
+              break;
+            }
+            case "correct_sample7": {
+              this.rationaleJsonFile = correct_sample7;
+              break;
+            }
+            case "correct_sample8": {
+              this.rationaleJsonFile = correct_sample8;
+              break;
+            }
+            case "correct_sample9": {
+              this.rationaleJsonFile = correct_sample9;
+              break;
+            }
+            case "correct_sample10": {
+              this.rationaleJsonFile = correct_sample10;
+              break;
+            }
+            case "correct_sample11": {
+              this.rationaleJsonFile = correct_sample11;
+              break;
+            }
+            case "correct_sample12": {
+              this.rationaleJsonFile = correct_sample12;
+              break;
+            }
+            case "correct_sample13": {
+              this.rationaleJsonFile = correct_sample13;
+              break;
+            }
+            case "correct_sample14": {
+              this.rationaleJsonFile = correct_sample14;
+              break;
+            }
+            case "incorrect_sample1": {
+              this.rationaleJsonFile = incorrect_sample1;
+              break;
+            }
+            case "incorrect_sample2": {
+              this.rationaleJsonFile = incorrect_sample2;
+              break;
+            }
+            case "incorrect_sample3": {
+              this.rationaleJsonFile = incorrect_sample3;
+              break;
+            }
+            case "incorrect_sample4": {
+              this.rationaleJsonFile = incorrect_sample4;
+              break;
+            }
+            case "incorrect_sample5": {
+              this.rationaleJsonFile = incorrect_sample5;
+              break;
+            }
+            case "incorrect_sample6": {
+              this.rationaleJsonFile = incorrect_sample6;
+              break;
+            }
+            case "incorrect_sample7": {
+              this.rationaleJsonFile = incorrect_sample7;
+              break;
+            }
+            case "incorrect_sample8": {
+              this.rationaleJsonFile = incorrect_sample8;
+              break;
+            }
+            case "incorrect_sample9": {
+              this.rationaleJsonFile = incorrect_sample9;
+              break;
+            }
+            case "incorrect_sample10": {
+              this.rationaleJsonFile = incorrect_sample10;
               break;
             }
           }
@@ -337,6 +470,40 @@ export class RationalePanelProvider implements vscode.WebviewViewProvider {
           influenceHeader.innerHTML = "Influence on token: <span class='highlighted-token'>" + selectedToken + "</span>";
         }
 
+        function pickTextColor(bgColor) {
+          function hslToRgb(h, s, l) {
+            s /= 100; l /= 100;
+            const c = (1 - Math.abs(2*l - 1)) * s;
+            const x = c * (1 - Math.abs(((h/60) % 2) - 1));
+            const m = l - c/2;
+            let r=0,g=0,b=0;
+            if (0 <= h && h < 60) { r=c; g=x; b=0; }
+            else if (60 <= h && h < 120) { r=x; g=c; b=0; }
+            else if (120 <= h && h < 180) { r=0; g=c; b=x; }
+            else if (180 <= h && h < 240) { r=0; g=x; b=c; }
+            else if (240 <= h && h < 300) { r=x; g=0; b=c; }
+            else { r=c; g=0; b=x; }
+            r = Math.round((r+m)*255);
+            g = Math.round((g+m)*255);
+            b = Math.round((b+m)*255);
+            return [r,g,b];
+          }
+
+          const m = bgColor.match(/hsl\\(\\s*([\\d.]+)\\s*,\\s*([\\d.]+)%\\s*,\\s*([\\d.]+)%\\s*\\)/i);
+          if (!m) return "white";
+
+          const h = parseFloat(m[1]);
+          const s = parseFloat(m[2]);
+          const l = parseFloat(m[3]);
+          const rgb = hslToRgb(h,s,l);
+          const r = rgb[0];
+          const g = rgb[1];
+          const b = rgb[2];
+
+          const luminance = (0.2126*r + 0.7152*g + 0.0722*b) / 255;
+          return luminance > 0.6 ? "black" : "white";
+        }
+
         function updateTokenInfluence(token, probability, color) {
           if (token !== undefined) {
             const labelsWrapper = document.querySelector('.probability-labels-wrapper');
@@ -365,11 +532,14 @@ export class RationalePanelProvider implements vscode.WebviewViewProvider {
 
             newProbabilityDivMarker.appendChild(tooltip);
 
+            const textColor = pickTextColor(color);
+            const style = "background-color: " + color + "; border-color: " + color + "; color: " + textColor + ";";
+
             if (probability < 0.01) {
-              newProbabilityDiv.innerHTML = "Token: <span class='highlighted-token'>" + token + "</span> has less than 0.01% influence";
+              newProbabilityDiv.innerHTML = "Token: <span class='highlighted-token' style='" + style + "'>" + token + "</span> has less than 0.01% influence";
             } 
             else {
-              newProbabilityDiv.innerHTML = "Token: <span class='highlighted-token'>" + token + "</span> has " + probability + "% influence";
+              newProbabilityDiv.innerHTML = "Token: <span class='highlighted-token' style='" + style + "'>" + token + "</span> has " + probability + "% influence";
             }
 
             labelsWrapper.append(newProbabilityDiv);
