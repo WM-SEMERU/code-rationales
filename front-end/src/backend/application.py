@@ -1,4 +1,3 @@
-
 from flask import Flask
 from flask import render_template 
 from flask import request, jsonify
@@ -7,6 +6,8 @@ import torch
 import importlib
 from transformers import GPT2Tokenizer, GPT2LMHeadModel
 import os
+import re
+from taxonomies import pl_taxonomy_python
 
 # imports rationalization functions from sequential-rationales library
 rationalization = importlib.import_module("rationalization")
@@ -142,7 +143,8 @@ def makeRationales(prompt):
     tokenizer = GPT2Tokenizer.from_pretrained(output_dir)
 
     input_ids = tokenizer(prompt, return_tensors='pt')['input_ids'].to(model.device)
-    outputs = model.generate(input_ids=input_ids, max_length=25, do_sample=False)[0]
+    #outputs = model.generate(input_ids=input_ids, max_length=60, do_sample=False)[0]
+    outputs = input_ids[0]
 
     torch.cuda.empty_cache() #Cleaning Cache
     all_rationales, log = rationalize_lm(model, outputs, tokenizer, verbose=True)
@@ -157,13 +159,77 @@ def parse_data(input, prompt):
     rationales = dict()
     rationales["_phrase"] = ''.join(input['input_text'])
 
+    pl_map = pl_taxonomy_python()
+    pl_lookup = {}
+    for k, vals in pl_map.items():
+        for v in vals:
+            pl_lookup[v.lower()] = k
+
     # Blank data for the first rationale index
+    token_raw = input["input_text"][0]
+    token = token_raw.strip()
+    token_l = token.lower()
+    if token == "":
+        concept_view = ["Programming Language", "Non-Semantic", "Indentation"]
+    elif "\n" in token_raw or "\t" in token_raw:
+        concept_view = ["Programming Language", "Non-Semantic", "Indentation"]
+    elif token_l in pl_lookup:
+        leaf_key = pl_lookup[token_l]
+        if leaf_key in ["identifier", "comment", "string"]:
+            concept_view = ["Programming Language", "Natural Language in Code", leaf_key.capitalize()]
+        elif leaf_key == "errors":
+            concept_view = ["Programming Language", "Syntax", "Errors"]
+        else:
+            if leaf_key in ["punctuation", "operators", "indentation", "functional", "return", "expression"]:
+                pretty = leaf_key.capitalize()
+                if leaf_key == "oop":
+                    pretty = "OOP"
+                elif leaf_key == "conditionals":
+                    pretty = "Conditional"
+                elif leaf_key == "bool":
+                    pretty = "Bool"
+                concept_view = ["Programming Language", "Non-Semantic", pretty]
+            else:
+                pretty = leaf_key.capitalize()
+                if leaf_key == "oop":
+                    pretty = "OOP"
+                elif leaf_key == "conditionals":
+                    pretty = "Conditional"
+                elif leaf_key == "bool":
+                    pretty = "Bool"
+                elif leaf_key == "asserts":
+                    pretty = "Asserts"
+                elif leaf_key == "statements":
+                    pretty = "Statements"
+                elif leaf_key == "types":
+                    pretty = "Types"
+                elif leaf_key == "loops":
+                    pretty = "Loops"
+                elif leaf_key == "structural":
+                    pretty = "Structural"
+                elif leaf_key == "exceptions":
+                    pretty = "Exceptions"
+                elif leaf_key == "with":
+                    pretty = "With"
+                concept_view = ["Programming Language", "Semantic", pretty]
+    else:
+        if token.startswith("#"):
+            concept_view = ["Programming Language", "Natural Language in Code", "Comment"]
+        elif (token.startswith('"') and token.endswith('"')) or (token.startswith("'") and token.endswith("'")):
+            concept_view = ["Programming Language", "Natural Language in Code", "String"]
+        elif (token.startswith('"') or token.startswith("'")):
+            concept_view = ["Programming Language", "Natural Language in Code", "String"]
+        elif re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", token) is not None:
+            concept_view = ["Programming Language", "Natural Language in Code", "Identifier"]
+        else:
+            concept_view = ["Programming Language", "Non-Semantic", "Expression"]
+
     rationales['0'] = {
         "token": input["input_text"][0],
         "rationales": [],
         "rationales_indexes": [],
         "probabilities": [],
-        "concept_view": ["Natural Language", "Semantic", "Noun"]
+        "concept_view": concept_view
     }
 
     for obj in input["rationalization"]:
@@ -173,17 +239,64 @@ def parse_data(input, prompt):
         data["rationales_indexes"] = []
         data["probabilities"] = []
 
-    # randomly choosing between concept tree or programming tree taxonomy
-        useNatural = random.choice([0,1])
-        if useNatural:
-            middle = random.choice(list(conceptsNat.keys()))
-            leaf = random.choice(conceptsNat[middle])
-            data["concept_view"] = ["Natural Language", middle, leaf]
-        else:
-            middle = random.choice(list(conceptsProgram.keys()))
-            leaf = random.choice(conceptsProgram[middle])
-            data["concept_view"] = ["Programming Language", middle, leaf]
+        token_raw = obj["goal_word"]
+        token = token_raw.strip()
+        token_l = token.lower()
 
+        if token == "":
+            data["concept_view"] = ["Programming Language", "Non-Semantic", "Indentation"]
+        elif "\n" in token_raw or "\t" in token_raw:
+            data["concept_view"] = ["Programming Language", "Non-Semantic", "Indentation"]
+        elif token_l in pl_lookup:
+            leaf_key = pl_lookup[token_l]
+            if leaf_key in ["identifier", "comment", "string"]:
+                data["concept_view"] = ["Programming Language", "Natural Language in Code", leaf_key.capitalize()]
+            elif leaf_key == "errors":
+                data["concept_view"] = ["Programming Language", "Syntax", "Errors"]
+            else:
+                if leaf_key in ["punctuation", "operators", "indentation", "functional", "return", "expression"]:
+                    pretty = leaf_key.capitalize()
+                    if leaf_key == "oop":
+                        pretty = "OOP"
+                    elif leaf_key == "conditionals":
+                        pretty = "Conditional"
+                    elif leaf_key == "bool":
+                        pretty = "Bool"
+                    data["concept_view"] = ["Programming Language", "Non-Semantic", pretty]
+                else:
+                    pretty = leaf_key.capitalize()
+                    if leaf_key == "oop":
+                        pretty = "OOP"
+                    elif leaf_key == "conditionals":
+                        pretty = "Conditional"
+                    elif leaf_key == "bool":
+                        pretty = "Bool"
+                    elif leaf_key == "asserts":
+                        pretty = "Asserts"
+                    elif leaf_key == "statements":
+                        pretty = "Statements"
+                    elif leaf_key == "types":
+                        pretty = "Types"
+                    elif leaf_key == "loops":
+                        pretty = "Loops"
+                    elif leaf_key == "structural":
+                        pretty = "Structural"
+                    elif leaf_key == "exceptions":
+                        pretty = "Exceptions"
+                    elif leaf_key == "with":
+                        pretty = "With"
+                    data["concept_view"] = ["Programming Language", "Semantic", pretty]
+        else:
+            if token.startswith("#"):
+                data["concept_view"] = ["Programming Language", "Natural Language in Code", "Comment"]
+            elif (token.startswith('"') and token.endswith('"')) or (token.startswith("'") and token.endswith("'")):
+                data["concept_view"] = ["Programming Language", "Natural Language in Code", "String"]
+            elif (token.startswith('"') or token.startswith("'")):
+                data["concept_view"] = ["Programming Language", "Natural Language in Code", "String"]
+            elif re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", token) is not None:
+                data["concept_view"] = ["Programming Language", "Natural Language in Code", "Identifier"]
+            else:
+                data["concept_view"] = ["Programming Language", "Non-Semantic", "Expression"]
 
         for item in obj["log"]:
             data["rationales"].append( item["added_token_text"] )
