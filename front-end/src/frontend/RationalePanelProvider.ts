@@ -16,33 +16,32 @@ const example7 = require('../backend/example7.json');
 const example8 = require('../backend/example8.json');
 const example9 = require('../backend/example9.json');
 const example10 = require('../backend/example10.json');
-const example14 = require('../backend/example14.json');
 
-const correct_sample1 = require('../backend/rationale-samples/correct_sample1.json');
-const correct_sample2 = require('../backend/rationale-samples/correct_sample2.json');
-const correct_sample3 = require('../backend/rationale-samples/correct_sample3.json');
-const correct_sample4 = require('../backend/rationale-samples/correct_sample4.json');
-const correct_sample5 = require('../backend/rationale-samples/correct_sample5.json');
-const correct_sample6 = require('../backend/rationale-samples/correct_sample6.json');
-const correct_sample7 = require('../backend/rationale-samples/correct_sample7.json');
-const correct_sample8 = require('../backend/rationale-samples/correct_sample8.json');
-const correct_sample9 = require('../backend/rationale-samples/correct_sample9.json');
-const correct_sample10 = require('../backend/rationale-samples/correct_sample10.json');
-const correct_sample11 = require('../backend/rationale-samples/correct_sample11.json');
-const correct_sample12 = require('../backend/rationale-samples/correct_sample12.json');
-const correct_sample13 = require('../backend/rationale-samples/correct_sample13.json');
-const correct_sample14 = require('../backend/rationale-samples/correct_sample14.json');
+const correct_sample1 = require('../backend/rationale_samples/correct_sample1.json');
+const correct_sample2 = require('../backend/rationale_samples/correct_sample2.json');
+const correct_sample3 = require('../backend/rationale_samples/correct_sample3.json');
+const correct_sample4 = require('../backend/rationale_samples/correct_sample4.json');
+const correct_sample5 = require('../backend/rationale_samples/correct_sample5.json');
+const correct_sample6 = require('../backend/rationale_samples/correct_sample6.json');
+const correct_sample7 = require('../backend/rationale_samples/correct_sample7.json');
+const correct_sample8 = require('../backend/rationale_samples/correct_sample8.json');
+const correct_sample9 = require('../backend/rationale_samples/correct_sample9.json');
+const correct_sample10 = require('../backend/rationale_samples/correct_sample10.json');
+const correct_sample11 = require('../backend/rationale_samples/correct_sample11.json');
+const correct_sample12 = require('../backend/rationale_samples/correct_sample12.json');
+const correct_sample13 = require('../backend/rationale_samples/correct_sample13.json');
+const correct_sample14 = require('../backend/rationale_samples/correct_sample14.json');
 
-const incorrect_sample1 = require('../backend/rationale-samples/incorrect_sample1.json');
-const incorrect_sample2 = require('../backend/rationale-samples/incorrect_sample2.json');
-const incorrect_sample3 = require('../backend/rationale-samples/incorrect_sample3.json');
-const incorrect_sample4 = require('../backend/rationale-samples/incorrect_sample4.json');
-const incorrect_sample5 = require('../backend/rationale-samples/incorrect_sample5.json');
-const incorrect_sample6 = require('../backend/rationale-samples/incorrect_sample6.json');
-const incorrect_sample7 = require('../backend/rationale-samples/incorrect_sample7.json');
-const incorrect_sample8 = require('../backend/rationale-samples/incorrect_sample8.json');
-const incorrect_sample9 = require('../backend/rationale-samples/incorrect_sample9.json');
-const incorrect_sample10 = require('../backend/rationale-samples/incorrect_sample10.json');
+const incorrect_sample1 = require('../backend/rationale_samples/incorrect_sample1.json');
+const incorrect_sample2 = require('../backend/rationale_samples/incorrect_sample2.json');
+const incorrect_sample3 = require('../backend/rationale_samples/incorrect_sample3.json');
+const incorrect_sample4 = require('../backend/rationale_samples/incorrect_sample4.json');
+const incorrect_sample5 = require('../backend/rationale_samples/incorrect_sample5.json');
+const incorrect_sample6 = require('../backend/rationale_samples/incorrect_sample6.json');
+const incorrect_sample7 = require('../backend/rationale_samples/incorrect_sample7.json');
+const incorrect_sample8 = require('../backend/rationale_samples/incorrect_sample8.json');
+const incorrect_sample9 = require('../backend/rationale_samples/incorrect_sample9.json');
+const incorrect_sample10 = require('../backend/rationale_samples/incorrect_sample10.json');
 
 
 /** Stores the rationale data. View the example.json files for practical examples.*/
@@ -96,7 +95,7 @@ export class RationalePanelProvider implements vscode.WebviewViewProvider {
         console.log("Current rationale", newRationale);
         
         if([
-          "example1","example2","example3", "example4", "example5", "example6", "example7", "example8", "example9", "example10","example14",
+          "example1","example2","example3", "example4", "example5", "example6", "example7", "example8", "example9", "example10",
           "correct_sample1","correct_sample2","correct_sample3","correct_sample4","correct_sample5","correct_sample6","correct_sample7",
           "correct_sample8","correct_sample9","correct_sample10","correct_sample11","correct_sample12","correct_sample13","correct_sample14",
           "incorrect_sample1","incorrect_sample2","incorrect_sample3","incorrect_sample4","incorrect_sample5",
@@ -142,10 +141,6 @@ export class RationalePanelProvider implements vscode.WebviewViewProvider {
             }
             case "example10": {
               this.rationaleJsonFile = example10;
-              break;
-            }
-            case "example14": {
-              this.rationaleJsonFile = example14;
               break;
             }
             case "correct_sample1": {
