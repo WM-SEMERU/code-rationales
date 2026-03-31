@@ -43,6 +43,8 @@ const incorrect_sample8 = require('../backend/rationale_samples/incorrect_sample
 const incorrect_sample9 = require('../backend/rationale_samples/incorrect_sample9.json');
 const incorrect_sample10 = require('../backend/rationale_samples/incorrect_sample10.json');
 
+const new_sample1 = require('../backend/rationale_samples/two_sum_generate_sample.json');
+
 
 /** Stores the rationale data. View the example.json files for practical examples.*/
 interface RationaleData {
@@ -99,7 +101,7 @@ export class RationalePanelProvider implements vscode.WebviewViewProvider {
           "correct_sample1","correct_sample2","correct_sample3","correct_sample4","correct_sample5","correct_sample6","correct_sample7",
           "correct_sample8","correct_sample9","correct_sample10","correct_sample11","correct_sample12","correct_sample13","correct_sample14",
           "incorrect_sample1","incorrect_sample2","incorrect_sample3","incorrect_sample4","incorrect_sample5",
-          "incorrect_sample6","incorrect_sample7","incorrect_sample8","incorrect_sample9","incorrect_sample10"
+          "incorrect_sample6","incorrect_sample7","incorrect_sample8","incorrect_sample9","incorrect_sample10", "new_sample1"
         ].includes(newRationale)){
           console.log("Example data is being used");
           switch(newRationale){
@@ -237,6 +239,10 @@ export class RationalePanelProvider implements vscode.WebviewViewProvider {
             }
             case "incorrect_sample10": {
               this.rationaleJsonFile = incorrect_sample10;
+              break;
+            }
+            case "new_sample1": {
+              this.rationaleJsonFile = new_sample1;
               break;
             }
           }
